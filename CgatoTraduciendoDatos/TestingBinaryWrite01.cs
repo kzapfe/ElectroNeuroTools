@@ -65,13 +65,13 @@ namespace ProbandoFunciones
 
 		  for (int x = 0; x < argporom; x++) 
                 {
-                    string content = "";
+                    
                     for (int y = 0; y < argporom; y++) 
                     {
-                        content += z[x, y].ToString("0") + "\t";
+		      chura.Write(z[x,y]);
                     }
-		    content += "\n";
-                    chura.Write(content);
+		    
+                    
                 }
 		
 	      }
