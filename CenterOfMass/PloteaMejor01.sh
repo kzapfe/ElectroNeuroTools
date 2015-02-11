@@ -13,7 +13,7 @@ gnuplot <<EOF
 
 set xr[0:64]
 set yr[0:64]
-set cbr[0.1:120]
+set cbr[-120:120]
 set size ratio -1
 
 set term pngcairo size 300,300 fontscale 0.5
