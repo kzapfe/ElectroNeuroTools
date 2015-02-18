@@ -1,0 +1,12 @@
+Este es un ejemplo de como reencodear usando mencoder
+
+mencoder CentrodeMasaNaive02.mp4  -o Test.mpg -of lavf -ovc lavc  -lavcopts vcodec=mpeg2video
+
+-of := un contenedor de salida, usando lavf, que usa libavformat,
+que a su vez usa libavcodecs. Determina el contenedor por la extension.
+
+-ovc:= determina el codec, libavcodecs en este caso
+
+-lavcopts: las opciones especìficas para este caso.
+
+
