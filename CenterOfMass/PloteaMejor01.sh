@@ -18,7 +18,8 @@ set size ratio -1
 
 set term pngcairo size 400,400 fontscale 0.75
 unset key
-set palette defined (0 "#000077", 1 "#0000FF", 2 "white", 3 "#FF0000", 4 "#770000")
+set palette rgbform 33,13,10
+#set palette defined (0 "#000077", 1 "#0000FF", 2 "white", 3 "#FF0000", 4 "#770000")
 #set palette defined (0 "white", 1 "#0000FF", 2 "black")
 set out "$outname"
 criterio(x)=(abs(x)<60)?0:x

@@ -12,3 +12,4 @@ que a su vez usa libavcodecs. Determina el contenedor por la extension.
 Otro ejemplo, a partir de una lista de Discr*png
 
 mencoder "mf://Discr*png"  -o Laplacian01.avi -ovc lavc -mf fps=10
+
