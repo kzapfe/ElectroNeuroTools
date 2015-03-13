@@ -11,9 +11,9 @@ echo $outname
 
 gnuplot <<EOF
 
-set xr[0.5:63.5]
-set yr[0.5:63.5]
-set cbr[-70:70]
+set xr[0.5:256.5]
+set yr[0.5:256.5]
+set cbr[-10:10]
 set size ratio -1
 
 set term pngcairo size 400,400 fontscale 0.75
