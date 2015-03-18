@@ -5,8 +5,9 @@
 datosfondobasename="LaplacianFilteredSpaceTime-"
 numero=$1
 dataname=$datosfondobasename$numero".dat"
-usandonegativo='2:1:($3/4.)'
-usandopositivo='2:1:($3/4.)'
+usandonegativo='(-$2/4.):(-$1/4):($3/500.)'
+usandopositivo='($2/4.):($1/4):($3/500.)'
+usandomatrix='($1/4.):($2/4):($3)'
 
 outname=`basename $dataname .dat`.png
 index="::::$numero"
@@ -21,7 +22,7 @@ gnuplot <<EOF
 
 set xr[-0.50:63.5]
 set yr[-0.5:63.5]
-set cbr[-120:120]
+set cbr[-10:10]
 set size ratio -1
 set pointsize 0.35
 unset key
@@ -32,7 +33,7 @@ set title titulo
 set palette defined (0 "#000077", 1 "#0000FF", 2 "white", 3 "#FF0000", 4 "#990000")
 #set palette defined (0 "white", 1 "#0000FF", 2 "black")
 set out "$outname"
-plot "$dataname" matrix  w image, "DatosCMNegativo01.dat" usi $usandonegativo every $index w lp ls 7 palette ,"DatosCMPositivo01.dat" usi $usandopositivo every $index w lp ls 7 palette 
+plot "$dataname" using $usandomatrix matrix  w image, "DatosCMNegativo01.dat" usi $usandonegativo every $index w lp ls 7 palette ,"DatosCMPositivo01.dat" usi $usandopositivo every $index w lp ls 7 palette 
  
 set out
 
