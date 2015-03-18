@@ -5,7 +5,7 @@
 dataname=$1
 outname=`basename $1 .dat`.png
 #umbral=30
-usando='using 1:2:(-$3))'
+usando='using ($1/4.0)):($2/4):(-$3))'
 
 echo $outname
 
@@ -13,7 +13,7 @@ gnuplot <<EOF
 
 set xr[0.5:63.5]
 set yr[0.5:63.5]
-set cbr[-200:200]
+set cbr[-2:2]
 set size ratio -1
 
 set term pngcairo size 400,400 fontscale 1.0
