@@ -5,9 +5,14 @@
 datosfondobasename="LaplacianFilteredSpaceTime-"
 numero=$1
 dataname=$datosfondobasename$numero".dat"
-usandonegativo='(-$2/4.):(-$1/4):($3/500.)'
-usandopositivo='($2/4.):($1/4):($3/500.)'
-usandomatrix='($1/4.):($2/4):($3)'
+#usandonegativo='(-$2/4.):(-$1/4):($3/500.)'
+#usandopositivo='($2/4.):($1/4):($3/500.)'
+#usandomatrix='($1/4.):($2/4):($3)'
+
+usandonegativo='(-$2):(-$1):($3/1500.)'
+usandopositivo='($2):($1):($3/1500.)'
+usandomatrix='($1):($2):($3)'
+
 
 outname=`basename $dataname .dat`.png
 index="::::$numero"
