@@ -9,8 +9,8 @@ numero=$1
 dataname=$datosfondobasename$numero".dat"
 datosCMNeg=$datosCMNegname$numero".dat"
 datosCMPos=$datosCMPosname$numero".dat"
-#usandonegativo='(-$2/4.):(-$1/4):($3/500.)'
-#usandopositivo='($2/4.):($1/4):($3/500.)'
+#usandonegativo='(-$2/4.):(-$1/4):($3/1000.)'
+#usandopositivo='($2/4.):($1/4):($3/1000.)'
 #usandomatrix='($1/4.):($2/4):($3)'
 
 usandonegativo='($1):($2):(abs($3*0.002))'
