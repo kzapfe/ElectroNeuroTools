@@ -1,0 +1,34 @@
+\documentclass[xetex,mathserif,serif]{beamer}
+
+
+
+\begin{document}
+  \begin{frame}
+    \frametitle{CSDA}
+    Our measurements would allow us to obtain the \emph{Current Source Density}
+    of the electric field potentials  recorded in the experiments.
+    The fundamental equation which relates this two quantities is
+    Gauss Law for an ohmic, resistive and uniform medium:
+    \begin{equation}
+      \sigma_e \nabla^2 \Phi = -I_m.
+    \end{equation}
+    Here $\sigma_e$ is the electric conductivity of the extracellular medium
+    and $I_m$ is the density of current sources. A more general approach
+    can be seen at \cite{Bedard11}.
+    
+  \end{frame}
+
+
+  \begin{frame}
+     \frametitle{Implementation}
+     The more direct approach for the CSD in 2D would be to apply
+     a discrete Laplacian Filter directly on the data, if
+     the spacing of the data were of the order of the dipolar structures
+     that we wish to see. Our main problem is that such a filter is
+     \emph{extremely} sensitive to noisse. This noice can be clearly seen
+     on the temporal domain as random ls spikes ranging  $-40\mu V$ to 
+     $+40\mu V$ 
+  \end{frame}
+% etc
+\end{document}
+
