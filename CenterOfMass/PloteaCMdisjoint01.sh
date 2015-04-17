@@ -13,8 +13,8 @@ datosCMPos=$datosCMPosname$numero".dat"
 #usandopositivo='($2/4.):($1/4):($3/1000.)'
 #usandomatrix='($1/4.):($2/4):($3)'
 
-usandonegativo='($1):($2):(abs($3*0.002))'
-usandopositivo='($1):($2):($3*0.002)'
+usandonegativo='($1):($2):(abs($3*0.001))'
+usandopositivo='($1):($2):($3*0.001)'
 usandomatrix='($1):($2):($3)'
 
 outname=`basename $dataname .dat`ConFondo.png
@@ -30,7 +30,7 @@ gnuplot <<EOF
 
 set xr[-0.50:63.5]
 set yr[63.5:-0.5]
-set cbr[-10:10]
+set cbr[-150:150]
 set size ratio -1
 set pointsize 0.35
 unset key
@@ -59,8 +59,16 @@ set dgrid 256,256 splines
 set table "Tabla.dat"
 splot "$dataname" using $usandomatrix matrix 
 unset table
+set pointsize 1
 #unset pm3d
-plot "Tabla.dat" using $usandomatrix   w image, "$datosCMNeg" usi $usandonegativo  w circles lw 3 lc rgb "#000075","$datosCMPos" usi $usandopositivo  w circles lw 3 lc rgb "#750000"
+
+plot "Tabla.dat" using $usandomatrix   w image, \
+"$datosCMNeg" usi $usandonegativo  w circles lw 3 lc rgb "#4a90ff",\
+"$datosCMPos" usi $usandopositivo  w circles lw 3 lc rgb "#ff1414",\
+"$datosCMNeg" usi $usandonegativo  w points ls 7 lc rgb "#0000ff",\
+"$datosCMPos" usi $usandopositivo  w points ls 7 lc rgb "#ff0000"
+
+
 #plot  "$datosCMNeg" usi $usandonegativo  w circles lw 3 lc rgb "#000075", "$datosCMPos" usi $usandopositivo  w circles lw 3 lc rgb "#750000"
 set out
 
