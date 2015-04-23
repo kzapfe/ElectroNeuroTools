@@ -10,10 +10,11 @@
 \begin{document}
   \begin{frame}
     \frametitle{CSDA}
-    Our measurements would allow us to obtain the \emph{Current Source Density}
+    Our measurements allow us to calculate the \emph{Current Source Density}
     of the electric field potentials  recorded in the experiments.
-    The fundamental equation which relates this two quantities is
-    Gauss Law for an ohmic, resistive and uniform medium:
+    The fundamental equation which relates this two quantitis 
+    in an ohmic, resistive and uniform medium,
+    is: 
     \begin{equation}
       \sigma_e \nabla^2 \Phi = -I_m.
     \end{equation}
@@ -25,10 +26,12 @@
 
    \begin{frame}
      \frametitle{Implementation: de-noising the Data}
-     A direct application of a Laplacian Filter is not viable, since
+     A direct application of any Laplacian is not viable, since
      this operator is extremely sensitive to noise. The noise is coupled
-     to the line power (\~ 60Hz). A (temporal) Gaussian convolution takes care
-     of this and its harmonics.
+     to the line power ($\approx$ 60Hz). 
+     A (temporal) Gaussian convolution takes care
+     of this and other high frequency structures.
+     
   \end{frame}
   % etc
 
@@ -43,7 +46,7 @@
 
 
   \begin{frame}
-     \frametitle{Enter of Mass Dynamics}
+     \frametitle{Centre of Mass Dynamics}
      Following \cite{Manjarrez07}, we desire to follow a putative CoM,
      to discover how activity propagates along the CA.
      
