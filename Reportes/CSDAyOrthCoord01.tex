@@ -1,0 +1,144 @@
+\documentclass{article}
+
+%usepackage[utf8]{inputenc}
+ \usepackage{fontspec}
+\usepackage{amsmath}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+
+ \setmainfont[Ligatures=TeX]{Oldstyle HPLHS}
+
+\newcommand{\Jd}{\mathbf{J}}
+\newcommand{\EF}{\mathbf{E}}
+\newcommand{\cond}{\boldsymbol{\sigma}}
+\DeclareMathOperator{\diver}{div}
+
+\title{Densidad de Fuentes de Corriente y Coordenadas generalizadas}
+\author{W. P. Karel Zapfe}
+
+\begin{document}
+
+\maketitle
+
+\section{Cálculo Diferencial y Electrodinámica sobre el Hipocampo}
+
+En principio, la densidad de fuentes de corriente se puede obtener
+de la densidad de corriente por continuidad:
+\begin{equation}
+\nabla \cdot \Jd +\frac{\partial \rho}{\partial t}=0.
+\end{equation}
+Es usual llamarle a $\partial \rho /\partial t =-I_m$, la densidad de 
+fuentes de corriente.
+Ahora es momento para recordar que la notación ``nabla'' resulta especialmente
+inconveniente para cambios de coordenadas, pues nos hace creer (y meter la pata)
+que sus componentes cambian siempre igual, y eso no es el caso. Por
+ello voy a reescribir de una forma más algorítmica la ecuación de arriba
+de la siguiente forma:
+\begin{equation}
+\diver \Jd =I_m.
+\end{equation}
+Obsérvese que la cantidad $\Jd$ es una cantidad \emph{vectorial}, cuyos componentes
+cambian de acuerdo a las coordenadas usadas localmente, sin embargo $I_m$ es un
+escalar, es decir, es invariante frente a cambios de coordenadas. Por
+ende, la operación $\diver ()$ tiene que contrarrestar el cambio de coordenadas,
+es decir, es un operador \emph{contravariante}, a diferencia del operador
+gradiente, que denotamos como $\nabla$ sin el puntido de producto interno\ldots
+
+Si el material es ohmico y descente esperamos esta relación:
+\begin{equation}
+\Jd=\cond \EF,
+\end{equation}
+despreciando la contribución del campo de desplazamiento eléctrico (ver
+las eqs. 18 y 28 los argumentos entre ellas en \cite{Bedard11}).
+Por el momento supongamos que estamos en un régimen linear, donde
+$\cond$ no depende de $\EF$. Sin embargo no hay ninguna razón
+de entrada para asumir $\cond$ como isotrópico o homogéneo. Así que en
+general consideremos a $\cond$ como un tensor, cuyas componentes generales
+son:
+\begin{equation}
+\cond=\begin{pmatrix}
+\sigma_{xx} & \sigma_{xy} \\
+\sigma_{yx} & \sigma_{yy}
+\end{pmatrix}
+\end{equation}
+Nótese que ya estoy restringiendome a un universo bidimensional.
+Este tensor es real y simétrico, así que básicamente esto quiere decir
+que podemos encontrar un sistema de coordendadas \emph{ortonormales}
+donde el tensor sólo tenga componentes diagonales (el sistema estaría
+alineado con los ``componentes principales'', véase por ejemplo la
+ecuación 6 en Mitzdorf,
+\cite{Mitzdorf85}). El cambio de coordenadas del sistema $(x,y)$ al
+sistema de componentes principales, que denotaré por $(t',a')$ es localmente
+\emph{ortogonal}, pues preserva norma y producto interno de nuestra
+base cartesiana usual. Este cambio de coordenadas es local, ya que como
+no hemos supuesto que $\cond$ sea constante, los ejes principales
+pueden variar de punto a punto. Vamos a considerar que son 
+bastante suaves y que por lo tanto dicha transformación local es la
+diferencial de un cambio de cordenadas ortogonal adecuado.
+Dado que la conductividad, a pesar de estar representada por este
+objeto matemático abstracto (un tensor de rango dos), es algo muy concreto,
+la sabiduría convencional indica que los ejes principales en cada punto
+deben de estar alineados con las estructuras notorias de nuestro material.
+
+En nuestro caso particular, las estructuras de interés son los cuerpos laminados
+donde se encuentran los somas de las neuronas, el ``estrato piramidal'',
+y las capas dendríticas cerca de éste. Podríamos imaginar entonces
+que los ejes principales siguen, punto por punto, a lo largo del
+CA, un vector tangente al centro de este estrato piramidal y otro vector
+normal a éste, que llamare ``apical'' por analogía, véase la fig. 
+\cite{esquemas01}.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.45\textwidth}
+\includegraphics[width=\textwidth]{DiagramaCAetDG02.pdf}
+\caption{Esquema}
+\label{diagCA}
+\end{subfigure}
+\quad
+\begin{subfigure}[b]{0.45\textwidth}
+\includegraphics[width=\textwidth]{PseudoCoordinates01.pdf}
+\caption{Coordenadas}
+\label{pseudocor}
+\end{subfigure}
+\caption{ (\ref{diagCA}) Esquema del hipocámpo en nuestras rebanadas y su
+colocación aproximada en el BioCAM. Se muestran los estratos somáticos.
+(\ref{pseudocor}) Coordenadas ortogonales putativas, a lo largo del eje
+``tangente al estrato piramidal'', $t$ y ``apical'', $a$. } 
+\label{esquemas01}
+\end{figure}
+
+Obsérvese que para el argumento no es central el hecho de que estas coordenadas
+estén realmente alineadas con la dirección apical y el estrato piramidal, 
+lo único importante es que existen ejes
+principales para la conductividad en cada punto, y que la transformación
+localmente puede ser vista como una rotación (ya que los eigenvectores pueden
+escogerse normales). Voy  a denotar por un tilde a los objetos representados
+en las coordenadas de los ejes principales, y por $T$ 
+a la transformación diferencial:
+\begin{equation}
+\tilde{\cond}=
+\begin{pmatrix}
+\sigma_{t} & 0 \\
+0 & \sigma_{a}
+\end{pmatrix} = T \cond T^{-1}
+\end{equation}
+
+\begin{equation}
+  \tilde{\Jd} = \tilde{\cond}\tilde{\EF}= T\Jd= (T \cond T^{-1}) T \EF = T\cond \EF
+\end{equation}
+
+
+ 
+
+\bibliographystyle{plain}
+\bibliography{BiblioReportes01}
+
+
+
+\end{document}
