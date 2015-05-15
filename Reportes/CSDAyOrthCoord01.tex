@@ -17,6 +17,7 @@
 \newcommand{\EF}{\mathbf{E}}
 \newcommand{\cond}{\boldsymbol{\sigma}}
 \DeclareMathOperator{\diver}{div}
+\DeclareMathOperator{\grad}{grad}
 
 \title{Densidad de Fuentes de Corriente y Coordenadas generalizadas}
 \author{W. P. Karel Zapfe}
@@ -91,7 +92,7 @@ y las capas dendríticas cerca de éste. Podríamos imaginar entonces
 que los ejes principales siguen, punto por punto, a lo largo del
 CA, un vector tangente al centro de este estrato piramidal y otro vector
 normal a éste, que llamare ``apical'' por analogía, véase la fig. 
-\cite{esquemas01}.
+\ref{esquemas01}.
 
 \begin{figure}[h]
 \centering
@@ -128,10 +129,47 @@ a la transformación diferencial:
 0 & \sigma_{a}
 \end{pmatrix} = T \cond T^{-1}
 \end{equation}
-
 \begin{equation}
   \tilde{\Jd} = \tilde{\cond}\tilde{\EF}= T\Jd= (T \cond T^{-1}) T \EF = T\cond \EF
 \end{equation}
+Entonces,
+\begin{equation}\label{imcambio}
+\tilde{I_m} = \widetilde{\diver} \tilde{\Jd} = \widetilde{\diver} T\cond \EF
+\end{equation}
+Como podemos escoger los eigenvectores de $\cond$ normalizados, $T$ es 
+una localmente una rotación, digamos que por el ángulo $\theta$. Esto quiere
+decir que en las coordenadas $(x,y)$ la conductividad tiene la 
+representación
+\begin{equation}
+\cond=
+\begin{pmatrix}
+\cos^2 \theta \sigma_t+\sen^2 \theta \sigma_a & \cos\theta \sen\theta (\sigma_t-\sigma_a) \\
+\cos\theta \sen\theta (\sigma_t-\sigma_a) &\sen^2 \theta \sigma_t+\cos^2 \theta \sigma_a
+\end{pmatrix} 
+\end{equation}
+usando
+\begin{equation}
+T^{-1}=
+\begin{pmatrix}
+\cos \theta  & - \sen\theta \\
+\sen\theta  &\cos \theta 
+\end{pmatrix} 
+\end{equation}
+Obtenemos $\EF$ aplicando el gradiente del potencial electroestático local. 
+En el sistema cartesiano usual,
+\begin{equation}
+\EF=-\grad \phi=-(\partial_x \phi, \partial_y \phi)
+\end{equation}
+La ecuación \ref{imcambio} queda entonces asì:
+\begin{equation}\label{imcambio}
+\tilde{I_m} = \widetilde{\diver} 
+(E_x\sigma_t \cos\theta - E_y \sigma_a \sen \theta,
+E_x\sigma_t \sen\theta + E_y \sigma_a \cos \theta)
+\end{equation}
+... y ha hacer talaaacha!
+
+
+
 
 
  
