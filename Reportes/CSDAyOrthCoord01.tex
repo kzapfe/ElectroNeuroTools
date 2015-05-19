@@ -11,7 +11,7 @@
 
 
 
- \setmainfont[Ligatures=TeX]{Oldstyle HPLHS}
+\setmainfont[Ligatures=TeX]{Oldstyle HPLHS}
 
 \newcommand{\Jd}{\mathbf{J}}
 \newcommand{\EF}{\mathbf{E}}
@@ -38,8 +38,7 @@ fuentes de corriente.
 Ahora es momento para recordar que la notación ``nabla'' resulta especialmente
 inconveniente para cambios de coordenadas, pues nos hace creer (y meter la pata)
 que sus componentes cambian siempre igual, y eso no es el caso. Por
-ello voy a reescribir de una forma más algorítmica la ecuación de arriba
-de la siguiente forma:
+ello voy a reescribir de una forma más libre de coordenadas la ecuación de arriba:
 \begin{equation}
 \diver \Jd =I_m.
 \end{equation}
@@ -48,7 +47,7 @@ cambian de acuerdo a las coordenadas usadas localmente, sin embargo $I_m$ es un
 escalar, es decir, es invariante frente a cambios de coordenadas. Por
 ende, la operación $\diver ()$ tiene que contrarrestar el cambio de coordenadas,
 es decir, es un operador \emph{contravariante}, a diferencia del operador
-gradiente, que denotamos como $\nabla$ sin el puntido de producto interno\ldots
+gradiente, que denotamos como $\nabla$ sin el puntico de producto interno\ldots
 
 Si el material es ohmico y descente esperamos esta relación:
 \begin{equation}
@@ -121,7 +120,7 @@ principales para la conductividad en cada punto, y que la transformación
 localmente puede ser vista como una rotación (ya que los eigenvectores pueden
 escogerse normales). Voy  a denotar por un tilde a los objetos representados
 en las coordenadas de los ejes principales, y por $T$ 
-a la transformación diferencial:
+a la transformación diferencial que pasa de coordenadas $(x, y)$ a las $(t,a)$:
 \begin{equation}
 \tilde{\cond}=
 \begin{pmatrix}
@@ -129,46 +128,121 @@ a la transformación diferencial:
 0 & \sigma_{a}
 \end{pmatrix} = T \cond T^{-1}
 \end{equation}
-\begin{equation}
-  \tilde{\Jd} = \tilde{\cond}\tilde{\EF}= T\Jd= (T \cond T^{-1}) T \EF = T\cond \EF
-\end{equation}
-Entonces,
-\begin{equation}\label{imcambio}
-\tilde{I_m} = \widetilde{\diver} \tilde{\Jd} = \widetilde{\diver} T\cond \EF
-\end{equation}
 Como podemos escoger los eigenvectores de $\cond$ normalizados, $T$ es 
-una localmente una rotación, digamos que por el ángulo $\theta$. Esto quiere
-decir que en las coordenadas $(x,y)$ la conductividad tiene la 
-representación
+una localmente una rotación, digamos que por el ángulo $\theta$:
 \begin{equation}
-\cond=
+T=
 \begin{pmatrix}
-\cos^2 \theta \sigma_t+\sen^2 \theta \sigma_a & \cos\theta \sen\theta (\sigma_t-\sigma_a) \\
-\cos\theta \sen\theta (\sigma_t-\sigma_a) &\sen^2 \theta \sigma_t+\cos^2 \theta \sigma_a
-\end{pmatrix} 
-\end{equation}
-usando
-\begin{equation}
-T^{-1}=
-\begin{pmatrix}
-\cos \theta  & - \sen\theta \\
-\sen\theta  &\cos \theta 
-\end{pmatrix} 
-\end{equation}
-Obtenemos $\EF$ aplicando el gradiente del potencial electroestático local. 
-En el sistema cartesiano usual,
-\begin{equation}
-\EF=-\grad \phi=-(\partial_x \phi, \partial_y \phi)
-\end{equation}
-La ecuación \ref{imcambio} queda entonces asì:
+\cos \theta  & \sen\theta \\
+-\sen\theta  &\cos \theta 
+\end{pmatrix}  
+\end{equation}(ver diagrama en la figura \ref{diagdif})
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.67\textwidth]{DiferentialCoordinates01.pdf}
+\caption{La base del espacio tangente.}\label{diagdif}
+\end{figure}
+
+
+Con esta convención, los ejes principales definen una base tangente local que
+es ortonormal, entonces:
 \begin{equation}\label{imcambio}
-\tilde{I_m} = \widetilde{\diver} 
-(E_x\sigma_t \cos\theta - E_y \sigma_a \sen \theta,
-E_x\sigma_t \sen\theta + E_y \sigma_a \cos \theta)
+\tilde{I_m} = \widetilde{\diver} \tilde{\Jd}=\partial_t J_t+\partial_a J_a.
 \end{equation}
-... y ha hacer talaaacha!
+Y la densidad de corriente a su vez esta dada por,
+\begin{equation}
+  \tilde{\Jd} = \tilde{\cond} \tilde{\EF}=\begin{pmatrix}
+-\sigma_t \partial_j \phi \\
+-\sigma_a \partial_a \phi 
+\end{pmatrix}
+\end{equation}
 
+Por otro lado, $I_m$ está dada por:
+\begin{equation}
+\begin{split}
+I_m& =\diver \sigma \EF = \diver \sigma (-\grad \phi)\\
+& = \diver T^{-1}\tilde{\sigma} T 
+\begin{pmatrix}
+- \partial_x \phi \\
+- \partial_y \phi 
+\end{pmatrix}
+\end{split}
+\end{equation}
+Tenemos que también los operadores parciales rotan así:
+\begin{align}
+\partial_x & =\cos\theta\partial _t - \sen\theta\partial_a \\
+\partial_y & =\sin\theta\partial _t +\cos\theta\partial_a
+\end{align}
+Es decir,
+\begin{equation}
+\begin{split}
+I_m& =\diver \sigma \EF = \diver \sigma (-\grad \phi)\\
+& = \diver T^{-1}\tilde{\sigma} T T^{-1} \begin{pmatrix}
+-\partial _t \phi\\
+-\partial_a \phi
+\end{pmatrix}\\
+&  = \diver T^{-1}\tilde{\sigma} \begin{pmatrix}
+-\partial _t \phi\\
+-\partial_a \phi
+\end{pmatrix}\\
+&  = \diver T^{-1} \begin{pmatrix}
+J_t\\
+J_a
+\end{pmatrix},
+\end{split}
+\end{equation}
+lo cual queda en el sistema cartesiano como:
+\begin{equation}
+\begin{split}
+I_m & =\partial_x (\cos\theta J_t - \sen \theta J_a) + \partial_y (\sen\theta J_t + \cos\theta J_a) \\
+&= (\cos\theta \partial_x -\sen\theta \partial_a)(\cos\theta J_t - \sen \theta J_a) \\
+ &\quad +
+(\sen\theta \partial_t + \cos \theta \partial_a)
+(\sen\theta J_t + \cos\theta J_a) \\
+&= \cos^2 \theta \partial_t J_t + \sen^2\theta \partial_a J_a 
+- \cos\theta\sin\theta(\partial_t J_a +\partial_a J_t )\\
+&\quad + 
+ \sin^2 \theta \partial_t J_t + \cos^2\theta \partial_a J_a 
++ \cos\theta\sin\theta(\partial_t J_a +\partial_a J_t )\\
+&= \partial_t J_t + \partial_a J_a \\
+&=\tilde{I}_m
+\end{split}
+\end{equation}
+Lo cual es lo que tenía que salir, si todo es correcto.
+Ahora que estamos seguros que la densidad de fuentes de corrientes
+es invariante frente a estos cambios locales de coordendadas, 
+todavía tenemos un problema: la conductividad puede no ser homogenea
+ni isotrópica. Por ello he trabajado sobre la divergencia
+de la densidad de corriente y no sobre el Laplaciano del potencial
+de campo eléctrico $\phi$. Continuemos la discución ahora sobre ello
+a partir de que podemos trabajar el álgebra en un sistema de coordenadas
+y la implementación numérica en otro y obtener el mismo resultado. 
 
+\section{La conductividad}
+
+A partir de éste momento, estamos localmente en el sistema 
+de ejes principales. expandiendo la expresión para $I_m$ tenemos que:
+\begin{equation} \label{CSDExplicita}
+\begin{split}
+I_m & =\partial_t J_t+ \partial_a J_a \\
+& \quad = -\partial_t (\sigma_t \partial_t \phi)  + 
+\partial_a (\sigma_a \partial_a \phi)  \\
+& \quad = - (\partial \sigma_t) \cdot ( \partial_t \phi) - \sigma_t \partial_t^2 \phi 
+- (\partial_a \sigma_a) \cdot ( \partial_a \phi) - \sigma_a \partial_a^2 \phi 
+\end{split}
+\end{equation} 
+En varios trabajos clásicos se  asume que $\partial_k \sigma=0$ (homogeneidad), y que 
+$\sigma_t=\sigma_a$ (isotropía), o trabajan en una sola dirección
+espacial y asumen que es uno de los ejes principales del tensor de conductividad,
+y que su derivada es despreciable en una vecindad)
+(\cite{Holsheimer87, Leski11, Mitzdorf85, Pettersen2006, Vaknin88}.  
+En el primer caso, la ecuación \ref{CSDExplicita} se reduce a 
+a aplicarle el Laplaciano al potencial de campo:
+\begin{equation}
+I_m=-\sigma(\partial_t^2 + \partial_a^2) \phi.
+\end{equation}
+La implementación numérica de esto puede tener sutilezas, que trataré en la 
+próxima sección. 
 
 
 
