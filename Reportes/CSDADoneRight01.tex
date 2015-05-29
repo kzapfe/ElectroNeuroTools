@@ -1,0 +1,73 @@
+\documentclass{article}
+
+%usepackage[utf8]{inputenc}
+ \usepackage{fontspec}
+\usepackage{amsmath}
+%\usepackage[spanish]{babel}
+\usepackage{graphicx}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+
+\setmainfont[Ligatures=TeX]{Oldstyle HPLHS}
+
+\newcommand{\Jd}{\mathbf{J}}
+\newcommand{\EF}{\mathbf{E}}
+\newcommand{\cond}{\boldsymbol{\sigma}}
+\DeclareMathOperator{\diver}{div}
+\DeclareMathOperator{\grad}{grad}
+
+\title{CSDA in 2D slices of the hippocampus \emph{done right}}
+\author{W. P. K. Zapfe, Whoever Helps}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+As high density electrode arrays become cheaper and more common, 
+electrophysiological measurements of activity in neural tissue approach
+the resolution of the studied structures. The electrodes measure
+directly the Local Field Potential, but it is aknoledged that the
+Current Source Density has more resolving power, as it points
+more accurately to the actual sources and sinks of ionic current,
+and thus, to the more active places in the tissue. Nevertheless,
+the role of the conductivity tensor is rarely taken into account
+in the derivation of the CSD, which could potentialy lead to
+spurious distributions of the sources and sinks and deformation
+of their structure, obfuscating the real activity underneath.
+Here we show a possible qualitative treatment of the conductivity
+across the stratum piramidale of the hippocampus, an expemplification
+with two toy models and a possible numerical implementation with
+high density real data.
+\end{abstract}
+
+
+\section{Introduction}
+
+As Bédard and Destexhe pointed out in \cite{Bedard11}, the CSDA, as it
+is performed usually, rests on
+assumptions which could leave important features out. One of these 
+assumptions is that the extracellular medium has very homogeneous 
+electrical propierties, but this has been shown to not be
+the case for dense neuronal layers such as the piramidal
+strata in the hippocampus \cite{Holsheimer87, Lopez01, MarioPersonal}.
+The evidence mostly points out that resistivity grows 
+considerably around the somatic layers. Here we shall investigate
+posible influence of this change of resistivity on current density
+($\Jd$) and current source density ($I_m$). 
+
+
+
+\section{Analytical  derivation of the CSD}
+
+For a carefull and complete derivation and discution of the CSD, 
+see \cite{Bedard11}. We start with the charge conservation equation,
+\begin{equation}
+\nabla \cdot \Jd + \frac{d \rho}{d t} =0.
+\end{equation}
+
+
+\end{document}
