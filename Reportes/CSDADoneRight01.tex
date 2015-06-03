@@ -3,7 +3,7 @@
 %\usepackage[utf8]{inputenc}
 \usepackage{fontspec}
 \usepackage{amsmath}
-\usepackage[spanish]{babel}
+
 \usepackage{graphicx}
 
 \usepackage{caption}
@@ -151,7 +151,7 @@ has the form
 The complete expression is cumbersome to write, but it is important to
 have \emph{full} expansion in order to make the numerical considerations
 in what follows.
-\begin{equation}
+\begin{equation}\label{Imcart}
   \begin{split}
   -I_m= & (\partial_x \sigma_{xx}) (\partial_x \phi) +
   (\partial_y \sigma_{yy}) (\partial_y \phi)\\
@@ -162,6 +162,125 @@ in what follows.
  \end{equation}
   
 
+\begin{figure}[h]
+\centering
+\begin{subfigure}[t]{0.20\textwidth}
+\includegraphics[width=\textwidth]{DiagramaCAetDG02.pdf}
+\caption{}
+\label{diagCA}
+\end{subfigure}
+\quad
+\begin{subfigure}[t]{0.33\textwidth}
+\includegraphics[width=0.67\textwidth]{DiferentialCoordinates01.pdf}
+\caption{}
+\label{loceig}
+\end{subfigure}
+\begin{subfigure}[t]{0.20\textwidth}
+\includegraphics[width=\textwidth]{PseudoCoordinates01.pdf}
+\caption{}
+\label{pseudocor}
+\end{subfigure}
+\caption{\ref{diagCA}) A diagram showing the position of
+the hippocampus slice over the MEA. \ref{loceig}) 
+A tangent space basis along the
+eigenvectors of $\cond$. The red vectors indicate the
+Cartesian Coordinates aligned with the MEA latice. 
+\ref{pseudocor}) A putative local coordinate system spawned by the 
+eigenvectors $(t,a)$ at every point of intereset. 
+ }\label{diagdif}
+\label{esquemas01}
+\end{figure}
+
+
+This expressions may be regardes as inescesarily long, as the 
+$\cond$ tensor, being a real symmetric tensor, can be represented
+in local coordinates which diagonalize it. Those coordinates have
+physical meaning, as they are the resolving directions in which
+conductivity behaves differently and denote some underlying structure
+in the studied material. The usual assumption is that 
+the conductivity tensor is isotropic but not homogeneous, and it 
+changes along the apical direction, and not along the 
+differentiated strata (e.g. stratum pyramidale, stratum granolosum).
+Let us suppose that this is approximately correct, and that very close
+to the stratum pyramidale we represent $\cond$ into the coordinates
+defined by its eigenvectors (see fig. \ref{esquemas01}).
+ We shall call them $(t,a)$ coordinates
+and asume that the first is approximately tangent to the
+strata and the other to the apical direction. The $\cond$ tensor would 
+have the expression in such coordinates
+\begin{equation}
+\tilde{\cond}=
+\begin{pmatrix}
+\sigma_t & 0 \\
+0 & \sigma_a
+\end{pmatrix}
+\end{equation} 
+Then, the equation \ref{Imcart} becomes
+\begin{equation}\label{Imapic}
+\begin{split}
+-I_m= & (\partial_t \sigma_{t}) (\partial_t \phi) +
+(\partial_a \sigma_{a}) (\partial_a \phi)  \\
+& + \sigma_{a} \partial_a^2 \phi + \sigma_{t} \partial_t^2 \phi, 
+\end{split}
+\end{equation}
+as $(t,a)$ are also local ortogonal coordinates. 
+One may wonder why we are explicitly stating the non-diagonal 
+version of the equations. The data as it is delivered by
+the measuring apparatus is on a strictly cartessian grid, and
+we have to perform the numerical derivatives over this data, so
+we have to know how these assumptions appear in both sets
+of coordinates. Besides, the \emph{tangent-apical} coordinates
+are just a teoretical tool, a real implementation of such a coordinate
+set would be extremely complicated and prone to numerical errors. 
+
+
+If the medium where the ions diffuse is liquid, and the structures
+therein are randomly distributed, the assumption of isotropy holds, 
+$\sigma_t=\sigma_a=\sigma$. Then, as we stated, there is no
+change along the strata, but there is change along the appical
+direction:
+\begin{align}
+\partial_t \sigma & =0 \\
+\partial_a \sigma & \neq 0. 
+\end{align}
+We are then left with
+\begin{equation}
+I_m=-\partial_t \sigma \partial_t \phi - \sigma \nabla^2 \phi.
+\end{equation}
+Here we must point out that the Laplacian is an invariant operator,
+so the last summand of the equation could be in principle be implemented
+in \emph{any} convenient set of coordinates, but in numerical aplications,
+the \emph{Discrete Laplacian Operator} is \emph{not} invariant (further
+discution in the following section). 
+The term $\partial_t \sigma \partial_t \phi$ is the hindrance to 
+ionic displacement due to dense layers of soma and dendrites near the
+CA structure. Most autors have neglected its efects, and in one
+dimensional analysis the structure of sources and sinks is not affected
+by this. Now, as the aquisition of data in two dimensions becomes
+finer, this term could lead to inexactitude in the location of the
+sinks and sources, depending on the magnitude of the
+derivative of the conductance. Locally both $(x,y)$ and
+$(t,a)$ are orthonormal systems, so we can change from one to another 
+with a rotation. If $theta$ is the angle between the $x$ vector
+and $t$, the partial derivatives follow the next set of relations:
+\begin{align}
+\partial_t \sigma &= \cos\theta \partial_x \sigma +\sin\theta \partial_y \sigma=0\\
+\partial_a \sigma &= -\sin\theta \partial_x \sigma +\cos\theta \partial_y \sigma
+\end{align}
+
+After a bit of algebraic juggling we end up with
+\begin{equation}
+-I_m=\sigma\nabla^2 \phi + 
+\partial_x\sigma (\partial_x \phi - \tan \theta \partial_y \phi)
+\end{equation} 
+
+
+In order to estimate the influence
+of this summand on the result, we shall make some toy models which
+represent the variation of $\sigma$ along the apical direction.
+
+
+
 
 
 
@@ -170,6 +289,7 @@ see \cite{Bedard11}. We start with the charge conservation equation,
 \begin{equation}
 \nabla \cdot \Jd + \frac{d \rho}{d t} =0.
 \end{equation}
+
 
 
 \bibliographystyle{plain}
