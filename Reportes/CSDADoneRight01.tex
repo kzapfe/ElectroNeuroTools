@@ -29,19 +29,20 @@
 \begin{abstract}
 As high density electrode arrays become cheaper and more common, 
 electrophysiological measurements of activity in neural tissue approach
-the resolution of the studied structures. The electrodes measure
+the scale of the underlying structures. The electrodes measure
 directly the Local Field Potential, but it is aknowledged that the
 Current Source Density has more resolving power, as it points
-more accurately to the actual sources and sinks themselves,
-and thus, to the more active places in the tissue. Nevertheless,
+more accurately to the actual sources and sinks. Nevertheless,
 the role of the conductivity tensor is rarely taken into account
 in the derivation of the CSD, which could potentialy lead to
 spurious distributions of the sources and sinks and deformation
-of their structure, obfuscating the precise place of the
-poles underneath.
+of their structure, obfuscating the precise locus of the
+poles underneath. In dense neural tissue, such as the
+stratum piramidale layer of the hippocampus, clear
+deviations from average conductivity have been detected. 
 Here we show a possible qualitative treatment of the conductivity
-across the stratum piramidale of the hippocampus, an examplification
-with two toy models and a possible numerical implementation with
+across the layers of the hippocampus, an examplification
+with two toy models and a numerical implementation with
 high density experimental data.
 \end{abstract}
 
@@ -52,7 +53,7 @@ As Bédard and Destexhe pointed out in \cite{Bedard11}, the CSDA, as it
 is performed usually, rests on
 assumptions which could leave important features out. One of these 
 assumptions is that the extracellular medium has very homogeneous 
-electrical propierties, but this has been shown to not be
+electrical propierties. This has been shown to not be
 the case for dense neuronal layers such as the piramidal
 strata in the hippocampus \cite{Holsheimer87, Lopez01, TrevinoPersonal}.
 The evidence mostly points out that resistivity grows 
@@ -85,7 +86,7 @@ explicit  \emph{tensorial} relationship:
   \end{pmatrix},
 \end{equation}
 where we allready used the fact that $\cond$ is simmetric when
-expressed on cartessian coordinates.
+expressed on Cartessian coordinates.
 We assume that the electric field can be obtained as the
 gradient of the LFP, $\phi$:
 \begin{equation}
