@@ -2,7 +2,7 @@
 
 ##ploteando un chingo con varios archivos
 
-datosfondobasename="CSDPure-"
+datosfondobasename="CSD-"
 datosCMNegname="CMNegLapla-"
 datosCMPosname="CMPosLapla-"
 numero=$1
@@ -45,8 +45,8 @@ set label "Sink" at graph 1.1, 0.02
 set style fill transparent solid 0.95 noborder
 #set palette defined (0 "white", 1 "#0000FF", 2 "black")
 set out "$outname"
-#plot "$dataname" using $usandomatrix matrix  w image, "$datosCMNeg" usi $usandonegativo  w circles lw 3 lc rgb "#000075"
-plot  "$datosCMNeg" usi $usandonegativo  w circles lw 3 lc rgb "#000075", "$datosCMPos" usi $usandopositivo  w circles lw 3 lc rgb "#750000"
+plot "$dataname" using $usandomatrix matrix  w image #, "$datosCMNeg" usi $usandonegativo  w circles lw 3 lc rgb "#000075"
+#plot  "$datosCMNeg" usi $usandonegativo  w circles lw 3 lc rgb "#000075", "$datosCMPos" usi $usandopositivo  w circles lw 3 lc rgb "#750000"
 set out
 
 EOF
