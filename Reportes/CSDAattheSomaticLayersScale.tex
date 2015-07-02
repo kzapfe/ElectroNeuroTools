@@ -41,7 +41,7 @@ stratum piramidale layer of the hippocampus, clear
 deviations from average conductivity have been measured. 
 Here we show a possible qualitative treatment of the conductivity
 across the layers of the hippocampus, and compare the results
-when this inhomogenity is taken into account and when it not.
+when this inhomogenity is taken into account and when its not.
 \end{abstract}
 
 
@@ -51,22 +51,22 @@ As Bédard and Destexhe pointed out in \cite{Bedard11}, the CSDA, as it
 is performed usually, rests on
 assumptions which could leave important features out. One of these 
 assumptions is that the extracellular medium has very homogeneous 
-electrical propierties. This has been shown to not be
+electrical propierties. It has been shown not to be
 the case for dense neuronal layers such as the piramidal
 strata in the hippocampus \cite{Holsheimer87, Lopez01, TrevinoPersonal}.
 The evidence mostly points out that resistivity grows 
-considerably around thick somatic layers, or conversely, that
-the conductivity drops considerably there. In ohmic (linear) media,
-we expect the following relation to hold:
+considerably around thick somatic layers.
+The following linear relationship is a good aproximation for
+most media at convencional regimes: 
 \begin{equation}
 \Jd=\cond \EF,
 \end{equation}
 that is, the current density $\Jd$ is the result of the
 local electric field $\EF$ and the local conductivity, $\cond$.
-We usually take that last quantity as an homogeneous, isotropic,
-factor, at least over the scales that we are interested in.
+We usually take this quantity as constant, 
+at least over macroscopic scales.
 The conductivity in inhomogeneous media can be rarely
-simplified to a constant, as it can depend both from the direction
+simplified this much, as it can depend both from the direction
 of the fields and currents, and vary from point to point. 
 Then the above expression is just shorthand notation for the
 explicit  \emph{tensorial} relationship:
@@ -99,7 +99,12 @@ To obtain the sources and sink densities, we use Gauss Divergence Theorem,
 The usual definition of $-\partial_t \rho =I_m$ has been made here. 
 We perform the divergence operation on the current density, \emph{not}
 on the electric field. When the medium is isotropic and homogeneous
-both derivations coincide within a positive factor. 
+both derivations coincide within a positive factor.
+This makes sense when we are dealing with macroscopic quantities,
+that is, that the are at last one order of magnitude larger
+than the underlying physical structures which could cause 
+inhomogenities, but as our measurements get finner and finner,
+this treatment begins to be faulty. 
 In the next section we investigate the role of the inhomogenities 
 of the conductivity on current density
 ($\Jd$) and current source density ($I_m$) at scales around
