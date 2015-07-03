@@ -2,7 +2,7 @@
 
 %\usepackage[utf8]{inputenc}
 \usepackage{fontspec}
-\usepackage{amsmath}
+\usepackage{amsmath, amssymb}
 
 \usepackage{graphicx}
 
@@ -27,20 +27,20 @@
 \maketitle
 
 \begin{abstract}
-As high density electrode arrays become cheaper and more common, 
+As high density electrode arrays become more common 
 electrophysiological measurements of activity in neural tissue approach
-the scale of the underlying structures. The electrodes measure
+the scale of individual neurons. The electrodes measure
 directly the Local Field Potential, but it is aknowledged that the
 Current Source Density has more resolving power and distinguishes
-clearly between the loci of outgoing current and ingoing currents.
+clearly between the loci of outgoing and ingoing currents.
  The role of the conductivity tensor is rarely taken into account
 in the derivation of the CSD, and this could potentialy lead to
-spurious distributions of the sources and sinks- 
+spurious distributions of the sources and sinks. 
 In dense neural tissue, such as the
 stratum piramidale layer of the hippocampus, clear
 deviations from average conductivity have been measured. 
 Here we show a possible qualitative treatment of the conductivity
-across the layers of the hippocampus based on coarse measurements
+across the layers of the hippocampus based on experimental evidence
 and general smoothness arguments.
 \end{abstract}
 
@@ -64,10 +64,10 @@ or through  more refinated
 techniques, called inverse CSDA \cite{Pettersen2006, Leski2011} or kernel CSDA 
 \cite{Potworowsky2011}. There the conductivity $\cond$ is taken as 
  a numerical constant, that is:
-\begin{equation}
--\nabla^2 \Phi = \frac{\Jd}{\cond}. 
+\begin{equation}\label{CSDasLaplacian}
+-\nabla^2 \Phi = \frac{I_m}{\cond}. 
 \end{equation}
-Here $\Phi$ is the LFP and $\Jd$ the current density. 
+Here $\Phi$ is the LFP and $I_m$ the current source density. 
 This is indeed a reasonable treatment at scales larger than $100\mu m$,
 where each electrode measures averaged contributions from many different
 densities of activity and structures. Even more, data are 
@@ -82,7 +82,17 @@ an axis which transverses said structure
 \cite{Holsheimer87, Lopez01, TrevinoPersonal}. 
 The evidence points out that resistivity grows 
 considerably around the thick somatic layers. These layers 
-have thickness between $40\mu m$ to $100 \mu m$.
+have thickness between $40\mu m$ to $100 \mu m$, which is
+near or above the interelectrode spacing of stat-of-the-art MEAS, so
+differences in conductivity shall be noticiable at this
+level of resolution. In the following we shall analytical address this
+issue, then, we will implement a model ``conductivity variation'' 
+and use it on real LFP data, compare
+the results with those done without this factor and then conclude.
+
+
+\section{Analytical  derivation of the CSD}
+
 The following linear relationship is a good aproximation for
 most media at convencional regimes: 
 \begin{equation}
@@ -111,34 +121,31 @@ explicit  \emph{tensorial} relationship:
   \end{pmatrix},
 \end{equation}
 where we allready used the fact that $\cond$ is simmetric when
-expressed on Cartessian coordinates.
-We assume that the electric field can be obtained as the
-gradient of the LFP, $\phi$:
+expressed on Cartessian coordinates. All quantities are functions of
+both position and time.
+The electric field is in the quasi-static approximation the
+gradient of the LFP, $\Phi$:
 \begin{equation}
-  -\nabla \phi=\EF
+  -\nabla \Phi=\EF
 \end{equation}
-This LFP is the quantity that the microelectrode arrays (MEAs) permits us
-to measure on the extracelular medium.
-To obtain the sources and sink densities, we use Gauss Divergence Theorem,
+To obtain the sources and sink densities, we use charge conservation in
+its differential form:
 \begin{equation}
-\nabla \cdot \Jd =I_m
+\nabla \cdot \Jd +\frac{\partial \rho}{\partial t}=0
 \end{equation}
-The usual definition of $-\partial_t \rho =I_m$ has been made here. 
+The usual definition of $-\partial_t \rho =I_m$ will be used here. 
 We perform the divergence operation on the current density, \emph{not}
 on the electric field. When the medium is isotropic and homogeneous
-both derivations coincide within a positive factor.
+this derivation coincides within a positive factor with the one
+on eq. \ref{CSDasLaplacian}.
 This makes sense when we are dealing with macroscopic quantities,
-that is, that the are at last one order of magnitude larger
+that is, that they are at last one order of magnitude larger
 than the underlying physical structures which could cause 
-inhomogenities, but as our measurements get finner and finner,
+inhomogenities, but as measurements devices get finner,
 this treatment begins to be faulty. 
-In the next section we investigate the role of the inhomogenities 
-of the conductivity on current density
-($\Jd$) and current source density ($I_m$) at scales around
-the $20\mu m$. 
-
-
-\section{Analytical  derivation of the CSD}
+Our primary concern are the roles of the thick somatic layers of
+the hippocampus of laboratory rodents and the implications for
+CSDA at scales of $20 \thicksim 50 \mu m$. 
 
 
 In experiments of this sort performed on hippocampus slices, the
@@ -146,7 +153,8 @@ MEAs permit us to measure a sample of LFP over discrete points on a
 two dimensional lattice, so we do not have possibility of
 calculating currents or electric fields on the third dimension of space.
 The slices of the hippocampus are very thin, and we do not consider
-the posibility of current going outside the neural tissue sample (in one
+the posibility of current going outside the liquid media in which
+the sample lies (in one
 direction there is air and on the other the MEA), so we
 can reduce our formalism to two dimensional space. We then take
 $J_z=0$ and use $(x,y)$ as a cartesian coordinate system aligned
