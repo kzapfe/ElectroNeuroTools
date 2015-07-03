@@ -40,8 +40,8 @@ In dense neural tissue, such as the
 stratum piramidale layer of the hippocampus, clear
 deviations from average conductivity have been measured. 
 Here we show a possible qualitative treatment of the conductivity
-across the layers of the hippocampus, and compare the results
-when this inhomogenity is taken into account and when its not.
+across the layers of the hippocampus based on coarse measurements
+and general smoothness arguments.
 \end{abstract}
 
 
@@ -50,12 +50,39 @@ when this inhomogenity is taken into account and when its not.
 As Bédard and Destexhe pointed out in \cite{Bedard11}, the CSDA, as it
 is performed usually, rests on
 assumptions which could leave important features out. One of these 
-assumptions is that the extracellular medium has very homogeneous 
-electrical propierties. It has been shown not to be
-the case for dense neuronal layers such as the piramidal
-strata in the hippocampus \cite{Holsheimer87, Lopez01, TrevinoPersonal}.
-The evidence mostly points out that resistivity grows 
-considerably around thick somatic layers.
+is that the extracellular medium has very homogeneous 
+electrical propierties. This may depend on the scale in which measurements
+take place and the size of the neuronal structures involved. We shall
+focus our atention on the hippocampus of the rat and mouse
+ and its typical sizes in what follows. 
+
+The CSDA is the application of charge conservation theorem
+for ionic dilutions in the extracelular medium for neuronal
+tissue. CSD are obtained either directly through application
+of a numeric Laplacian operator directly to LFP data \cite{Nicholson75}, 
+or through  more refinated
+techniques, called inverse CSDA \cite{Pettersen2006, Leski2011} or kernel CSDA 
+\cite{Potworowsky2011}. There the conductivity $\cond$ is taken as 
+ a numerical constant, that is:
+\begin{equation}
+-\nabla^2 \Phi = \frac{\Jd}{\cond}. 
+\end{equation}
+Here $\Phi$ is the LFP and $\Jd$ the current density. 
+This is indeed a reasonable treatment at scales larger than $100\mu m$,
+where each electrode measures averaged contributions from many different
+densities of activity and structures. Even more, data are 
+generaly smoothed out for presentation, and this contributes to the
+averaging process.
+
+On the other hand, it has been shown that at 
+dense neuronal layers such as the piramidal
+strata in the hippocampus the conductivity (or equivalently,
+the resistivity) varies greatly around its mean value along
+an axis which transverses said structure
+\cite{Holsheimer87, Lopez01, TrevinoPersonal}. 
+The evidence points out that resistivity grows 
+considerably around the thick somatic layers. These layers 
+have thickness between $40\mu m$ to $100 \mu m$.
 The following linear relationship is a good aproximation for
 most media at convencional regimes: 
 \begin{equation}
