@@ -39,17 +39,22 @@ end
 
         
 function Divergencia2D(Ex::Array, Ey::Array)
-    (alto,ancho)=size(z)
+    (alto,ancho)=size(Ex)
     result=Array(Real, (alto,ancho))
-    aux=copy(z)
-    aux=vcat(aux[1,:],aux,aux[end,:])
-    aux=hcat(aux[:,1],aux,aux[:,end])
+    (auxEx,auxEy)=(copy(Ex),copy(Ey))
+
+    auxEx=vcat(auxEx[1,:],auxEx,auxEx[end,:])
+    auxEx=hcat(auxEx[:,1],auxEx,auxEx[:,end])
+    
+    auxEy=vcat(auxEy[1,:],auxEy,auxEy[end,:])
+    auxEy=hcat(auxEy[:,1],auxEy,auxEy[:,end])
+
     for j=2:alto+1, k=2:ancho+1
         #Derivada de la secante
-        vx2=Ex[j,k+1]
-        vx1=Ex[j,k-1][1]
-        vy2=Ey[j+1,k][2]
-        vy1=Ey[j-1,k][2] 
+        vx2=auxEx[j,k+1]
+        vx1=auxEx[j,k-1]
+        vy2=auxEy[j+1,k]
+        vy1=auxEy[j-1,k] 
         dvxdx=vx2-vx1
         #los arreys tienen un eje y invertido. Su y es la -y cartesiana
         dvydy=(vy2-vy1)
