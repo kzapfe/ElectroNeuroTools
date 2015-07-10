@@ -1,8 +1,8 @@
 function Gradiente2D(z::Array)
     #por cuestiones de ploteo, mejor dar dos matrices como resultado
     (alto,ancho)=size(z)
-    vx=Array(Real, (alto,ancho))
-    vy=Array(Real, (alto,ancho))
+    vx=Array(Float64, (alto,ancho))
+    vy=Array(Float64, (alto,ancho))
     aux=copy(z)
     aux=vcat(aux[1,:],aux,aux[end,:])
     aux=hcat(aux[:,1],aux,aux[:,end])
@@ -19,7 +19,7 @@ end
         
 function Divergencia2D(z::Array)
     (alto,ancho)=size(z)
-    result=Array(Real, (alto,ancho))
+    result=Array(Float64, (alto,ancho))
     aux=copy(z)
     aux=vcat(aux[1,:],aux,aux[end,:])
     aux=hcat(aux[:,1],aux,aux[:,end])
@@ -40,7 +40,7 @@ end
         
 function Divergencia2D(Ex::Array, Ey::Array)
     (alto,ancho)=size(Ex)
-    result=Array(Real, (alto,ancho))
+    result=Array(Float64, (alto,ancho))
     (auxEx,auxEy)=(copy(Ex),copy(Ey))
 
     auxEx=vcat(auxEx[1,:],auxEx,auxEx[end,:])
