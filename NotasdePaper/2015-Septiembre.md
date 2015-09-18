@@ -20,3 +20,20 @@ may belong to differetn clusters and the do not always fire together...
 
 The use of pathway-specific LFP eliminates important concern of an LFP oscillation
 being a mixture of two or more inputs,...
+
+# Jason Robert Potas et all 2015.
+================================
+
+CAP: Compound Action Potential
+A complex CAP response is defined as one that contains several events
+within the total response, all individal events being reproducible and
+occurring at the same latency when evoked by an identical stymulis.
+
+## Waveform similarity analysis
+
+WSA is based on the cross correlation between two signals.
+$$
+xycorr(x, y, n) = \sum x*(m) u(n+m)
+$$
+
+
