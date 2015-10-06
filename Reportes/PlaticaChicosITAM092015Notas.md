@@ -1,4 +1,4 @@
-#De la medida eléctrica a lo subyacente.
+De la medida eléctrica a lo subyacente.
 
 El potencial eléctrico es un *efecto* debido a la distribución inhomogénea de
 cargas eléctricas en el espacio. El potencial de una carga unitaria puntual
