@@ -23,6 +23,6 @@ rename $argumento $argumento$tresceros $argumento$unnum".png"
 
 echo $paraencoderbien
 
-mencoder "$paraencoderbien"  -o $outputbien -ovc lavc -mf fps=24
+mencoder "$paraencoderbien"  -o $outputbien -ovc lavc -mf fps=12
 
 
