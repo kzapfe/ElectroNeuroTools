@@ -1,0 +1,62 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+
+
+\begin{document}
+
+\section{CSD and centers of mass}
+
+
+For certain purposes the representation of the measured data in CSD
+representation has advantages over the recorded LFP. The principal one is
+that it minimizes the volume-conducted activity, pointing more acurattely
+to the sites in which electrical-measurable events are taking place. We have
+another more important reason to resort to this representation: namely,
+as it names implies, it represents a \emph{density}, so, it indicates
+quantity of something per unit volume, which permits us to apply certain
+concepts in a rigourous, physicaly interpretable manner.
+
+Densities are instrumental for taking vector averages, also known as centers
+of mass. A charged or flux density is in this regard no different that a
+mass density and can be used to obtain significant ``centers'' of
+physical objects. In our case, our physical objects are active neurons and
+their inmediate extracellular space, and is our interest to track a
+putative ``center of activity'' in order to trace routes in which this
+activity flows across the tissues that we are studing. Also, in this regard,
+it delimitates (instantaneous) active areas from their surroundings by
+a (aproximate) zero Set, which is the locus of all points in the measurement
+area that register a null CSD. This set is typically a regular set of
+curves which separate two sets, the ``sources'' and ``sinks'', i.e. the
+set of all places where there is outflux of charge and the set of all places
+where there is influx of charge. Each of these sets can be decomposed in
+its disjoint components using the zero set as the border between them.
+
+Each disjoint component is an instantaneous locus where we localize one pole of
+an active unit. These poles will appear to move as the activity grows in neighbouring
+units or vanishes. The high frecuency of sampling at our disposal permits us to
+track very precicely the apparent track that this apparition, grows, wanning and
+dissapearence of poles produce. Thus, by calculating the center of mass of
+each one of these poles at succesive recording times
+we can obtain a trayectory of activity at local units. 
+
+
+The HD MEAS of the kind of the BioCAM 4096  an electrode density comparable
+to the sizes of of typical neurons at the hipocampal tissue, which is around
+the limit in which mean size approximations are still applicable \cite{Bedard2011}.
+At such ranges a simple convex numeric Laplacian yields adecuate results without
+the need to restore to computer costly alternatives such as the iCSDA or kCSDA
+\cite{Leski2011, Potworowsky2011}. A nice implementation of a 2D numeric Laplacian
+which reduces the typical cross effect is given by a convolution of
+the 2D array of data with the following matrix:
+\begin{equation}
+
+\end{equation}
+
+
+
+
+
+
+\end{document}
+
