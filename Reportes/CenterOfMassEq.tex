@@ -1,7 +1,10 @@
 \documentclass[12pt]{standalone}
-
-\DeclareMathSizes{22}{30}{16}{22}
 \usepackage{amsmath}
+
+\usepackage{lmodern}% http://ctan.org/pkg/lm
+
+\DeclareMathSizes{22}{60}{32}{32}
+
 
 \newcommand{\dd}{\, \mathrm{d}}
 \newcommand{\xq}{\, \mathbf{x}}
@@ -9,9 +12,7 @@
 
 \begin{document}
 $\displaystyle
-   \varphi(\xq)
-    =\int \frac{1}{4\pi\epsilon}
-    \frac{\rho(\xq')}{|\xq-\xq'|} \dd^3 \xq'  
+\langle x_k(t) \rangle =\frac{\sum_j x_{j,k} (t) m_{j,k} (t)} {\sum_j m_{j,k}(t)}
 $
 
 \end{document}

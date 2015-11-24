@@ -1,14 +1,17 @@
 \documentclass[12pt]{standalone}
-
-\DeclareMathSizes{22}{30}{16}{22}
+\usepackage{lmodern}% http://ctan.org/pkg/lm
 \usepackage{amsmath}
+
 \newcommand{\xq}{\, \mathbf{x}}
 \newcommand{\dd}{\, \mathrm{d}}
 
+\DeclareMathSizes{22}{60}{32}{32}
+
+
+
 \begin{document}
 $\displaystyle
-     \frac{\partial \rho}{\partial{t}}(\xq)=
-      -\frac{\sigma}{\epsilon}\rho(\xq)
+     \nabla^2 \Phi \propto \frac{\partial \rho}{\partial t} =-I_m 
     $
     
 \end{document}
