@@ -16,7 +16,13 @@
 
 \section{Introduction}
 
-Spatialy tracking the activity of electrophysiological data in a clear, concise, and interpretable manner is a challenging problem. 
+Spatialy tracking the activity of electrophysiological data in a clear, concise, and interpretable manner is a challenging problem. The data from electrophysiological recordings are usually presented first, as a series of traces that correspond each to a sampling point in the studied structure. As Micro Electrode Arrays (MEAs) become denser, this representation of the data becomes saturated and the discovery of patterns turns out a difficult task, and novel information gets cluttered or obfuscated by the density of the data.
+
+The succesive electrophysiological action of distinct units on structured tissue would trace a ``path'' or ``trajectory'' of the activity. A tracing of such trajectories would help to indicate causal or correlated ``efective conections'' in the tissue. How to define and acquire such traces is an open question. In previous works, some form of vector averaging using heuristic wheights obtained from the Local Field Potential or the number of action potentials have been presented \cite{Chao05, Manjarrez07}. Here we advance on such methdos by incorporating mathematically sound definitions and techniques which allow us to sepparate spatialy distinct traces. 
+
+An important piece of information that can be aquired from a dense enough MEA would be putative trajectories traced out by active units, as they fire in succesion by causal relations or as a side effect of correlation in their workings. This is part of the ``efective  conectome problem'', that is, the search for effective causality paths that convey activity (and ultimately, information) inside the nervous structures.  
+
+
 
 
 \section{CSD, CM and Disjoint Components}
