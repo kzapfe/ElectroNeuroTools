@@ -21,90 +21,21 @@
 
 \section{Introduction}
 
-Spatially tracking the activity of electro-physiological data in a concise, rigorous and interpretable manner poses a challenging problem. Measurement recordings are usually presented first as a series of traces that correspond each to a sampling point in the studied structure. As Micro Electrode Arrays (MEAs) become denser, this representation of the data becomes saturated and the discovery of patterns turns into a difficult task. Novel information is also cluttered or obfuscated by the same high density acquisition that allows us to discover it. Therefore, representing  the recorded data in ways which can unveil previously unobtainable information. Our task in this paper is to present a method for tracing out ``functional connectivity trajectories'' of activity in structured neural tissue, and we shall exemplify the method by application to the data obtained from recordings of the rats hippocampus. 
+Spatially tracking the activity of electro-physiological data in a concise, rigorous and interpretable manner poses a challenging problem. Measurement recordings are usually presented first as a series of traces that correspond each to a sampling point in the studied structure. As Micro Electrode Arrays (MEAs) become denser, this representation of the data becomes saturated and the discovery of patterns turns into a difficult task. Novel information is obfuscated by the same high density acquisition that allows us to discover it. Therefore, representing  the recorded data in ways which can unveil previously unobtainable information is a necessity. Our task in this paper is to present a method for tracing out ``functional connectivity trajectories'' of activity in structured neural tissue, and we shall exemplify the method by application to the data obtained from recordings of the rats hippocampus. 
 
-Succesive  of distinct units on structured tissue would trace a ``trajectory'' of the activity. A tracing of such trajectories would help to indicate causal or correlated ``functional conections'' over the tissue. Neighbouring neurons that fire in succesion, integrated subthreshold activity and ephaptic coupling could all be interpreted parts of the paths where the activity gets transmitted. Nevertheless, how to define and acquire the corresponging traces is an open question.
+Succesive activation  of distinct units on structured tissue would trace a ``trajectory'' of the activity. A tracing of such trajectories would help to indicate causal or correlated ``functional conections'' over the tissue. Neighbouring neurons that fire in succesion, integrated subthreshold activity and ephaptic coupling could all be interpreted as paths for transmission of activity. Nevertheless, how to define and acquire the corresponging traces is an open question.
 
-In previous works, some form of vector averaging has been proposed and shown to reveal some trajectrories traced out by the activity. We shall call such methods Center of Mass Analyses (CMA).  The \emph{wheights} that have been chosen for obtaining the average have been selected on heuristic grounds. In the works of Chao \emph{et al.} \cite{Chao05, Chao07}, the density of spikes in a certain interval was used, a sort of ``density of action'', while Manjarrez \emph{et al.} \cite{Manjarrez07, Manjarrez09} used the positive half of the LFP recording as their weight. 
-Here we advance on such methods by incorporating mathematically sound definitions and concepts which allow us to rigorously separate spatially distinct traces. Our weight is actually the natural density function provided by the data: the Current Source Density. This representation not only provides a mathematical fit measure for the weights in the vector averaging process, but helps to separate the data into disjoint components. Based on this, a further refinement of the technique, given by the polar structure of firing neurons, allowed us to obtain accurate, well defined trajectories of the activity in the studied tissue. 
+In previous works some form of vector averaging has been proposed and shown to reveal some trajectrories traced out by the activity. We shall call such methods Center of Mass Analyses (CMA).  The \emph{wheights} that have been chosen for obtaining the average have been selected on heuristic grounds. In the works of Chao \emph{et al.} \cite{Chao05, Chao07}, the density of spikes in a certain interval was used, a sort of ``density of action'', while Manjarrez \emph{et al.} \cite{Manjarrez07, Manjarrez09} used the positive half of the LFP recording as their weight. 
+Here we advance on such methods by incorporating mathematically sound definitions and concepts which allow us to rigorously separate spatially distinct traces. Our weight is actually the natural density function provided by the data: the Current Source Density. This representation not only provides a mathematical fit measure for the weights in the vector averaging process, but helps to separate the data into disjoint components. Based on this, a further refinement of the technique, given by the polar structure of firing neurons, allowed us to obtain accurate, well defined trajectories of the activity in non convex structured tissues. 
 
 The application of the method requires electro-physiological data acquired through bi-dimensional MEAs, although the extension to three dimensional arrays is possible in principle. The MEA should have dense enough spatial and temporal samplings, so as to obtain good estimates of the CSD and their changes in time.
 
-Our method permits us to map possible trajectories of activity inside structured neuronal tissue, without requiring ad hoc geometric constraints. As a prime example, non-convex structures which may show simultaneous activity in separate parts could test the robustness of our method. We have tested then the method on slices of rat's hippocampus, concentrating in the CA region. We exemplify the usage of the method with data that has been obtained by an experiment \textbf{bla bla bla describr experimentos}.
+Our method permits us to map possible trajectories of activity inside structured neuronal tissue, without requiring ad hoc geometric constraints. As a prime example, non-convex structures which may show simultaneous activity in separate parts could test the robustness of our method. We have tested then the method on slices of rat's hippocampus, concentrating in the CA region. We exemplify the usage of the method with data that has been obtained by an experiment with 4AP ...\textbf{bla bla bla describr experimentos}.
 
 
 
 
-\section{CSD, CM and Disjoint Components}
-
-\subsection{CSD as weight density for vectors}
-
-
-Center of Mass Analysis (CMA) has been used previously in order to track putative  ``trajectories'' of the activity or information across neural tissue or even the whole brain \cite{Chao05, Chao07, Manjarrez07, Manjarrez09}. In such works the chosen ``mass'' was an heuristic measure adecuate for representing the corse-grain picture of displacement of activity. These present the problem of justifing the choice made on practical grounds. For calculating a vectorial average, the adecuate wheight per vector is a density, a positive quantity that measures the concentration of something per space unit, so it is only adequate that we search for a natural density in the electrophysiological experiments. The Current Source Density fits the mathematical and interpretative requirements. We shall denote it in the following as $I$.  This measure is usually presented in arbitrary units, which permits us to interpret it two-fold. One, directly from its definition, as the \emph{differential divergence} of the vectorial electric current density:
-\begin{equation}
-  I:=\nabla \cdot J
-\end{equation}
-Due to conservation of charges, this is the same as as the temporal variation of density of charge:
-\begin{equation}
-  I=\frac{\partial \rho}{\partial t}
-\end{equation}
-Current Source Density (CSD) as a mathematical density (a quasi-probability density function)  allows  to rigorously apply the concepts of vector averaging. This use has been overlooked. This might have occurred because  samplings at lesser spatial resolution did not permit estimations of this quantity with enough precision to make reliable spatial implications, even with the use of sophisticated CSD estimation methods. In our case, we want to use the density as a mathematician would: a function which assigns weights to points in the space of interest, and permits us to carry linear operations over them.  The space here is the sampling points of the electrodes at a given instant in time, and the weight, the CSD, is amount interchange of charged ions from the inside to the outside of cellular membranes, per unit space.  This is an indicator of activity in the neurons, therefore the CSD is also, indirectly, a \emph{``density of local activity''}.
-
-Apparently, CSD would not fit the requirements of non-negativity for its use as a mathematical density, but this turns out to be not a problem.  CSD separates the measured activity into three distinct sets, namely, the set of all sources, the set of all sinks and the zero set. The separation is not quantitative but qualitative: even when the signs of electric charge are arbitrary, the distinction between them is not. Therefore, CSD represents on each of the two active sets (sinks and sources) exactly what we need, a unit of concentration per unit space, in this case, per area, and the sign can be ignored, as long as we perform the operations in the sets separately. Also, the separation by the zero value set of the CSD is in contrast to the zero value of the LFP, where it has no precise meaning as it only represents a practical ground value. This is acknowledged in most of the literature, where only the scales of the LFP recording are shown, without reference to the sign of the values. Here the so called zero set (all the points in our space which have a recorded CSD of zero)  has a precise meaning: it is an instantaneous lack of activity and a border between sinks and sources. This shall be exploited further in the section below.
-
-Once the separation into sinks and sources has been made, we would have two densities, or more precisely, two different density functions defined over two separate sets. Trying to use this for obtaining vector averages would still be crude and inexact. If these sets spread out over non-convex geometries, the vector averages could lie outside the sets, having little or none physiological interpretation. Therefore we decided to introduce another concept from geometrical sets in order to make the analysis more local in character.
-
-
-\subsection{CSD and Disjoint Components}
-
-A first visual inspection of the CSD color map at a given instant in time shows that both sources and sinks appear in rather large and significant patches. These appear to correspond to the expected double and triple poles of firing neurons in structured tissue \cite{Buzsaki2012} and inspired us to separate the sink and source  sets into their \emph{disjoint components}. This concept is used in mathematics to denote subsets of a given geometric set that do not touch each other or share no elements in common \cite{Halmos}. Their rough correspondence to poles of firing neurons would be most useful in tracking the successive locus of the activity.
-
-
-To clarify the concept and how we are we using it an example is in order. In figure \ref{ejemplodisjuntos} we show geometrical sets enclosed by simple curves as color patches, where every color indicates a Set. The set A consists of a single component, that means that one can make  path between any two points in the set that consist entirely of points of the same set. In contrast, the set B is made of two disjoint components, labeled B1 and B2. If one chooses a point in each of the components, one cannot draw a path joining them without leaving the set. But each one of those components is connected, meaning that if we choose the pair of points in one component, then again we can trace a path joining them in the set. So the set B consists of two disjoint components, but each component can be regarded as a connected set on their own. Likewise the set C is made of three disjoint components. 
- 
-Theoretically, CSD would divide the set of measuring points into three subsets: the set of all sources, the set of all sinks, and the border between them i.e, the set of all measuring points that have a CSD positive value, the set of those who have a negative CSD value, and the set of those points having exactly the zero value in CSD space.
-Due to the finite precision of the measurement, the validity of the mean field approach, and the noise in the measurements, the sinks and sources sets can make contact with each other. Said measurements produce a function over a discrete point set, but we tend to think of them as continuous functions. Noise between patches corresponding to a single set often makes a ``bridges'' between components, making identification of poles inexact. In order to avoid this we create a ``thick zero'' set of all the recording points whose CSD values are inside a small error interval around zero. This separates more sharply the components of the set, represents our ignorance of precise borders and helps us to simplify the following analysis.
-
-The ``thick zero'' would help us to sepparate the sinks and sources sets into its disjoint components, which would correspond then to clear patches of definite activity. If each one of these patches could be interpreted as an active unit, we may asign to it a ``center of activity'' in order to follow their displacements. A Center of Mass for each instantaneous disjoint sink/source would provide us a very sensitive measurement of ``active locus''. We can then calculate at each time frame the CM for each disjoint component before tracking displacements of activity.
-
-At each disjoint component at a precise time $t$, indexed $k$, we have a number of points with CSD of the same sign, indexed $j$. Then, the CM of the $k$ component would have the usual definition:
-\begin{equation}\label{cmparadisj}
-   \langle q(t) \rangle_k =\frac{\sum_j q_{j,k} (t) I_{j,k} (q_{j,k},t)}
-           {\sum_j I(q_{j,k},t)},
-\end{equation}
-where $I(q_{j,k},t)$ is the CSD at point $q_{j,k}=(x_{j,k}, y_{j,k})$ at time $t$. These disjoint components, while not rigorously convex, are less spread over the space of the measurements and tend to have their CM over the actual active points, or at the border of the active units.
-
-\subsection{CM and trajectories}
-
-We must not take out of sight the phenomena which is producing the CSD distribution: neurons have a finite size, and the effect of their action a delimited extent. Every patch that we can identify as a disjoint component of the Sources/Sink sets indicates a coherent, joint active group of units. A center of mass for each disjoint component would then indicate an average locus for this active group, a putative center of activity to which we can give a position, intensity and time. An instantaneous snapshot of such information would depict the centers of activity of an ordered structure of neurons and their relative intensities. But it is in the successive depiction of a series of such snapshots that this analysis can show interpretative power. The appearance , displacement, and disappearance of such centers could reveal very subtle details of the dynamics of neural activity. Very small, fast displacements of the Centers of mass, may be occur due to slight asynchronism between neurons which belong to the same active group. Larger and  longer than a few firing periods displacements could indicate physiological connections between different groups.
-
-The next step in our analysis is a procedure to systematically associate to each CM at time $t$ a ``successor'' at time $t+\Delta t$, where $\Delta t$ is the sampling time step. We have used a pseudo-distance function which takes into account the geometrical distance from the putativa succesors for a CM, and also the intensity. For two CM inside our measurement space we define our pseudo-distance as follows. Let $q_1=(x_1, y_1)$ be the coordinates of the first point and $q_2=(x_2,y_2)$, the corresponding coordinates of the second, and let $I_1, I_2$ be their corresponding integrated intensities. Then the ``distance'' that separates them shall be 
-\begin{equation}\label{pseudodist}
-d(q_1,q_2):=\sqrt{(x_1-x_2)^2+(y_1+y_2)^2+C(I_1-I_2)},
-\end{equation}
-where $C$ is a conveniently chosen constant, so as to give a similar importance to the intensities as to the positions.
-The integrated intensity of a CM is simply the denominator in the eq. \ref{cmparadisj}, that is, the total ``mass'' obtained by integrating the CSD in a specific disjoint component:
-\begin{equation}
-I_k(t)=\sum_j I (q_{j,k}, t)
-\end{equation}
-We specify then a tolerance $\delta$. If a certain $t$ a CM is below $\delta$ distance from another at $t+\Delta t$, we consider the latter the successor in time of the former. By continuously applying such procedure, we can begin to trace trajectories of the CMs, as they appear, wander, and fade. 
-
- 
- \section{The Procedure}
-\subsection{Recipe in a nutshell}
- 
- In order to perform the analysis described here, we summarize the steps.
- \begin{enumerate}
- \item Acquire high density electro-physiological data. The data must be two or three dimensional in space. Distance between the recording sites must be of the order of the size of the typical neurons involved, and such sites must be on a dense enough grid to perform numerical difference operations over them. The sampling frequency should be enough to detect sub-threshold activity, of at least 5kHz. Also, the data should come from structured tissue. Unordered, highly homogeneous tissue, will not yield significant results. 
-\item Obtain, frame by frame, the CSD from the data. Any method may be used, but computer expensive techniques are discouraged if the data is dense enough. Common sense and tests are guidelines here. We recommend simpler, difference based approaches. Our approach is detailed below.
-\item Separate the CSD data into three sets: sources, sinks, and border or indiscernible (below error) data.
-\item Perform disjoint component analysis in the sources and sinks sets, frame by frame.
-  A single pass algorithm could be used here \cite{Vincent91, Abubaker07}.
-\item  Obtain the CM for each disjoint component, using eq. \ref{cmparadisj}.
-\item For each frame and its successor, and for each CM, perform a ``most probable successor'' detection. Here we must put numerical criteria according to the data avaible, i.e. how far away and how different in intensity should be allowed a CM to be at time $t+1$ to be considered succesor in time of another at time $t$. We use the distance defined in eq. \ref{pseudodist}, a pseudo-Euclidean distance. 
-\item ``Connect the dots'', that is, apply succesively the step above for each CM, until it stops having a succesor or its intensity falls below the error criteria. Then plot the succesive CMs as one trayectory.
-  \item Plot all the trayectories and sort visually those that may have physiological interpretation from those who may be artifacts of the method. 
-\end{enumerate}
+\section{Materials and Methods}
 
 
 \subsection{CSD for high density MEAS}
@@ -129,19 +60,95 @@ This is  in accordance to our mean field approach, where we expect smooth differ
 
 On previous works it has been argued that numerical difference operators sacrifice all data on the borders of the array. For electrode arrays of lesser density, this could posse a problem, but in our case we only renounce to 27 out of 4095 channels (one is grounded). More sophisticated methods such as iCSDA \cite{Leski2011} and kCSDA \cite{Potworowski2011} prove little advantage in estimating the sources under the ohmic, isotropic and homogeneous assumptions at the scales involved in our data, and turn out to be computer-costly for high density MEAs and dense temporal sampling. The complexity order exponents of the algorithms are high, in integrating and inverse matrix solving operations, and thus, become unusable for large enough matrices. 
 
-\section{Experimental examples}
+
+\subsection{CSD as weight density for vectors}
+
+
+Center of Mass Analysis (CMA) has been used previously in order to track putative  ``trajectories'' of the activity or information across neural tissue or even the whole brain \cite{Chao05, Chao07, Manjarrez07, Manjarrez09}. In such works the chosen ``mass'' was an heuristic measure adecuate for representing the corse-grain picture of displacement of activity. These present the problem of justifing the choice made on practical grounds. For calculating a vectorial average, the adecuate wheight per vector is a density, a positive quantity that measures the concentration of something per space unit, so it is only adequate that we search for a natural density in the electrophysiological experiments. The Current Source Density fits the mathematical and interpretative requirements. We shall denote it in the following as $I$.  This measure is usually presented in arbitrary units, which permits us to interpret it two-fold. One, directly from its definition, as the \emph{differential divergence} of the vectorial electric current density:
+\begin{equation}
+  I:=\nabla \cdot J
+\end{equation}
+Due to conservation of charges, this is the same as as the temporal variation of density of charge:
+\begin{equation}
+  I=\frac{\partial \rho}{\partial t}
+\end{equation}
+Current Source Density (CSD) as a mathematical density (a quasi-probability density function)  allows  to rigorously apply the concepts of vector averaging. This use has been overlooked. This might have occurred because  samplings at lesser spatial resolution did not permit estimations of this quantity with enough precision to make reliable spatial implications, even with the use of sophisticated CSD estimation methods. In our case, we want to use the density as a mathematician would: a function which assigns weights to points in the space of interest and permits us to carry linear operations over them.  The space here is the sampling points of the electrodes at a given instant in time, and the weight, the CSD, is amount interchange of charged ions from the inside to the outside of cellular membranes, per unit space.  This is an indicator of activity in the neurons, therefore the CSD is also, indirectly, a \emph{``density of local activity''}.
+
+Apparently, CSD would not fit the requirements of non-negativity for its use as a mathematical density, but this turns out to be not a problem.  CSD separates the measured activity into three distinct sets, namely, the set of all sources, the set of all sinks and the zero set. The separation is not quantitative but qualitative: even when the signs of electric charge are arbitrary, the distinction between them is not. Therefore, CSD represents on each of the two active sets (sinks and sources) exactly what we need, a unit of concentration per unit space, in this case, per area, and the sign can be ignored, as long as we perform the operations in the sets separately. Also, the separation by the zero value set of the CSD is in contrast to the zero value of the LFP, where it has no precise meaning as it only represents a practical ground value. This is acknowledged in most of the literature, where only the scales of the LFP recording are shown, without reference to the sign of the values. In the CSD representation,  the so called zero set (all the points in our space which have a recorded CSD of zero)  has a precise meaning: it is an instantaneous lack of activity and a border between sinks and sources. This shall be exploited further in the section below.
+
+Once the separation into sinks and sources has been made, we would have two densities, or more precisely, two different density functions defined over two separate sets. Trying to use this for obtaining vector averages would still be crude and inexact. If these sets spread out over large non-convex geometries, the vector averages could lie outside the sets, having little or none physiological interpretation. Therefore we decided to introduce another concept from geometrical sets in order to make the analysis more local in character.
+
+
+\subsection{CSD and Disjoint Components}
+
+A first visual inspection of the CSD color map at a given instant in time shows that both sources and sinks appear in rather large and significant patches. These appear to correspond to the expected double and triple poles of firing neurons in structured tissue \cite{Buzsaki2012} and inspired us to separate the sink and source  sets into their \emph{disjoint components}. This concept is used in mathematics to denote subsets of a given geometric set that do not touch each other or share no elements in common \cite{Halmos}. Their rough correspondence to poles of firing neurons would be most useful in tracking the successive locus of the activity.
+
+
+To clarify the concept and how we are we using it an example is in order. In figure \ref{ejemplodisjuntos} we show geometrical sets enclosed by simple curves as color patches, where every color indicates a Set. The set A consists of a single component, that means that one can make  path between any two points in the set that consist entirely of points of the same set. In contrast, the set B is made of two disjoint components, labeled B1 and B2. If one chooses a point in each of the components, one cannot draw a path joining them without leaving the set. But each one of those components is connected, meaning that if we choose the pair of points in one component, then again we can trace a path joining them in the set. So the set B consists of two disjoint components, but each component can be regarded as a connected set on their own. Likewise the set C is made of three disjoint components. 
+ 
+Theoretically, CSD would divide the set of measuring points into three subsets: the set of all sources, the set of all sinks, and the border between them i.e, the set of all measuring points that have a CSD positive value, the set of those who have a negative CSD value, and the set of those points having exactly the zero value in CSD space.
+Due to the finite precision of the measurement, the validity of the mean field approach, and the noise in the measurements, the sinks and sources sets can make contact with each other. Said measurements produce a function over a discrete point set. Noise between patches corresponding to a single set often makes a ``bridges'' between components, making identification of poles inexact. In order to avoid this we create a ``thick zero'' set of all the recording points whose CSD values are inside a small error interval around zero. This separates more sharply the components of the set, represents our ignorance of precise borders and helps us to simplify the following analysis.
+
+The ``thick zero'' would help us to sepparate the sinks and sources sets into its disjoint components, which would correspond then to clear patches of definite activity. If each one of these patches could be interpreted as an active unit, we may asign to it a ``center of activity'' in order to follow their displacements. A Center of Mass for each instantaneous disjoint sink/source would provide us a very sensitive measurement of ``active locus''. We can then calculate at each time frame the CM for each disjoint component before tracking displacements of activity.
+
+At each disjoint component at a precise time $t$, indexed $k$, we have a number of points with CSD of the same sign, indexed $j$. Then, the CM of the $k$ component would have the usual definition:
+\begin{equation}\label{cmparadisj}
+   \langle q(t) \rangle_k =\frac{\sum_j q_{j,k} (t) I_{j,k} (q_{j,k},t)}
+           {\sum_j I(q_{j,k},t)},
+\end{equation}
+where $I(q_{j,k},t)$ is the CSD at point $q_{j,k}=(x_{j,k}, y_{j,k})$ at time $t$. These disjoint components, while not rigorously convex, are less spread over the space of the measurements and tend to have their CM over the actual active points, or at the border of the active units. 
+
+\subsection{CM and trajectories}
+
+We must not take out of sight the phenomena which is producing the CSD distribution: neurons have a finite size, and the effect of their action a delimited extent. Every patch that we can identify as a disjoint component of the Sources/Sink sets indicates a coherent, joint active group of units. A center of mass for each disjoint component would then indicate an average locus for this active group, a putative center of activity to which we can give a position, intensity and time. An instantaneous snapshot of such information would depict the centers of activity of an ordered structure of neurons and their relative intensities. But it is in the successive depiction of a series of such snapshots that this analysis can show interpretative power. The appearance , displacement, and disappearance of such centers could reveal very subtle details of the dynamics of neural activity. Very small, fast displacements of the Centers of mass, may be occur due to slight asynchronism between neurons which belong to the same active group. Larger and  longer than a few firing periods displacements could indicate physiological connections between different groups.
+
+The next step in our analysis is a procedure to systematically associate to each CM at time $t$ a ``successor'' at time $t+\Delta t$, where $\Delta t$ is the sampling time step. We have used a pseudo-distance function which takes into account the geometrical distance from the putativa succesors for a CM, and also the intensity. For two CM inside our measurement space we define our pseudo-distance as follows. Let $q_1=(x_1, y_1)$ be the coordinates of the first point and $q_2=(x_2,y_2)$, the corresponding coordinates of the second, and let $I_1, I_2$ be their corresponding integrated intensities. Then the ``distance'' that separates them shall be 
+\begin{equation}\label{pseudodist}
+d(q_1,q_2):=\sqrt{(x_1-x_2)^2+(y_1+y_2)^2+C(I_1-I_2)},
+\end{equation}
+where $C$ is a conveniently chosen constant, so as to give a similar importance to the intensities as to the positions.
+The integrated intensity of a CM is simply the denominator in the eq. \ref{cmparadisj}, that is, the total ``mass'' obtained by integrating the CSD in a specific disjoint component:
+\begin{equation}
+I_k(t)=\sum_j I (q_{j,k}, t)
+\end{equation}
+We specify then a tolerance $\delta$. If a certain $t$ a CM is below $\delta$ distance from another at $t+\Delta t$, we consider the latter the successor in time of the former. By continuously applying such procedure, we can begin to trace trajectories of the CMs, as they appear, wander, and fade. 
+
+ 
+ \subsection{The Procedure}
+ 
+ In order to perform the analysis described here, we summarize the steps.
+ \begin{enumerate}
+ \item Acquire high density electro-physiological data. The data must be two or three dimensional in space. Distance between the recording sites must be of the order of the size of the typical neurons involved, and such sites must be on a dense enough grid to perform numerical difference operations over them. The sampling frequency should be enough to detect sub-threshold activity, of at least 5kHz. Also, the data should come from structured tissue. Unordered, highly homogeneous tissue, will not yield significant results. 
+\item Obtain, frame by frame, the CSD from the data. Any method may be used, but computer expensive techniques are discouraged if the data is dense enough. Common sense and tests are guidelines here. We recommend simpler, difference based approaches.
+\item Separate the CSD data into three sets: sources, sinks, and border or indiscernible (below error) data.
+\item Perform disjoint component analysis in the sources and sinks sets, frame by frame.
+  A single pass algorithm could be used here \cite{Vincent91, Abubaker07}.
+\item  Obtain the CM for each disjoint component, using eq. \ref{cmparadisj}.
+\item For each frame and its successor, and for each CM, perform a ``most probable successor'' detection. Here we must put numerical criteria according to the data avaible, i.e. how far away and how different in intensity should be allowed a CM to be at time $t+1$ to be considered succesor in time of another at time $t$. We use the distance defined in eq. \ref{pseudodist}, a pseudo-Euclidean distance. 
+\item ``Connect the dots'', that is, apply succesively the step above for each CM, until it stops having a succesor or its intensity falls below the error criteria. Then plot the succesive CMs as one trayectory.
+\item Plot all the trayectories and sort visually those that may have physiological interpretation from those who may be artifacts of the method. 
+\end{enumerate}
+
+
+ 
+\section{Results}
 
 The necessity to create such analysis came originally from the study of electro-physiological data obtained from the rat's hippocampus. The highly structured CA region of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the pattern of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the layered tissue. Using CSD and disjoint component tracking over them provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacologically induced. The proposed analysis would not produce vector averages over different simultaneously active areas, on the contrary, it would separate them and track them independently. So the most violent epileptic burst provided us with the data necessary to prove the robustness of the method. 
+a
+
+\subsection{Application to epileptic-like activity in the hippocampus}
+Chronologically speaking, we performed first the analysis to the most complicated data (numerically and qualitatively), which where a series of epileptic burst that occurred after 15 minutes of application of 4AP to living slices of hippocampus. The burst occurred with activity spreading over many sites simultaneously. This turned out to be a test of the applicability and robustness of our method. The necessity of having good error value for the ``thick zero'' set was more apparent here than anywhere else. Also the posibilty to create new structures of numerical data was first seen here.  But also the most strickig features of the propagation of activity, coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole CA structure. A sample of the raw data in $\mu V$ can be seen in the figure \textbf{Tururu}. Three key moments in the epileptic burst have been selected, one before the onset of the attack, one at the peak and one at the middle of the subsequent waves. Traces from selected electrodes along the line labeled A-F are presented in the subfigure D. 
+
+In figure \textbf{Tururu2} we present the CSD for the same selected moments.
+
+In the figure \textbf{Tururu3} we present our method using the peak moment as an example. 
 
 
-\section{Application to epileptic-like activity in the hippocampus}
-Chronologically speaking, we performed first the analysis to the most complicated data (numerically and qualitatively), which where a series of epileptic burst that occurred after 15 minutes of application of 4AP to living slices of hippocampus. The burst occurred with activity spreading over many sites simultaneously. This turned out to be a test of the applicability and robustness of our method. The necessity of having good error value for the ``thick zero'' set was more apparent here than anywhere else. Also the posibilty to create new structures of numerical data was seen here.  But also the most strickig features of the propagation of activity, coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole CA structure. 
-
-\section{Application to evoked activity in idem.}
+\subsection{Application to evoked activity in idem.}
 
 The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and wanning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
 
-\section{Application to spontaneous activity in idem.}
+\subsection{Application to spontaneous activity in idem.}
 
 We had one experiment in which we could trace very nicely the data on DG and CA simultaneously without adding excitatory drugs. 
 
