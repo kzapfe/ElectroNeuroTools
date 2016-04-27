@@ -1,14 +1,13 @@
-# Modulo para abrir los archivos BrainWave brw
+# funcion para abrir los archivos BrainWave brw
 # Util para los experimentos evocados
-module AbrirLeerInterpretarbrw01
+
+#Como todavia no le agarras comodamente a los modulos en julia,
+#pos a la merga, puras funciones sueltas.
 
 using HDF5
 
-export AbreyCheca
-
-
 function AbreyCheca(x::AbstractString)
-    #Abre el archivo de brw (acepta el nombre tal cual)
+   #Abre el archivo de brw (acepta el nombre tal cual)
     archivo=h5open(x)
     #sacatito todas las variables que te interesan
     numcuadros=archivo["/3BRecInfo/3BRecVars/NRecFrames"][1][1]
@@ -20,14 +19,15 @@ function AbreyCheca(x::AbstractString)
     factordeescala=(maxvolt-minvolt)/2^bitdepth
     DatosCrudos=read(archivo["/3BData/Raw"])
     result=Dict("numcuadros" => numcuadros,
-                "frecuencuia"=> frecuencia,
+                "frecuencia"=> frecuencia,
                 "maxvolt" => maxvolt,
                 "minvolt" => minvolt,
                 "bitdepth" => bitdepth,
                 "duracion" => duracionexperimento,
-                "factor " => factordeeescala,
+                "factor" => factordeescala,
                 "DatosCrudos"=>DatosCrudos )
     return result
+                    
                     
 end
 
