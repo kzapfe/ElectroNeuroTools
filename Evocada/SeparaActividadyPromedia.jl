@@ -13,10 +13,10 @@ using JLD
 
 
 if length(ARGS)==0
-    println("Dar el nombre de un archivo para trabajar, sin terminacion")
+    println("Dar el nombre de un archivo para trabajar")
 else
-    stringgeneral=ARGS[1]
-    abrestring=string(stringgeneral,".brw")
+    abrestring=ARGS[1]
+    stringgeneral=replace(abrestring, ".brw", "")
     println("Voy a trabajar con el archivo ", abrestring)
 end
     
@@ -24,7 +24,7 @@ end
 #stringgeneral="est2_con3"
 
 #Todos los datos de la matriz del brw file
-Datos=AbreyCheca("/media/discogrande/estimulacion_control2/$abrestring")
+Datos=AbreyCheca(abrestring)
 
 #Los ponemos bien, array espacio-temporal
 if size(Datos["DatosCrudos"])[1] != 4096

@@ -35,9 +35,12 @@ latencia=round(Int, ceil(1.5*frecuencia))
 iniciobusqueda=retrazo
 finbusqueda=retrazo+4*latencia
 
-saturados=BuscaSaturados(LFP,1300,iniciobusqueda,finbusqueda)
+println("Estamos buscando desde el cuadro ",iniciobusqueda, " hasta el ",
+        finbusqueda)
 
-numerosaturados=length(Saturados)
+saturados=BuscaSaturados(LFP,1200,iniciobusqueda,finbusqueda)
+
+numerosaturados=length(saturados)
 
 println("Encontramos ", numerosaturados, " canales probablemente saturados.")
 
