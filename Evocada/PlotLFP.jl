@@ -28,7 +28,7 @@ end
 #parametros
 tantossaturados=length(saturados)
 tantosrespuesta=length(respuestas);
-limites=3000
+limites=200
 
 xxsresp=zeros(tantosrespuesta)
 yysresp=zeros(tantosrespuesta)
@@ -50,25 +50,26 @@ end
 
 ioff()
 tmax=size(LFP,3)
-
+#tmax=4 #for tests
 
 #= El mapa de color del potencial y los canales
 saturados y posibles respuestas
 =#
-#for tests
 
-tmax=4
+
+
 
 for t=1:tmax
    
-figure(figsize=(6,6))
-xlim(0,65)
-ylim(0,65)
+    figure(figsize=(6,6))
+    xlim(0,65)
+    ylim(0,65)
 
+    ejemplo=LFP[:,:,t]
     tiempo=round((t-retrazo)/frecuencia,1)
     title("t= $tiempo")
-imagen=imshow(ejemplo, origin="lower", interpolation="nearest", cmap="Spectral_r", 
-vmin=-1400,vmax=-1300, extent=[0.5,64.5,0.5,64.5])
+    imagen=imshow(ejemplo, origin="lower", interpolation="nearest", cmap="Spectral_r", 
+vmin=-limites,vmax=limites, extent=[0.5,64.5,0.5,64.5])
     cb=colorbar(imagen, fraction=0.046)
     if t>(tmax-140)
 
@@ -77,8 +78,8 @@ vmin=-1400,vmax=-1300, extent=[0.5,64.5,0.5,64.5])
     end
     nombre=palabrita*"/"*palabra*"_"*string(t)*".png"
     savefig(nombre,dpi=90)
-  #  close("all")
-    PyPlot.close_queued_figs()
+    close("all")
+  #  PyPlot.close_queued_figs()
 end
 
 

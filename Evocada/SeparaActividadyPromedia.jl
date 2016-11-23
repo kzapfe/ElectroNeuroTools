@@ -63,9 +63,9 @@ LFPPromedio=(DatosCentrados["Trancazo_1"]+DatosCentrados["Trancazo_2"]+DatosCent
 
 PruebaRespuesta=BuscaCanalRespActPot(LFPPromedio,freq, 120,-120,-800)
 
-iniciobusqueda=retrazo+2*latencia
+iniciobusqueda=retrazo
 finbusqueda=retrazo+4*latencia
-Saturados=BuscaSaturados(LFPPromedio,1500,iniciobusqueda,finbusqueda)
+Saturados=BuscaSaturados(LFPPromedio,1200,iniciobusqueda,finbusqueda)
 numerosaturados=length(Saturados)
 
 println("Encontramos ", numerosaturados, " canales probablemente saturados.")
