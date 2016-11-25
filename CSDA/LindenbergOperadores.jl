@@ -103,6 +103,12 @@ function GaussianSmooth(Datos)
     return result
 end
 
+
+
+LaplacianTerm1=[[0 1 0]; [1 -4 1]; [0 1 0]]
+LaplacianTerm2=[[0.5 0 0.5]; [0 -2 0]; [0.5 0 0.5]]
+LaplacianKernel=(1-1/3)*LaplacianTerm1+(1/3)*LaplacianTerm2
+
 #Nueva variante: AHORA SI VAMOS A ELIMINAR LAS ORILLAS
 #Los efectos de borde estan dando puro choro en el CSD.
 function DiscreteLaplacian(Datos)
