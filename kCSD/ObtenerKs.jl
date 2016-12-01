@@ -1,10 +1,20 @@
 
-if length(ARGS)==0
+numarg=length(ARGS)
+if numarg<=1
     error("Dame un nombre de archivo de funciones b y btilde para trabajar")
-else
+elseif numarg>1
     bnombre=ARGS[1] 
     btildenombre=ARGS[2]
 end
+
+if numarg==3
+    #sacar saturados de archivo
+else
+    saturados=Set{Array{Int,1}}()
+    push!(saturados, [1,1])
+end
+
+    
 
 println("Numero de procesos en paralelo ",nprocs())
 
@@ -13,21 +23,24 @@ b=readdlm(bnombre)
 btilde=readdlm(btildenombre)
 
 println("Iniciando las coordenadas de interes...")       
-#ConjuntoDeCoordenadasTotal=Array[]
-LasXNetas=Array[]
+todaslasX=Array[]
+
+#LasXNetas=Array[]
 #CasiXNetas=Array[]
 
-#=
-for j=1:64,k=1:64
-    push!(ConjuntoDeCoordenadasTotal,[j,k])
-end
-=#
 
+for j=1:64,k=1:64
+    push!(todaslasX,[j,k])
+end
+
+xpurgadas=filter(q->!(q in saturados), todaslasX)
+#=
 for j=1:24, k=1:24
     push!(LasXNetas,[j+5,k+23])
 end
+=#
 
-LasXchiquitas=LasXNetas[1:24]
+LasXchiquitas=xpurgadas[1:48]
 
 println("Definiendo las funciones necesarias...")
 
@@ -76,14 +89,14 @@ end
 
 @everywhere function divideArray(lasX::Array)
     #el proceso myid()==nprocs() va a ser el director de orquesta
-    procesos=nprocs()-1
+    procesos=nprocs()
     largo=length(lasX)
     idx=myid()
-    if idx==nprocs()
+    if idx==1 #nprocs()
         return 1:0
     else
-        splits=[round(Int, s) for s in linspace(0,largo,procesos+1)]
-        return splits[idx]+1:splits[idx+1]
+        splits=[round(Int, s) for s in linspace(0,largo,procesos)]
+        return splits[idx-1]+1:splits[idx]
     end
 end
 
@@ -143,9 +156,10 @@ laKParcial=obtenKtildeParcial(b, btilde,LasXchiquitas)
 K=sacalaKenTrozos(b,LasXchiquitas);
 KTilde=KtildeenTrozos(b, btilde, LasXchiquitas);
 
+
 println("Calculando K y Ktilde...")
-@time K=sacalaKenTrozos(b,LasXNetas);
-@time KTilde=KtildeenTrozos(b,btilde, LasXNetas);
+@time K=sacalaKenTrozos(b,xpurgadas);
+@time KTilde=KtildeenTrozos(b,btilde, xpurgadas);
 
 println("Simetrizando K y arreglando K tilde...")
 
@@ -165,3 +179,4 @@ println("Escribiendo K.dat y KTilde.dat en el disco...")
 
 writedlm("K.dat",K)
 writedlm("KTilde.dat",KTilde)
+
