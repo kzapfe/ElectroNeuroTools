@@ -8,7 +8,8 @@ elseif numarg>1
 end
 
 if numarg==3
-    #sacar saturados de archivo
+    archivo=ARGS[3]
+    saturados=load(archivo)["Saturados"]
 else
     saturados=Set{Array{Int,1}}()
     push!(saturados, [1,1])
@@ -175,8 +176,17 @@ for j=1:longus
     K[j,j]=K[j,j]/2
 end
 =#
-println("Escribiendo K.dat y KTilde.dat en el disco...")
 
-writedlm("K.dat",K)
-writedlm("KTilde.dat",KTilde)
+KTT=transpose(KTilde)*inv(K)
+
+if numarg<3
+    println("Escribiendo K.dat y KTilde.dat en el disco...")
+    writedlm("K.dat",K)
+    writedlm("KTilde.dat",KTilde)
+
+else
+    paguardar=load(archivo)
+    paguardar["KTT_KInv"]=KTT
+    save(archivo,paguardar)
+end
 

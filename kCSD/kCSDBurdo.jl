@@ -12,15 +12,15 @@ lfp=load(nombre)["LFPSaturados"]
 
 tmax=size(lfp,3)
 
-if isfile("KTT_Suave_r_1.0_4095.dat")
-    KTT=readdlm("KTT_Suave_r_1.0_4095.dat")
+if isfile("KTT_Suave_r_0.5_4095.dat")
+    KTT=readdlm("KTT_Suave_r_0.5_4095.dat")
     println("KTT leida del disco")
 else
-    K=readdlm("K_Suave_r-1.0-4095.dat")
-    KTilde=readdlm("KTilde_Suave_r-1.0-4095.dat")
+    K=readdlm("K_Suave_r-0.5-4095.dat")
+    KTilde=readdlm("KTilde_Suave_r-0.5-4095.dat")
     Kinv=inv(K)
     KTT=transpose(KTilde)*Kinv;
-    writedllm("KTT_Suave_r_1.0_4095.dat", KTT)
+    writedlm("KTT_Suave_r_0.5_4095.dat", KTT)
     println("KTT Kinv calculada y guardada")
 end
 
@@ -41,7 +41,7 @@ end
 println("terminando calculo")
 
 paguardar=load(nombre)
-paguardar["kCSD"]=CSD
+paguardar["kCSD_r_0_5"]=CSD
 save(nombre,paguardar)
 
 println("Tu archivo jld ha sido modificado, checa una entrada kCSD")
