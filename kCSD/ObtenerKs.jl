@@ -185,8 +185,16 @@ if numarg<3
     writedlm("KTilde.dat",KTilde)
 
 else
+    nota=string("Usamos las siguientes B y BT para obtener las Ks")
+    nota=string(nota,": ",ARGS[1], " y ", ARGS[2])
+    println("voy a poner esta nota")
+    println(nota)
+
+    println("voy a modififar tu archivo " archivo)
+    println("va a tener una entrada KTT_Kinv")
     paguardar=load(archivo)
     paguardar["KTT_KInv"]=KTT
+    paguardar["Nota"]=nota
     save(archivo,paguardar)
 end
 
