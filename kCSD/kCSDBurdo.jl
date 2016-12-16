@@ -45,7 +45,7 @@ else
     Kinv=inv(K)
     KTT=transpose(KTilde)*Kinv;   
    
-    nombrekcsd=replace(palabra, "KTT", "kCSD")
+    nombrekcsd=replace(palabra, "K_", "kCSD_")
     nombrekcsd=replace(nombrekcsd, ".dat", "")
 
 end

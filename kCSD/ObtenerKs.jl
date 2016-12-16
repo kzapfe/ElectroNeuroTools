@@ -1,3 +1,4 @@
+using JLD
 
 numarg=length(ARGS)
 if numarg<=1
@@ -9,7 +10,8 @@ end
 
 if numarg==3
     archivo=ARGS[3]
-    saturados=load(archivo)["Saturados"]
+    saturados=load(archivo)["CanalesSaturados"]
+    push!(saturados, [1,1])
 else
     saturados=Set{Array{Int,1}}()
     push!(saturados, [1,1])
@@ -35,6 +37,12 @@ for j=1:64,k=1:64
 end
 
 xpurgadas=filter(q->!(q in saturados), todaslasX)
+
+numsaturados=length(saturados)
+numxpurgadas=length(xpurgadas)
+println("Tengo ",numsaturados, " canales saturados")
+println("Tengo ",numxpurgadas, " canales para trabajar")
+
 #=
 for j=1:24, k=1:24
     push!(LasXNetas,[j+5,k+23])
@@ -190,7 +198,11 @@ else
     println("voy a poner esta nota")
     println(nota)
 
-    println("voy a modififar tu archivo " archivo)
+    println("Escribiendo K.dat y KTilde.dat en el disco...")
+    writedlm("K.dat",K)
+    writedlm("KTilde.dat",KTilde)
+
+    println("voy a modififar tu archivo ", archivo)
     println("va a tener una entrada KTT_Kinv")
     paguardar=load(archivo)
     paguardar["KTT_KInv"]=KTT

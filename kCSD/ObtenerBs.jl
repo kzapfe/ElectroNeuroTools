@@ -86,8 +86,8 @@ for j in 1:127, k in 1:127
 end
 
 println("funciones b tilde calculadas y guardadas en archivos")
-writedlm("BtildeSuaveCero_radio_$radio.dat",btildesuavecero)
-writedlm("BtildeDuraCero_radio_$radio.dat",btildeduracero)
+writedlm("BtildeceroSuave-r-$radio.dat",btildesuavecero)
+writedlm("BtildeceroDura-r-$radio.dat",btildeduracero)
 
 
 hcubature(x ->

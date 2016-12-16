@@ -10,6 +10,7 @@ end
 println("cargando lfp")
 lfp=load(nombre)["LFPSaturados"]
 KTT=load(nombre)["KTT_KInv"]
+saturados=load(nombre)["CanalesSaturados"]
 tmax=size(lfp,3)
 
 todaslasX=Array[]
@@ -24,21 +25,22 @@ nbuenas=length(xpurgadas)
 CSDtentativa=zeros(4096)
 CSD=zeros(lfp)
 
-lfpenvectores=zeros(nbuenas,tmax)
+lfpv=zeros(nbuenas,tmax)
 
 println("Acomodando los LFP correctos")
 
 for j=1:nbuenas
     renglon=xpurgadas[j][1]
     columna=xpurgadas[j][2]
-    lfpenvectores[j,:]=lfp[renglon,columna,:]
+    lfpv[j,:]=lfp[renglon,columna,:]
 end
 
-CSDTentativa=zeros(lfpenvectores)
+
+CSDTentativa=zeros(lfpv)
 
 println("Empezando calculo")
 for t=1:tmax
-    CSDTentativa[:,t]=KTT*flpenvectores[:,t] 
+    CSDTentativa[:,t]=KTT*lfpv[:,t] 
 end
 
 for j=1:nbuenas
