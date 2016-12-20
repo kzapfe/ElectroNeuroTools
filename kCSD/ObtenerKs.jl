@@ -170,6 +170,9 @@ println("Calculando K y Ktilde...")
 @time K=sacalaKenTrozos(b,xpurgadas);
 @time KTilde=KtildeenTrozos(b,btilde, xpurgadas);
 
+
+
+
 println("Simetrizando K y arreglando K tilde...")
 
 

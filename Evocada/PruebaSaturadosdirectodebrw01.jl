@@ -5,34 +5,44 @@ están inusables y como se ven
 =#
 
 namefile=ARGS[1]
-println("$namefile")
+println(" Abriendo $namefile")
+stringgeneral=replace(namefile, ".brw", "")
 
-using HDF5
 
-function AbreyCheca(x::AbstractString)
-    #Abre el archivo de brw (acepta el nombre tal cual)
-    archivo=h5open(x)
-    #sacatito todas las variables que te interesan
-    numcuadros=archivo["/3BRecInfo/3BRecVars/NRecFrames"][1][1]
-    frecuencia=archivo["/3BRecInfo/3BRecVars/SamplingRate"][1][1]
-    maxvolt=archivo["/3BRecInfo/3BRecVars/MaxVolt"][1][1]
-    minvolt=archivo["/3BRecInfo/3BRecVars/MinVolt"][1][1]
-    bitdepth=archivo["/3BRecInfo/3BRecVars/BitDepth"][1][1]
-    duracionexperimento=numcuadros/frecuencia
-    factordeescala=(maxvolt-minvolt)/2^bitdepth
-    DatosCrudos=read(archivo["/3BData/Raw"])
-    result=Dict("numcuadros" => numcuadros,
-                "frecuencia"=> frecuencia,
-                "maxvolt" => maxvolt,
-                "minvolt" => minvolt,
-                "bitdepth" => bitdepth,
-                "duracion" => duracionexperimento,
-                "factor " => factordeescala,
-                "DatosCrudos"=>DatosCrudos )
-    return result
-                    
-end
+
+using HDF5,JLD
+
+include("SeparaActividadySaturados01.jl")
+using SeparaActividadySaturados01
+#ya en el modulo estan las funciones necesarias.
 
 
 Datos=AbreyCheca("$namefile")
-println(Datos["frecuencia"])
+factor=Datos["factor"]
+freq=Datos["frecuencia"]/1000 #cuadros por segundo
+println("Esta es la frecuencia de muestreo: ",Datos["frecuencia"])
+#la mayoría de los datos están en una lista monstruosa
+DatosCrudosArreglados=reshape(Datos["DatosCrudos"], (4096, Datos["numcuadros"]));
+
+LFPSaturado=FormaMatrizDatosCentrados(DatosCrudosArreglados, factor)
+
+tmax=size(LFPSaturado,3)
+ini=100
+fini=400
+
+PruebaRespuesta=BuscaCanalRespActPot(LFPSaturado,freq, 120,-120,-800)
+Saturados=BuscaSaturados(LFPSaturado,1200,ini,fini)
+setdiff!(PruebaRespuesta,Saturados)
+
+tantossaturados=length(Saturados)
+tantosrespuesta=length(PruebaRespuesta)
+
+println("Me encontre ", tantossaturados, " saturados y ", tantosrespuesta, " posibles respuestas")
+
+
+outname=string(stringgeneral,".jld")
+save(outname,
+     "LFPSaturados", LFPSaturado,
+     "freq",freq,
+     "Canalesrespuesta", PruebaRespuesta,
+     "CanalesSaturados", Saturados)
