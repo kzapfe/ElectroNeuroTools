@@ -37,5 +37,9 @@ coherentes siempre cerca de los somas de las neuronas.
 Aquí probamos y extendemos varias ideas que Franco Ortiz propuso para
 establecer correlaciones entre GD y CA.
 
+## Graficando
+
+Todas las rutinas para hacer figuras para paper, poster y presentaciones.
+
 
 
