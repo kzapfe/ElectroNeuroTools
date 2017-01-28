@@ -41,5 +41,18 @@ establecer correlaciones entre GD y CA.
 
 Todas las rutinas para hacer figuras para paper, poster y presentaciones.
 
+## Evocada
+
+Rutinas para preprocesar (promediar) datos evocados, obtención de dCSD y CM.
+Casi todas son extensiones sobre lo desarrollado en la carpeta CenterOfMass.
+También hay rutinas que permiten separar electrodos saturados y electrodos con
+actividad presuntamente fisiológica.
+
+## PrimerosIntentos
+
+Mayormente aquí encontramos un archivo muerto de código con los primeros
+intentos de varios cálculos y calculos tentativos de otras soluciones que aún
+no hemos concluido con seriedad.
+
 
 
