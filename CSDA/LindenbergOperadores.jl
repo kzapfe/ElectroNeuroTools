@@ -3,7 +3,14 @@ module LindenbergOperadores
 export vecindad8, promediasobreconjunto, TiraOrillas, GaussSuavizarTemporal
 export GaussianSmooth, DiscreteLaplacian
 
+#=
+Los operadores, funciones y objetos auxiliares que se usan para el CSDA
+diferencial (dCSD).
+=#
+
+
 function vecindad8(punto::Array)
+    # La ocho-vecindad de un punto en una malla cuadrada.
     j=punto[1]
     k=punto[2]
     result=Set{Array{Int64,1}}()
@@ -19,6 +26,7 @@ function vecindad8(punto::Array)
 end
 
 function promediasobreconjunto(puntos::Set, datos::Array)
+    #Promedia sobre un conjunto un valor.
     n=0
     result=0
     for q in puntos
@@ -31,6 +39,7 @@ end
 
 
 function TiraOrillas(Puntos::Set)
+    #Descarta las orillas de la malla de electrodos
     result=Set([])
     for p in Puntos
         if !(p[1]==1 || p[2]==1 || p[1]==64 ||  p[2]==64)
@@ -47,32 +56,31 @@ function UnNormGauss(x,sigma)
     return exp(-x*x/(2*sigma))
 end
 
-function GaussSuavizarTemporal(Datos,Sigma=3)  
+function GaussSuavizarTemporal(Datos,Sigma=3)
+    #Un suavizado Gaussiano temporal.
+    #Esto es escencialmente un filtro pasabajos.
+    #Depende implicitamente de la frecuencia de muestreo.
     #sigma esta medido en pixeles, es la desviacion estandar de nuestro kernel.
     #El medioancho de nuestra ventana seran 3*sigma
-    #Esto es escencialmente un filtro pasabajos
+
     medioancho=ceil(Sigma*3)
     colchon=ones(medioancho)
     result=zeros(Datos)
     datoscolchon=vcat(colchon*Datos[1], Datos, colchon*Datos[end])
     kernel=map(x->UnNormGauss(x,Sigma), collect(-medioancho:medioancho))
     kernel=kernel/(sum(kernel))
+
     #La convolucion asi normalizada preserva el valor RELATIVO entre los puntos de la funcion.
-    #pero queremos ponerlo mas parecido a los voltajes que medimos, para preservar el rango de valores
-    #experimentales y su criterio de potenciales de accion / ruido
+   
     for t=medioancho+1:length(Datos)+medioancho
         result[t-medioancho]=sum(datoscolchon[t-medioancho:t+medioancho].*kernel)
     end
-    a=maximum(abs(Datos))
-    b=maximum(abs(result))
-    #nromalizacion 
-    #result=result*a/b
+ 
     return result
 end
 
 
-
-#De momento todo "in file"
+#De momento todo "in file". El Kernel Gaussiano Bidimensional (sigma = 3 pixeles)
 GaussianKernel=[0.00000067	0.00002292	0.00019117	0.00038771	0.00019117	0.00002292	0.00000067
 0.00002292	0.00078634	0.00655965	0.01330373	0.00655965	0.00078633	0.00002292
 0.00019117	0.00655965	0.05472157	0.11098164	0.05472157	0.00655965	0.00019117
@@ -85,7 +93,7 @@ function GaussianSmooth(Datos)
     tamanodatos=size(Datos)
     result=zeros(Datos)
     temp=copy(Datos)
-    #Primero, hacemos el padding de los datos para que no se suavice demasiado
+    #Primero, hacemos el padding con copia de los datos para que no se suavice demasiado
     for j=1:3
         temp=vcat(temp[1,:], temp, temp[end,:])
     end
@@ -104,17 +112,15 @@ function GaussianSmooth(Datos)
 end
 
 
-
+#El operador de Laplace-Lindenberg
 LaplacianTerm1=[[0 1 0]; [1 -4 1]; [0 1 0]]
 LaplacianTerm2=[[0.5 0 0.5]; [0 -2 0]; [0.5 0 0.5]]
 LaplacianKernel=(1-1/3)*LaplacianTerm1+(1/3)*LaplacianTerm2
 
-#Nueva variante: AHORA SI VAMOS A ELIMINAR LAS ORILLAS
-#Los efectos de borde estan dando puro choro en el CSD.
 function DiscreteLaplacian(Datos)
     result=zeros(Datos)
     temp=copy(Datos)
-    #Primero, hacemos el padding de los datos para que no se suavice demasiado
+    #Primero, hacemos el padding con copia de los datos para que no se suavice demasiado
     temp=vcat(temp[1,:], temp, temp[end,:])
     temp=hcat(temp[:,1], temp, temp[:,end])
     largo,ancho=size(Datos)
