@@ -1,7 +1,15 @@
+##Cambiamos las convenciones a Julia 0.5 
+##En particular, hist e hist! se cambian por fit(Histogram...) en StatsBase
+### espero que no conflictue despues con MultivariateStats (no creo).
+
+using StatsBase 
+
 function OtsuMethod(Data)
     #Pa que esto funcione hay que mandar los datos ya sin NaNs u otras mugres   
     binsdefault=2*ceil(Int,sqrt(length(Data)))
-    (rango, cuentas)=hist(Data,binsdefault)
+    histograma=fit(Histogram,Data,nbins=binsdefault)
+    ##por alguna razon los devs creen que esta padre poner el rango en una tupla
+    (rango, cuentas)=(histograma.edges[1],histograma.weights)
     tantos=length(rango)
     #valores
     omega1=0

@@ -1,9 +1,21 @@
 ## Preprocesamiento de un LFP para implementar ICA
 using JLD
 
+##Funciones de Otsu
+include("./Otsu05.jl")
+
+#= Esto es muy importante:
+===========================
+Si usas OtsuUmbral sobre un LFP con canales Saturados
+adivina que pasa?
+Exacto: te da los canales Saturados.
+=#
+
+
+
 archivo=ARGS[1]
 println("cargando lfp")
-lfp=load(nombre)["LFPSaturados"]
+lfp=load(archivo)["LFPSaturados"]
 
 (ancho,alto,tmax)=size(lfp)
 ### para que sea mas facilito aplastamos los datos de entrada en una lista larga
