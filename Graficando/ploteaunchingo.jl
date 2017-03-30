@@ -2,7 +2,7 @@
 
 using JLD,PyPlot
 
-nombre="/home/karel/RGutWork/JLDFiles/evento_deshinibido_2.jld"
+nombre="/home/karel/RGutWork/JLDFiles/evento_desinhibido_1.jld"
 #nombre=ARGS[1]
 arx=load(nombre)
 lfp=arx["LFPSaturados"]
@@ -43,7 +43,7 @@ for j=1:4:64
     text((j+1)*265,-300, "$j")
     text(200,(j-1)*125, "$j")
 end
-savefig("MapaTrazosCSDDeshinibida02.svg",dpi=90)
-savefig("MapaTrazosCSDDeshinibida02.png",dpi=90)
+savefig("MapaTrazosCSDDeshinibida01.svg",dpi=90)
+savefig("MapaTrazosCSDDeshinibida01.png",dpi=90)
 close()
 close()

@@ -182,11 +182,13 @@ K=reshape(K,longus,longus)
 KTilde=reshape(KTilde,longus,longus)
 
 K=K+transpose(K)
-#=
+
+#estabilización de matrix
 for j=1:longus
-    K[j,j]=K[j,j]/2
+    K[j,j]=K[j,j]/2+0.001
 end
-=#
+
+
 
 KTT=transpose(KTilde)*inv(K)
 
