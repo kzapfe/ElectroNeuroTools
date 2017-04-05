@@ -2,11 +2,11 @@
 
 using JLD,PyPlot
 
-nombre="/home/karel/RGutWork/JLDFiles/evento_desinhibido_1.jld"
+nombre="/home/karel/RGutWork/JLDFiles/140116s2cut2_evento_4.jld"
 #nombre=ARGS[1]
 arx=load(nombre)
-lfp=arx["LFPSaturados"]
-csd=arx["kCSDCorrecta"]
+lfp=arx["LFPTotales"]
+#csd=arx["kCSDCorrecta"]
 (alto,ancho,tmax)=size(lfp)
 
 maxabs=zeros(alto,ancho)
@@ -35,7 +35,7 @@ plot(xxs1,yys1, lw=2,c="black")
 text(650,270,"142ms")
 #text(650,20, "0.5mV")
 for j=1:4:64 ,k=1:4:64
-    plot((600:1600)+(k-1)*265,-vec(csd[j,k,600:1600])+(j-1)*125,
+    plot((600:1600)+(k-1)*265,-vec(lfp[j,k,600:1600])+(j-1)*125,
          c="black",lw=0.1)
         # edgecolors=float(j),cmap="jet")
 end
@@ -43,7 +43,7 @@ for j=1:4:64
     text((j+1)*265,-300, "$j")
     text(200,(j-1)*125, "$j")
 end
-savefig("MapaTrazosCSDDeshinibida01.svg",dpi=90)
-savefig("MapaTrazosCSDDeshinibida01.png",dpi=90)
-close()
+savefig("MapaTrazosLFPdeshinibida02test.svg",dpi=90)
+#savefig("MapaTrazosCSDDeshinibida01.png",dpi=90)
+#close()
 close()
