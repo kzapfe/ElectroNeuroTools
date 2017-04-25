@@ -93,12 +93,19 @@ function GaussianSmooth(Datos)
     tamanodatos=size(Datos)
     result=zeros(Datos)
     temp=copy(Datos)
+    (mu, lu)=size(Datos)
     #Primero, hacemos el padding con copia de los datos para que no se suavice demasiado
+    ## Okey, parece que los imbeciles de rioarriba cambiaron la sintaxis de
+    # rebanadas de matriz. Ahora CUALQUIER rebanada de matriz es colvec.
+    arriba=reshape(temp[1,:],(1,lu))
+    abajo=reshape(temp[end,:],(1,lu))
+    arr3=vcat(arriba,arriba,arriba)
+    aba3=vcat(abajo,abajo,abajo)
+    
+    temp=vcat(arr3, temp, aba3)
+    
     for j=1:3
-        temp=vcat(temp[1,:], temp, temp[end,:])
-    end
-    for j=1:3
-        temp=hcat(temp[:,1], temp, temp[:,1])
+        temp=hcat(temp[:,1], temp, temp[:,end])
     end
     
     for j=4:tamanodatos[1]+3, k=4:tamanodatos[2]+3
@@ -120,18 +127,22 @@ LaplacianKernel=(1-1/3)*LaplacianTerm1+(1/3)*LaplacianTerm2
 function DiscreteLaplacian(Datos)
     result=zeros(Datos)
     temp=copy(Datos)
+    (mu,lu)=size(Datos)
+    izq=reshape(temp[1,:],(1,lu))
+    der=reshape(temp[end,:],(1,lu))
     #Primero, hacemos el padding con copia de los datos para que no se suavice demasiado
-    temp=vcat(temp[1,:], temp, temp[end,:])
+    temp=vcat(izq, temp, der)
     temp=hcat(temp[:,1], temp, temp[:,end])
-    largo,ancho=size(Datos)
+    largo,ancho=size(temp)
     aux=Array(Float64,(3,3))
-    result=zeros(Datos)
+    result=zeros(temp)
     for j=2:largo-1, k=2:ancho-1
         #los indices van primero, "renglones", luego "columnas", etc
         aux=temp[j-1:j+1,k-1:k+1]
         result[j,k]=sum(LaplacianKernel.*aux)
     end
-    #DO NOT Crop the borders
+    #DO  Crop the borders
+    result=result[2:end-1,2:end-1]
     return result
 end
 

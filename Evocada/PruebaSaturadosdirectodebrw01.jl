@@ -4,34 +4,52 @@ notebooks de este directorio para rapidamente estimar cuantos canales
 están inusables y como se ven
 =#
 
+using JLD
 namefile=ARGS[1]
-println(" Abriendo $namefile")
-stringgeneral=replace(namefile, ".brw", "")
-
-
-
-using HDF5,JLD
+println(" Usando $namefile")
+namecola=namefile[end-2:end]
+println(namecola)
+if namecola=="brw"
+    using HDF5
+elseif namecola=="jld"
+    println("chido")
+else
+    error("No se que tipo de archivo es la terminación $namecola")
+end
+    
+stringgeneral=namefile[1:end-4]
 
 include("SeparaActividadySaturados01.jl")
 using SeparaActividadySaturados01
 #ya en el modulo estan las funciones necesarias.
 
-
-Datos=AbreyCheca("$namefile")
-factor=Datos["factor"]
-freq=Datos["frecuencia"]/1000 #cuadros por segundo
-println("Esta es la frecuencia de muestreo: ",Datos["frecuencia"])
+if namecola=="brw"
+    Datos=AbreyCheca("$namefile")
+    factor=Datos["factor"]
+    freq=Datos["frecuencia"]/1000 #cuadros por segundo
 #la mayoría de los datos están en una lista monstruosa
-DatosCrudosArreglados=reshape(Datos["DatosCrudos"], (4096, Datos["numcuadros"]));
+    DatosCrudosArreglados=reshape(Datos["DatosCrudos"], (4096, Datos["numcuadros"]));
+    LFP=FormaMatrizDatosCentrados(DatosCrudosArreglados, factor)
+elseif namecola=="jld"
+    Datos=load(namefile)
+    freq=Datos["freq"]
+    if haskey(Datos, "LFPSaturados")
+        LFP=Datos["LFPSaturados"]
+    else
+        LFP=Datos["LFPTotal"]
+    end
+end
+        
 
-LFPSaturado=FormaMatrizDatosCentrados(DatosCrudosArreglados, factor)
-
-tmax=size(LFPSaturado,3)
+println("Esta es la frecuencia de muestreo: ", freq)
+tmax=size(LFP,3)
 ini=100
 fini=400
+println("Este es el número de cuadros: ", tmax)
 
-PruebaRespuesta=BuscaCanalRespActPot(LFPSaturado,freq, 120,-120,-800)
-Saturados=BuscaSaturados(LFPSaturado,1200,ini,fini)
+
+PruebaRespuesta=BuscaCanalRespActPot(LFP,freq, 120,-120,-800)
+Saturados=BuscaSaturados(LFP,1200,ini,fini)
 setdiff!(PruebaRespuesta,Saturados)
 
 tantossaturados=length(Saturados)
@@ -42,7 +60,7 @@ println("Me encontre ", tantossaturados, " saturados y ", tantosrespuesta, " pos
 
 outname=string(stringgeneral,".jld")
 save(outname,
-     "LFPSaturados", LFPSaturado,
+     "LFPTotal", LFP,
      "freq",freq,
      "Canalesrespuesta", PruebaRespuesta,
      "CanalesSaturados", Saturados)

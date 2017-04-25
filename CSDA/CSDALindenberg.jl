@@ -15,7 +15,7 @@ importall LindenbergOperadores
 
 
 if length(ARGS)==0
-    error("Dar el nombre de un archivo LFP_*.jld para graficar")
+    error("Dar el nombre de un archivo *.jld para analizar")
 else
     archivo=ARGS[1]
     println("Voy a trabajar con el archivo ", archivo)
@@ -25,11 +25,16 @@ end
 
 
 #Los datos para trabajar
-LFP=load(archivo)["LFPSaturados"]
-saturados=load(archivo)["CanalesSaturados"]
-respuestas=load(archivo)["Canalesrespuesta"];
-frecuencia=load(archivo)["freq"]
-retrazo=load(archivo)["retrazo"]
+arx=load(archivo)
+if haskey(arx, "LFPSaturados")
+    LFP=arx["LFPSaturados"]
+else
+    LFP=arx["LFPTotal"]
+end
+saturados=arx["CanalesSaturados"]
+respuestas=arx["Canalesrespuesta"];
+frecuencia=arx["freq"]
+#retrazo=load(archivo)["retrazo"]
 
 #quitemos la terminacion de los nombres de archivo
 palabra=replace(archivo,".jld", "")
