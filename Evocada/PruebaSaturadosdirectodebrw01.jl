@@ -43,13 +43,18 @@ end
 
 println("Esta es la frecuencia de muestreo: ", freq)
 tmax=size(LFP,3)
-ini=100
-fini=400
+ini=150
+fini=tmax
 println("Este es el número de cuadros: ", tmax)
 
 
 PruebaRespuesta=BuscaCanalRespActPot(LFP,freq, 120,-120,-800)
-Saturados=BuscaSaturados(LFP,1200,ini,fini)
+#primero por promedio
+Saturados1=BuscaSaturados(LFP,1200,ini,fini)
+# luego por ventanas de desviacion
+Saturados2=BuscaSaturadosStd(LFP,50,2)
+
+Saturados=union(Saturados1,Saturados2)
 setdiff!(PruebaRespuesta,Saturados)
 
 tantossaturados=length(Saturados)

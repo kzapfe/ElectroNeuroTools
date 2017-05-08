@@ -3,7 +3,7 @@ module SeparaActividadySaturados01
 using HDF5
 using JLD
 
-export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaCanalRespActPot
+export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaCanalRespActPot
 
 
 function AbreyCheca(x::AbstractString)
@@ -90,6 +90,7 @@ function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
 end
 
 function BuscaSaturados(datos::Array, saturavalue=1900, desde=retrazo, hasta=final)
+     #busca saturados por promedio sobre umbral
     (alto,ancho,largo)=size(datos)
     result=Set{Array{Int,1}}()
     for j=1:ancho, k=1:alto
@@ -102,6 +103,26 @@ function BuscaSaturados(datos::Array, saturavalue=1900, desde=retrazo, hasta=fin
     end
     return result
 end
+
+function BuscaSaturadosStd(datos::Array, ventana=50, umbral=20)
+    #busca saturardos por desviación por ventana por umbral
+    (alto,ancho,largo)=size(datos)
+    mediaventana=div(ventana,2)
+    largoventanasmedias=div(largo-ventana,mediaventana)
+    result=Set{Array{Int,1}}()
+    for j=1:ancho, k=1:alto
+        for l=1:largoventanasmedias-1
+            sigma=std(datos[k,j,l*mediaventana:l*mediaventana+ventana])    
+            if sigma<umbral
+                push!(result, [k,j])
+                break
+            end
+        end
+    end
+    return result
+end
+
+
 
 function BuscaCanalRespActPot(datos::Array,freq::Number, tini=tiempopostgolpe, umbral=-100, umbralsaturacion=-1500)
     #Busquemos los canales con probable respuesta de potencial de accion
