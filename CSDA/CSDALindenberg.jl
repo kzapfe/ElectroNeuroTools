@@ -1,4 +1,4 @@
-using JLD
+
 #=
 Este programita obtiene el CSD usando operadores diferenciales.
 Usa el operador convexo de Lindenberg como Laplaciano.
@@ -9,6 +9,7 @@ y, optativamente, una lista de electrodos inusables ("saturados").
 
 
 #Los operadores Diferenciales Numericos estan definidos en otro archivo.
+using JLD
 include("LindenbergOperadores.jl")
 importall LindenbergOperadores
 
@@ -21,11 +22,11 @@ else
     println("Voy a trabajar con el archivo ", archivo)
 end
 
-
+arx=load(archivo)
 
 
 #Los datos para trabajar
-arx=load(archivo)
+
 if haskey(arx, "LFPSaturados")
     LFP=arx["LFPSaturados"]
 else
@@ -45,6 +46,7 @@ println(palabra)
 #Una copia del LFP para trabajar sobre ella
 lfpParchado=copy(LFP)
 
+yes
 
 #Poner en cero los canales inservbles
 for m in saturados
