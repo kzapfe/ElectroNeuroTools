@@ -32,9 +32,16 @@ todaslasX=Array[]
 #CasiXNetas=Array[]
 
 
-for j=1:64,k=1:64
+#alto=64
+#ancho=64
+
+
+alto=24
+ancho=24
+for j=1:alto,k=1:ancho
     push!(todaslasX,[j,k])
 end
+
 
 xpurgadas=filter(q->!(q in saturados), todaslasX)
 
@@ -49,7 +56,7 @@ for j=1:24, k=1:24
 end
 =#
 
-LasXchiquitas=xpurgadas[1:48]
+LasXchiquitas=xpurgadas[1:24]
 
 println("Definiendo las funciones necesarias...")
 
@@ -184,18 +191,19 @@ KTilde=reshape(KTilde,longus,longus)
 K=K+transpose(K)
 
 #estabilización de matrix
+#=
 for j=1:longus
     K[j,j]=K[j,j]/2+0.001
 end
-
+=#
 
 
 KTT=transpose(KTilde)*inv(K)
 
 if numarg<3
     println("Escribiendo K.dat y KTilde.dat en el disco...")
-    writedlm("K.dat",K)
-    writedlm("KTilde.dat",KTilde)
+    writedlm("Krevisarestable.dat",K)
+    writedlm("KTilderevisarestable.dat",KTilde)
 
 else
     nota=string("Usamos las siguientes B y BT para obtener las Ks")
