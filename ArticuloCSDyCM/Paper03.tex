@@ -27,16 +27,16 @@
 \section{Introduction}
 
 Spatially tracking the activity of electro-physiological data in a concise, rigorous and interpretable manner poses a challenging problem. Measurement recordings are usually presented first as a series of traces that correspond each to a sampling point in the studied structure. As Micro Electrode Arrays (MEAs) become denser, this representation of the data becomes saturated and the discovery of patterns turns into a difficult task. Novel information is obfuscated by the same high density acquisition that allows us to discover it. Therefore, representing  the recorded data in ways which can unveil previously unobtainable information is a necessity. Various techniques for sepparation of functional generators are avaible now, most come from the application of blind source sepparation analysis, such as ICA. 
-Our task in this paper is to present a method for tracing out ``functional connectivity'', which would apport independent information that is complementary to those analysis.  Our  analysis would be applicable mostly to activity in structured neural tissue. We shall exemplify the method by application to the data obtained from recordings of the rats hippocampus. 
+Our task in this paper is to present a method for tracing out ``functional connectivity'', which would bring independent information that is complementary to those analysis.  Our  method would be applicable mostly to activity in structured neural tissue. We shall exemplify it by application to the data obtained from recordings of the rats hippocampus. 
 
-Succesive activation  of distinct nearby units on structured tissue would trace a ``trajectory'' of the activity. A tracing of such trajectories would help to indicate causal or correlated ``functional conections'' over the tissue. Neighbouring neurons that fire in succesion, integrated subthreshold activity and ephaptic coupling could all be represented as paths for transmission of activity. Nevertheless, how to define and acquire the corresponging traces is an open question.
+Succesive activation  of distinct nearby units on structured tissue would trace a ``trajectory'' of the activity. A tracing of such trajectories would help to indicate causal or correlated ``functional conections'' over the tissue. Neighbouring neurons that fire in succesion, integrated subthreshold activity and ephaptic coupling could all be represented as pathways for transmission of activity. Nevertheless, how to define and acquire the putative paths is an open question.
 
-In previous works some form of vector averaging has been proposed and shown to reveal some trajectrories traced out by the activity. We shall call such methods Center of Mass Analyses (CMA).  The \emph{wheights} that have been chosen for obtaining the average have been selected on heuristic grounds. In the works of Chao \emph{et al.} \cite{Chao05, Chao07}, the density of spikes in a certain time interval was used, a sort of ``density of action'', while Manjarrez \emph{et al.} \cite{Manjarrez07, Manjarrez09} used the positive half of the LFP recording as their weight. 
-Here we advance on such methods by incorporating mathematically sound definitions and concepts which allow us to rigorously separate spatially distinct traces. Our weight is actually the natural density function provided by the data: the Current Source Density. This representation not only provides a mathematical fit measure for the weights in the vector averaging process, but helps to separate the data into disjoint components. Based on this, a further refinement of the technique, given by the polar structure of firing neurons, allowed us to obtain accurate, well defined trajectories of the activity in non convex structured tissues. 
+In previous works some form of vector averaging has been proposed and shown to reveal some trajectrories drawn by the activity. We shall call such methods Center of Mass Analyses (CMA).  The \emph{wheights} that have been chosen for obtaining the average have been selected on heuristic grounds. In the works of Chao \emph{et al.} \cite{Chao05, Chao07}, the density of spikes in a certain time interval was used, a sort of ``density of action'', while Manjarrez \emph{et al.} \cite{Manjarrez07, Manjarrez09} used the positive half of the LFP recording as their weight. 
+Here we advance on such methods by incorporating mathematically sound definitions and concepts which allow us to rigorously separate spatially distinct traces. Our weight is actually the natural density function provided by the data: the Current Source Density. This representation not only provides a mathematical fit measure for the weights in the vector averaging process, but helps to separate the data into disjoint components. Based on this, a further refinement of the technique, given by the multipolar signature of firing neurons, allowed us to obtain accurate, well defined trajectories of the activity in non convex structured tissues. 
 
-The application of the method requires electro-physiological data acquired through bidimensional MEAs, although the extension to three dimensional arrays is possible in principle. The MEA should have dense enough spatial and temporal samplings, so as to obtain good estimates of the CSD and their changes in time.
+The application of the method requires electro-physiological data acquired through bidimensional MEAs, although the extension to three dimensional arrays would, in principle, be possible. The MEA should have dense enough spatial and temporal samplings, so as to obtain good estimates of the CSD and their changes in time.
 
-Our method permits us to map possible trajectories of activity inside structured neuronal tissue, without requiring ad hoc geometric constraints. As a prime example, non-convex structures which may show simultaneous activity in separate parts could test the robustness of our method. We have tested then the method on slices of rat's hippocampus, concentrating in the CA region. We exemplify the usage of the method with data that has been obtained by an experiment with 4AP ...\textbf{bla bla bla describr experimentos}.
+Our method permits us to map possible trajectories of activity inside structured neuronal tissue, without requiring ad hoc geometric constraints. As a prime example, non-convex structures which may show simultaneous activity in separate parts could test the robustness of our method. We have tested then the method on slices of rat's hippocampus, concentrating in the CA region. We exemplify the usage of the method with data that has been obtained by an experiment with ...\textbf{bla bla bla describr experimentos}.
 
 
 
@@ -46,12 +46,12 @@ Our method permits us to map possible trajectories of activity inside structured
 
 \subsection{CSD for high density MEAS}
 
-The concepts presented here require first obtaining the CSD from the recorded LFP. Any correct method would present the same utility. We present to methods and show the robustness of the result for the Center of Mass tracking. The first method is a classical finite diference operator, while the second is the kCSDA presented in \cite{Potworowski2011}, which is an inverse problem approach.
+The concepts presented here require first obtaining the CSD from the recorded LFP. Any correct method would present the same utility. The first method is a  finite difference operator, while the second is the kCSDA presented in \cite{Potworowski2011}, which is an inverse problem approach.  Where both methods are usuable, we prefer the former, as is faster and requires less supositions. We present to methods and show the robustness of the result for the Center of Mass tracking. 
 
 Thanks to the density and scales of the BioCAM 4096, a numerical finite difference method
 can give a good aproximation to the CSD, if the number of failing channels is low. For experiments that were made without electrical stimulation this was the case, where the order of saturated or otherwise failing electrodes was around 10.  A  numerical Laplacian Operator which reduces the cross effect of rectangular grids is the convolution of the data with the following matrix \cite{Lindberg90}:
 \begin{equation}
-\nabla^2_{1/3}=(2/3)
+\nabla^2_{1/3}=2/3Es
 \begin{pmatrix}
   0 & 1 & 0 \\
   1 & -4 & 1 \\
@@ -64,18 +64,18 @@ can give a good aproximation to the CSD, if the number of failing channels is lo
   0.5 & 0 & 0.5
 \end{pmatrix}  
 \end{equation}
-This sort of operators are extremely sensitive to edges. The noise of the data can be perceived in the spatial domain as rapidly varying edges. A Gaussian spatial denoising can be performed before or after the Laplacian operator to the data in order to reduce excessive borders. Our Gaussian blur filter has a $\sigma$ value of three electrodes or $126 \mu m$. Intuitively this means that it smooths over each structure smaller than the soma of a typical pyramidal cell. 
-This is  in accordance to our mean field approach, where we expect smooth differentiable fields over the scale of the neurons, but not in finer scales (for details see \cite{Bedard11}.
+This sort of operators are extremely sensitive to abrupt changes in the values. The noise of the data can be perceived in the spatial domain as rapidly varying edges. A Gaussian spatial denoising can be performed before or after the Laplacian operator to the data in order to reduce excessive borders. Our Gaussian blur filter has a $\sigma$ value of three electrodes or $126 \mu m$. Intuitively this means that it smooths over each structure smaller than the soma of a typical pyramidal cell. 
+This is  in accordance to our mean field approach, where we expect smooth differentiable fields over the scale of the neurons, but not in finer scales (for details see \cite{Bedard11}) .
 
-On previous works it has been argued that numerical difference operators sacrifice all data on the borders of the array. For electrode arrays of lesser density, this could posse a problem, but in our case we only renounce to 27 out of 4095 channels (one is grounded).
+On previous works it has been argued that numerical difference operators sacrifice all data on the borders of the array. For electrode arrays of lesser density, this could posse a problem, but in our case we only renounce to 27 out of 4095 channels (one is grounded). 
 If very few electrodes fail, more sophisticated methods such as iCSDA \cite{Leski2011} and kCSDA \cite{Potworowski2011} prove little advantage in estimating the sources under the ohmic, isotropic and homogeneous assumptions. In case that around 30 or more electrodes
-fail, specially if they are on the region of intereset, the use of indirect methods
-becomes necessary. The Kernel CSDA is then the tool to use. This methods relies on the
+fail, specially if they are on the region of intereset, the use of such methods
+becomes necessary. The kCSDA method relies on the
 assumption that a finite family of reasonable functions can span (with acceptable accuracy) the possible CSD at each instant in time. The idea behind the method is simple:
 presenting one model function of this family and obtaining the LFP that such a function
 would generate, we calculate the coefficients for the entire family by proyecting the
-experimental data over this ideal LFP. A general presentation is in the reference, here
-we shall put only the implementation that we used.
+experimental data over this ideal LFP model function family. A general presentation is in the reference, here
+we shall recount only the implementation that we used.
 
 We shall borrow the notation in \ref{Potworowski2011}. Our model function for the CSD is a hard disk function, given by:
 \begin{equation}
@@ -133,7 +133,7 @@ GPUs, solves this issue.
 
 We have performed comparition of both methods over experimental data that has
 no failing channels in order to adjust the parameters of the second method. We
-have obtained very precise results in both methods.
+have obtained consistent results between methods.
 
 
 \subsection{CSD as weight density for vectors}
