@@ -26,15 +26,15 @@
 
 \section{Introduction}
 
-Spatially tracking the activity of electro-physiological data in a concise, rigorous and interpretable manner poses a challenging problem. Measurement recordings are usually presented first as a series of traces that correspond each to a sampling point in the studied structure. As Micro Electrode Arrays (MEAs) become denser, this representation of the data becomes saturated and the discovery of patterns turns into a difficult task. Novel information is obfuscated by the same high density acquisition that allows us to discover it. Therefore, representing  the recorded data in ways which can unveil previously unobtainable information is a necessity. Various techniques for sepparation of functional generators are avaible now, most come from the application of blind source sepparation analysis, such as ICA. 
+Spatially tracking the activity of electro-physiological data in a concise, rigorous and interpretable manner poses a challenging problem. Measurement recordings are usually presented first as a series of traces that correspond each to a sampling point in the studied structure. As Micro Electrode Arrays (MEAs) become denser, this representation of the data becomes saturated and the discovery of patterns turns into a difficult task. Novel information is obfuscated by the same high density acquisition that allows us to discover it. Therefore, representing  the recorded data in ways which can unveil previously unobtainable information is a necessity. Various techniques for separation of functional generators are available now, most come from the application of blind source separation analysis, such as ICA. 
 Our task in this paper is to present a method for tracing out ``functional connectivity'', which would bring independent information that is complementary to those analysis.  Our  method would be applicable mostly to activity in structured neural tissue. We shall exemplify it by application to the data obtained from recordings of the rats hippocampus. 
 
 Succesive activation  of distinct nearby units on structured tissue would trace a ``trajectory'' of the activity. A tracing of such trajectories would help to indicate causal or correlated ``functional conections'' over the tissue. Neighbouring neurons that fire in succesion, integrated subthreshold activity and ephaptic coupling could all be represented as pathways for transmission of activity. Nevertheless, how to define and acquire the putative paths is an open question.
 
 In previous works some form of vector averaging has been proposed and shown to reveal some trajectrories drawn by the activity. We shall call such methods Center of Mass Analyses (CMA).  The \emph{wheights} that have been chosen for obtaining the average have been selected on heuristic grounds. In the works of Chao \emph{et al.} \cite{Chao05, Chao07}, the density of spikes in a certain time interval was used, a sort of ``density of action'', while Manjarrez \emph{et al.} \cite{Manjarrez07, Manjarrez09} used the positive half of the LFP recording as their weight. 
-Here we advance on such methods by incorporating mathematically sound definitions and concepts which allow us to rigorously separate spatially distinct traces. Our weight is actually the natural density function provided by the data: the Current Source Density. This representation not only provides a mathematical fit measure for the weights in the vector averaging process, but helps to separate the data into disjoint components. Based on this, a further refinement of the technique, given by the multipolar signature of firing neurons, allowed us to obtain accurate, well defined trajectories of the activity in non convex structured tissues. 
+Here we advance on such methods by incorporating mathematically sound definitions and concepts which allow us to rigorously separate spatially distinct traces. Our weight is actually the natural density function provided by the data: the Current Source Density. This representation not only provides a mathematical rigorous  measure for the weights in the vector averaging process, but helps to separate the data into disjoint components. This allows us to track separate process in the same region of interest. 
 
-The application of the method requires electro-physiological data acquired through bidimensional MEAs, although the extension to three dimensional arrays would, in principle, be possible. The MEA should have dense enough spatial and temporal samplings, so as to obtain good estimates of the CSD and their changes in time.
+The application of the method requires electro-physiological data acquired through bi-dimensional MEAs, although the extension to three dimensional arrays would, in principle, be possible. The MEA should have dense enough spatial and temporal samplings, so as to obtain good estimates of the CSD and their changes in time.
 
 Our method permits us to map possible trajectories of activity inside structured neuronal tissue, without requiring ad hoc geometric constraints. As a prime example, non-convex structures which may show simultaneous activity in separate parts could test the robustness of our method. We have tested then the method on slices of rat's hippocampus, concentrating in the CA region. We exemplify the usage of the method with data that has been obtained by an experiment with ...\textbf{bla bla bla describr experimentos}.
 
@@ -46,12 +46,12 @@ Our method permits us to map possible trajectories of activity inside structured
 
 \subsection{CSD for high density MEAS}
 
-The concepts presented here require first obtaining the CSD from the recorded LFP. Any correct method would present the same utility. The first method is a  finite difference operator, while the second is the kCSDA presented in \cite{Potworowski2011}, which is an inverse problem approach.  Where both methods are usuable, we prefer the former, as is faster and requires less supositions. We present to methods and show the robustness of the result for the Center of Mass tracking. 
+The concepts presented here require first obtaining the CSD from the recorded LFP. Any correct method would present the same utility. The first method is a  finite difference operator, while the second is the kCSDA presented by Potworowski \emph{et all} \cite{Potworowski2011}, which is an inverse problem approach.  Where both methods are usable, we prefer the former, as is faster and requires less assumptions. We present to methods and show the robustness of the result for the Center of Mass tracking. 
 
 Thanks to the density and scales of the BioCAM 4096, a numerical finite difference method
-can give a good aproximation to the CSD, if the number of failing channels is low. For experiments that were made without electrical stimulation this was the case, where the order of saturated or otherwise failing electrodes was around 10.  A  numerical Laplacian Operator which reduces the cross effect of rectangular grids is the convolution of the data with the following matrix \cite{Lindberg90}:
+can give a good approximation to the CSD, if the number of failing channels is low. For experiments that were made without electrical stimulation this was the case, where the order of saturated or otherwise failing electrodes was around 10.  A  numerical Laplacian Operator which reduces the cross effect of rectangular grids is the convolution of the data with the following matrix \cite{Lindberg90}:
 \begin{equation}
-\nabla^2_{1/3}=2/3Es
+\nabla^2_{1/3}=2/3
 \begin{pmatrix}
   0 & 1 & 0 \\
   1 & -4 & 1 \\
@@ -67,27 +67,27 @@ can give a good aproximation to the CSD, if the number of failing channels is lo
 This sort of operators are extremely sensitive to abrupt changes in the values. The noise of the data can be perceived in the spatial domain as rapidly varying edges. A Gaussian spatial denoising can be performed before or after the Laplacian operator to the data in order to reduce excessive borders. Our Gaussian blur filter has a $\sigma$ value of three electrodes or $126 \mu m$. Intuitively this means that it smooths over each structure smaller than the soma of a typical pyramidal cell. 
 This is  in accordance to our mean field approach, where we expect smooth differentiable fields over the scale of the neurons, but not in finer scales (for details see \cite{Bedard11}) .
 
-On previous works it has been argued that numerical difference operators sacrifice all data on the borders of the array. For electrode arrays of lesser density, this could posse a problem, but in our case we only renounce to 27 out of 4095 channels (one is grounded). 
+On previous works it has been argued that numerical difference operators sacrifice all data on the borders of the array. For electrode arrays of lesser density, this could posse a problem, but in our case we only renounce to 27 out of 4095 channels (one is grounded), and those are outside the region of interest.
 If very few electrodes fail, more sophisticated methods such as iCSDA \cite{Leski2011} and kCSDA \cite{Potworowski2011} prove little advantage in estimating the sources under the ohmic, isotropic and homogeneous assumptions. In case that around 30 or more electrodes
-fail, specially if they are on the region of intereset, the use of such methods
+fail, specially if they are on the region of interest, the use of such methods
 becomes necessary. The kCSDA method relies on the
 assumption that a finite family of reasonable functions can span (with acceptable accuracy) the possible CSD at each instant in time. The idea behind the method is simple:
 presenting one model function of this family and obtaining the LFP that such a function
-would generate, we calculate the coefficients for the entire family by proyecting the
+would generate, we calculate the coefficients for the entire family by projecting the
 experimental data over this ideal LFP model function family. A general presentation is in the reference, here
 we shall recount only the implementation that we used.
 
-We shall borrow the notation in \ref{Potworowski2011}. Our model function for the CSD is a hard disk function, given by:
+We shall borrow the notation in \cite{Potworowski2011}. Our model function for the CSD is a hard disk function, given by:
 \begin{equation}
   \tilde{b}_j(x,y)=\begin{cases}
   1, \text{ for } (x-x_j)^2+(y-y_j)^2 \leq R^2 \\
-  0 \text{ otherwise.}
+  0 \text{ otherwise.} 
   \end{cases}
 \end{equation}
 The $R$ parameter is the effective radius of the charge density, which for our
-calculations was taken as half the interelectrode distance, that is $R=21 \mu m$.
+calculations was taken as half the inter-electrode distance, that is $R=21 \mu m$.
 Each pair $(x_j, y_j)$ is the center of one such model function, which we take as
-the position of each  functioning electrode in an adecuate coordinate system.
+the position of each  functioning electrode in an adequate coordinate system.
 The LFP generated by this function would then be:
 \begin{equation}
   \tilde{b}_j(x,y)=\frac{1}{2\pi\sigma}
@@ -99,10 +99,10 @@ The LFP generated by this function would then be:
   with $h$ being the effective height of the function support, in our case,
   the half width of the hippocampus slice ($h=150 \mu m$).
 
-Then the kCSDA consist of proyecting the experimental data (LFP), frame by frame,
+Then the kCSDA consist of projecting the experimental data (LFP), frame by frame,
 over these model functions and obtaining the  coefficients that would spawn an idealized
 LFP approximation. These coefficients are the same that would produce the
-corresponing CSD. The first operator is the projection operator $K$ of the experimental
+corresponding CSD. The first operator is the projection operator $K$ of the experimental
 LFP (from now on $V(x,y)$) on the space of the idealized LFP (which we call $V^* (x,y)$).
 \begin{equation}
   K_{jk}=\sum_{l=1}^{M}b_l(x_j,y_j)b_l(x_k,y_k).
@@ -117,23 +117,23 @@ Then $C^*(x,y)$ can be obtained on the region of interest by:
 \begin{equation}
   C^*(x_j,y_j)=\sum_{k,l=1}^M \tilde{K}_{kj} K^{-1}_{ml} V(x_l,y_l)
 \end{equation}
-Notice how the method incorporates a denoizing mechanism, so
+Notice how the method incorporates a denoising mechanism, so
 no smoothing procedures are used.
 The great advantage of this method is that is possible to obtain a reasonable
-approximation to CSD even when the prescene of unusable channels is near or inside
+approximation to CSD even when the presence of unusable channels is near or inside
 the region of interest. The difference method, on the other hand, affects all surrounding
-channels to a failing channel, up to 8 of them, so it becomes unusuable if enough
+channels to a failing channel, up to 8 of them, so it becomes unusable if enough
 saturated electrodes are over the r.o.i.
 
-It is important to mention that our data has noice up to 0.1 of the magnitude of the
+It is important to mention that our data has noise up to 0.1 of the magnitude of the
 signal, which means that regularization of the matrix $K$ is unavoidable (see section 4.1 in \cite{Potworowski2011} and references therein). We used a regularization parameter $\lambda=0.001 |e_{max}|$, where $e_{max}$ is the principal eigenvalue of $K$. 
 
-The obtention of $K$ and $\tilde{K}$ turn out to be computer-costly for high density MEAs and dense temporal sampling, but paralelization, specially on
+The attainment of $K$ and $\tilde{K}$ turn out to be computer-costly for high density MEAs and dense temporal sampling, but paraletization, specially on
 GPUs, solves this issue.
 
-We have performed comparition of both methods over experimental data that has
+We have performed comparison of both methods over experimental data that has
 no failing channels in order to adjust the parameters of the second method. We
-have obtained consistent results between methods.
+have obtained consistent results between them.
 
 
 \subsection{CSD as weight density for vectors}
@@ -149,7 +149,7 @@ Due to conservation of charges, this is the same as as the temporal variation of
 \end{equation}
 Current Source Density as a mathematical density (a quasi-probability density function)  allows  to rigorously apply the concepts of vector averaging. This use has been overlooked. This might have occurred because  samplings at lesser spatial resolution did not permit estimations of this quantity with enough precision to make reliable spatial implications, even with the use of sophisticated CSD estimation methods. In our case, we want to use the density as a mathematician would: a function which assigns weights to points in the space of interest and permits us to carry linear operations over them.  The space here is the sampling points of the electrodes at a given instant in time, and the weight, the CSD, is amount interchange of charged ions from the inside to the outside of cellular membranes, per unit space.  This is an indicator of activity in the neurons, therefore the CSD is also, indirectly, a \emph{``density of local activity''}.
 
-Apparently, CSD would not fit the requirements of non-negativity for its use as a mathematical density, but this turns out to be not a problem.  CSD separates the measured activity into three distinct sets, namely, the set of all sources, the set of all sinks and the zero set. The separation is not quantitative but qualitative: even when the signs of electric charge are arbitrary, the distinction between them is not. Therefore, CSD represents on each of the two active sets (sinks and sources) exactly what we need, a unit of concentration per unit space, in this case, per area, and the sign can be ignored, as long as we perform the operations in the sets separately. Also, the separation by the zero value set of the CSD is in contrast to the zero value of the LFP, where it has no precise meaning as it only represents a practical ground value. This is acknowledged in most of the literature, where only the scales of the LFP recording are shown, without reference to the sign of the values. In the CSD representation,  the so called zero set (all the points in our space which have a recorded CSD of zero)  has a precise meaning: it is an instantaneous lack of activity and a border between sinks and sources. This shall be exploited further in the section below.
+Apparently, CSD would not fit the requirements of non-negativity for its use as a mathematical density, but this turns out to be not a problem.  CSD separates the measured activity into three distinct sets, namely, the set of all sources, the set of all sinks and the zero set. The separation is not quantitative but qualitative: even when the signs of electric charge are arbitrary, the distinction between them is not. Therefore, CSD represents on each of the two active sets (sinks and sources) exactly what we need, a unit of concentration per unit space, in this case, per area, and the sign can be ignored, as long as we perform the operations in the sets separately. Also, the separation by the zero value set of the CSD is in contrast to the zero value of the LFP, where it has no precise meaning as it only represents a practical reference value. This is acknowledged in most of the literature, where only the scales of the LFP recording are shown, without reference to the sign of the values. In the CSD representation,  the so called zero set (all the points in our space which have a recorded CSD of zero)  has a precise meaning: it is an instantaneous lack of activity and a border between sinks and sources. This shall be exploited further in the section below.
 
 Once the separation into sinks and sources has been made, we would have two densities, or more precisely, two different density functions defined over two separate sets. Trying to use this for obtaining vector averages would still be crude and inexact. If these sets spread out over large non-convex geometries, the vector averages could lie outside the sets, having little or none physiological interpretation. Therefore we decided to introduce another concept from geometrical sets in order to make the analysis more local in character.
 
@@ -159,8 +159,40 @@ Once the separation into sinks and sources has been made, we would have two dens
 A first visual inspection of the CSD color map at a given instant in time shows that both sources and sinks appear in rather large and significant patches. These appear to correspond to the expected double and triple poles of firing neurons in structured tissue \cite{Buzsaki2012} and inspired us to separate the sink and source  sets into their \emph{disjoint components}. This concept is used in mathematics to denote subsets of a given geometric set that do not touch each other or share no elements in common \cite{Halmos}. Their rough correspondence to poles of firing neurons would be most useful in tracking the successive locus of the activity.
 
 
-To clarify the concept and how we are we using it an example is in order. In figure \ref{ejemplodisjuntos} we show geometrical sets enclosed by simple curves as color patches, where every color indicates a Set. The set A consists of a single component, that means that one can make  path between any two points in the set that consist entirely of points of the same set. In contrast, the set B is made of two disjoint components, labeled B1 and B2. If one chooses a point in each of the components, one cannot draw a path joining them without leaving the set. But each one of those components is connected, meaning that if we choose the pair of points in one component, then again we can trace a path joining them in the set. So the set B consists of two disjoint components, but each component can be regarded as a connected set on their own. Likewise the set C is made of three disjoint components. 
- 
+To clarify the concept and how we are we using it an example is in order. In figure \ref{Disjuntos} A we show geometrical sets enclosed by simple curves as color patches, where every color indicates a Set. The set $A$ consists of a single component, that means that one can make  path between any two points in the set that consist entirely of points of the same set. In contrast, the set $B$ is made of two disjoint components, labeled $B1$ and $B2$. If one chooses a point in each of the components, one cannot draw a path joining them without leaving the set. But each one of those components is connected, meaning that if we choose the pair of points in one component, then again we can trace a path joining them in the set. So the set $B$ consists of two disjoint components, but each component can be regarded as a connected set on their own. Likewise the set $C$ is made of three disjoint components. In the subfigre \ref{Disjuntos} Aiii we show the center of mass of the sets. The set $A$ is concave, so, it can have a center of mass outside the set. The
+set $B$ has also a center of mass outside the set. It has two disjoint components that are aproximatelly
+equall and separated by a long distance (this is not an implication: a set can be disjoint and have
+a CM inside the set). For the set $C$ our aproach has been used: we treat every disjoint component of the
+set as an independent entity and calculate the center of mass for each one. Notice that this doesn't preclude the posibility of having a concave subset with a CM that lies outside. But, as we shall see,
+as the electrode resolution is finite, the posibility of having concave shapes is unlikely, and they
+tend to have a CM near their borders. In the figure \ref{Disjuntos} B we show this with experimental
+data (we are using evoked activity data, as explained in section \ref{sec:evocada}). In graph Bi we
+sepparate the CSD data into the sink and sources set. We take sinks as example. In the grabh Bii
+we label each disjoint component, obtained by a single pass algorhythm. There are 25 components, and
+the biggest two are not strictly convex but they have tolerable deviations from it. In the
+subfigure Biii we indicate the CM of only those components that are above certain threshold of
+integrated intensity (the dot is proportional in area to such intensity, there are five CM to be
+seen). Each CM gets listed as a probable step in a trajectory.
+
+\begin{figure}
+  \includegraphics[width=0.9\textwidth]{Figuras/Disjuntos01.pdf}
+  \caption{ Explanation of the geometrical concepts used on our analysis. In subfigure A we show
+    with an artificial example the concepts of disjointness and convexivity. The subfigure Ai shows
+    three sets, $A$, $B$, and $C$. $A$ fails to be convex because it is concave, and $C$ fails to be
+    be convex because it is made of two disjoint components. In each of them is possible to draw a line
+    connecting two points inside the set that is not entirely inside the set. In $B$ that is not possible, the set $B$ is convex in a mathematical sense. In subfigure Aii we made some modification to whos that
+    each set can be made of many disjoint components, and each one of them can be convex or not.  In Aiii we show the center of mass for $A$ and $B$ taken as a wholle, while for $C$ we break the set into each of the disjoint components and calculate each CM separately. There is no guarantee that each disjoint component would be convex, but as the resolution of the data is finite, the smaller components are more likely to
+    be convex. In figure B we shoe everything with a frame of experimental data. In Bi we sepparate the
+    data into three sets, Sources, Sinks, and Zeros. We discard the Zeros and keep the interesting ones.
+    In Figure Bii we take the Sink Set and separate it into disjoint components, that are labeled from one to 25 in this particular example. From this subsets we calculate the total mass of each one and only
+    considerate for the next step those who are above certain threshold of integrated intensity. The
+    next step is shown in Biii, where we plot the Center of Mass for each of such subsets. Deviations
+    from convexity seem to be unimportant, as most of the mass is concentrated in the inner electrodes
+    of each set.
+  }
+  \label{disjuntos}
+\end{figure}
+
 Theoretically, CSD would divide the set of measuring points into three subsets: the set of all sources, the set of all sinks, and the border between them i.e, the set of all measuring points that have a CSD positive value, the set of those who have a negative CSD value, and the set of those points having exactly the zero value in CSD space.
 Due to the finite precision of the measurement, the validity of the mean field approach, and the noise in the measurements, the sinks and sources sets can make contact with each other. Said measurements produce a function over a discrete point set. Noise between patches corresponding to a single set often makes a ``bridges'' between components, making identification of poles inexact. In order to avoid this we create a ``thick zero'' set of all the recording points whose CSD values are inside a small error interval around zero. This separates more sharply the components of the set, represents our ignorance of precise borders and helps us to simplify the following analysis.
 
@@ -175,30 +207,34 @@ where $I(q_{j,k},t)$ is the CSD at point $q_{j,k}=(x_{j,k}, y_{j,k})$ at time $t
 
 \subsection{CM and trajectories}
 
-We must not take out of sight the phenomena which is producing the CSD distribution: neurons have a finite size, and the effect of their action a delimited extent. Every patch that we can identify as a disjoint component of the Sources/Sink sets indicates a coherent, joint active group of units. A center of mass for each disjoint component would then indicate an average locus for this active group, a putative center of activity to which we can give a position, intensity and time. An instantaneous snapshot of such information would depict the centers of activity of an ordered structure of neurons and their relative intensities. But it is in the successive depiction of a series of such snapshots that this analysis can show interpretative power. The appearance , displacement, and disappearance of such centers could reveal very subtle details of the dynamics of neural activity. Very small, fast displacements of the Centers of mass, may be occur due to slight asynchronism between neurons which belong to the same active group. Larger and  longer than a few firing periods displacements could indicate physiological connections between different groups.
+We must not take out of sight the phenomena which is producing the CSD distribution: neurons have a finite size, and the effect of their action a delimited extent. Every patch that we can identify as a disjoint component of the Sources/Sink sets indicates a coherent, joint active group of units. A center of mass for each disjoint component would then indicate an average locus for this active group, a putative center of activity to which we can give a position, intensity and time. An instantaneous snapshot of such information would depict the centers of activity of an ordered structure of neurons and their relative intensities. But it is in the successive depiction of a series of such snapshots that this analysis can show interpretative power. The appearance , displacement, and disappearance of such centers could reveal very subtle details of the dynamics of neural activity. Very small, fast displacements of the Centers of mass, may be occur due to slight asynchronous between neurons which belong to the same active group. Larger and  longer than a few firing periods displacements could indicate physiological connections between different groups.
 
-The next step in our analysis is a procedure to systematically associate to each CM at time $t$ a ``successor'' at time $t+\Delta t$, where $\Delta t$ is the sampling time step. We have used a pseudo-distance function which takes into account the geometrical distance from the putativa succesors for a CM, and also the intensity. For two CM inside our measurement space we define our pseudo-distance as follows. Let $q_1=(x_1, y_1)$ be the coordinates of the first point and $q_2=(x_2,y_2)$, the corresponding coordinates of the second, and let $I_1, I_2$ be their corresponding integrated intensities. Then the ``distance'' that separates them shall be 
-\begin{equation}\label{pseudodist}
-d(q_1,q_2):=\sqrt{(x_1-x_2)^2+(y_1+y_2)^2+C(I_1-I_2)},
+The next step in our analysis is a procedure to systematically associate to each CM at time $t$ a ``successor'' at time $t+\Delta t$, where $\Delta t$ is the sampling time step. We used an euclididan distance. Let $q_1=(x_1, y_1)$ be the coordinates of the first point and $q_2=(x_2,y_2)$, the corresponding coordinates of the second. Then the distance is:
+d(q_1,q_2):=\sqrt{(x_1-x_2)^2+(y_1+y_2)^2}.
 \end{equation}
-where $C$ is a conveniently chosen constant, so as to give a similar importance to the intensities as to the positions.
 The integrated intensity of a CM is simply the denominator in the eq. \ref{cmparadisj}, that is, the total ``mass'' obtained by integrating the CSD in a specific disjoint component:
 \begin{equation}
-I_k(t)=\sum_j I (q_{j,k}, t)
+  I_k(t)=\sum_j I (q_{j,k}, t).
 \end{equation}
 We specify then a tolerance $\delta$. If a certain $t$ a CM is below $\delta$ distance from another at $t+\Delta t$, we consider the latter the successor in time of the former. By continuously applying such procedure, we can begin to trace trajectories of the CMs, as they appear, wander, and fade. 
+
+When a specific trajectory cannot find a successor point that is above the
+threshold intensity, we assume that it is finished, so we do not concatenate
+points that are separated in time by more than $\Delta t$. In order to paste different
+trajectories, more rigorous analysis of their origin and interpretation would be needed.
 
  
  \subsection{The Procedure}
  
  In order to perform the analysis described here, we summarize the steps.
  \begin{enumerate}
- \item Acquire high density electro-physiological data. The data must be two or three dimensional in space. Distance between the recording sites must be of the order of the size of the typical neurons involved, and such sites must be on a dense enough grid to perform numerical difference operations over them. The sampling frequency should be enough to detect sub-threshold activity, of at least 5kHz. Also, the data should come from structured tissue. Unordered, highly homogeneous tissue, will not yield significant results. 
-\item Obtain, frame by frame, the CSD from the data. Any method may be used, but computer expensive techniques are discouraged if the data is dense enough. Common sense and tests are guidelines here. We recommend simpler, difference based approaches.
-\item Separate the CSD data into three sets: sources, sinks, and border or indiscernible (below error) data.
+ \item Acquire high density electro-physiological data. The data must be two dimensional in space. Distance between the recording sites must be of the order of the size of the typical neurons involved or less, and such sites must be on a dense enough grid to perform numerical difference operations over them. The sampling frequency should be enough to detect sub-threshold activity, of at least 5kHz. Also, the data should come from structured tissue. Unordered, highly homogeneous tissue, will not yield significant results. 
+ \item Calculate the CSD from the data. Any method may be used, but computer expensive techniques are discouraged if the data too dense. Common sense and tests are guidelines here. We recommend simpler, difference based approaches wherever possible. If many electrodes fail near the r.o.i. kCSD is a good alternative if paraletization is available.  If many electrodes are failing over the r.o.i., it is better to discard the data. 
+\item Separate the CSD data into three sets: sources, sinks, and border or indiscernible (below error magnitude) data. Again, sensible criteria have to be defined. A rule of thumb would be to use the noise level of the recording as the amplitude for the ``thick zero'' range of values. 
 \item Perform disjoint component analysis in the sources and sinks sets, frame by frame.
   A single pass algorithm could be used here \cite{Vincent91, Abubaker07}.
-\item  Obtain the CM for each disjoint component, using eq. \ref{cmparadisj}.
+\item  Obtain the CM for each disjoint component, using eq. \ref{cmparadisj}. Discard
+  all CM that are below some significant value. 
 \item For each frame and its successor, and for each CM, perform a ``most probable successor'' detection. Here we must put numerical criteria according to the data avaible, i.e. how far away and how different in intensity should be allowed a CM to be at time $t+1$ to be considered succesor in time of another at time $t$. We use the distance defined in eq. \ref{pseudodist}, a pseudo-Euclidean distance. 
 \item ``Connect the dots'', that is, apply succesively the step above for each CM, until it stops having a succesor or its intensity falls below the error criteria. Then plot the succesive CMs as one trayectory.
 \item Plot all the trayectories and sort visually those that may have physiological interpretation from those who may be artifacts of the method. 
@@ -206,10 +242,67 @@ We specify then a tolerance $\delta$. If a certain $t$ a CM is below $\delta$ di
 
 
  
-\section{Results}
+\section{Examples from Electro physiological data}
 
-The necessity to create such analysis came originally from the study of electro-physiological data obtained from the rat's hippocampus. The highly structured CA region of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the pattern of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the layered tissue. Using CSD and disjoint component tracking over them provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacologically induced. The proposed analysis would not produce vector averages over different simultaneously active areas, on the contrary, it would separate them and track them independently. So the most violent epileptic burst provided us with the data necessary to prove the robustness of the method. 
-a
+The necessity to create such analysis came originally from the study of electro-physiological data obtained from the rat's hippocampus. The highly layered CA structure of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the pattern of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the somatic layer. Using CSD and disjoint component tracking over them provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacological induced. The proposed analysis would not produce vector averages over different simultaneously active areas, on the contrary, it would separate them and track them independently. So the most violent epileptic burst provided us with the data necessary to prove the robustness of the method. 
+
+\subsection{Application to evoked activity in idem.}\label{sec:evocada}
+
+Evoked activity by electrical stimulus yields simpler and cleaner patterns in the LFP
+measurements. This facilitates the exemplification of our analysis, so we shall
+start the exposition of the usage with these kind of data.
+The data was obtained by stimulating certain specific points on the dentate gyrus
+of the slice of hippocampus with different voltage intensities. Details of the experiment
+will be published elsewhere \cite{FrancoGut2017}. We shall borrow some of
+the best experimental data for our purposes.
+
+A simple example of the procedure and the treatment of the data is shown in figure
+\ref{CSD_Evocada01}.  The subfigure A  shows a diagram of the hippocampus, with
+the somatic layers (CA and DG) as thick black lines and the stimulus point
+shown as a blue arrow. The $a,b,c,d,e$ dots are selected electrodes for
+showing LFP and CSD traces. Those are shown in the subfigure B. In subfigure
+C the same data is presented as a spatiotemporal color map that
+indicates shows the expected poles of firing neurons in transverse to the
+pyramidal stratum.  In the subfigure D we show the CSD for a series of time frames
+over the square delimited in the subfigure A. The idea for treating the different
+patches separately becomes evident here. The sources and sinks form patches
+with an apparent anterograde movement from CA3 to CA1. The patches change polarity
+as especteed, with the somatic layer becoming a strong sink between 3 to 4 ms
+after the stimulus, and then, at the 6 ms, inverting its polarity in a way that suggest
+successive activation of groups that can be presented as movement of the patch.
+
+\begin{figure}[h]
+  \includegraphics[width=0.9\textwidth]{Figuras/CSD_Evocada01.pdf}
+  \caption{ CSDA for evoked activity and visual inspection of disjoint
+    components. In A we present a diagram of the hippocampus slice over
+    the acquisition device. The somatic layers of CA and DG are represented as
+    thick black lines, and the stimulus site is indicated by a blue arrow. A selection
+    of six contiguous electrodes labeled $a,b,c,d,e$ in the r.o.i. are presented as blue
+    dots. In B we show the LFP traces and their CSD representation for those
+    selected electrodes. In C we present the same information as a color map,
+    with blue for sinks and red for sources, and a shorter time interval. The
+    map covers the 8ms after the stimulus is made (shown in the temporal axis by a
+    green doted line). The change of polarity around and over the str. pyr. (between b and
+    d) is clearly visible. In D we show the CSDA for various timestamps in the sub-region
+    indicated in A as the r.o.i, which covers a square of 24 by 24 electrodes over CA3.
+    in the first plot, 1ms before the stimulus, we show the grid of electrodes and a
+    shaded strip indicating the approximate location of str. pyr. A model neuron is
+    drawn for scale. At 4ms after the stimulus, the saturation of the electric shock
+    recedes and we can began to appreciate real neuronal activity on the responsive
+    sector of CA3. A great sink appears over the somatic layer, surrounded by two
+    sources and some smaller patches of activity. At the following frame the patch
+    appears to have moved anterogradly, towards CA1. Next frame, the sink appears
+    to have inverted its polarity as do their surrounding patches, and the movement
+    continues until approximately 9ms after stimulus, where the activity ceases to be
+    discernible from noise.}
+  \label{CSD_Evocada01}
+\end{figure}
+
+
+
+The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
+
+
 
 \subsection{Application to epileptic-like activity in the hippocampus}
 Chronologically speaking, we performed first the analysis to the most complicated data (numerically and qualitatively), which where a series of epileptic burst that occurred after 15 minutes of application of 4AP to living slices of hippocampus. The burst occurred with activity spreading over many sites simultaneously. This turned out to be a test of the applicability and robustness of our method. The necessity of having good error value for the ``thick zero'' set was more apparent here than anywhere else. Also the posibilty to create new structures of numerical data was first seen here.  But also the most strickig features of the propagation of activity, coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole CA structure. A sample of the raw data in $\mu V$ can be seen in the figure \textbf{Tururu}. Three key moments in the epileptic burst have been selected, one before the onset of the attack, one at the peak and one at the middle of the subsequent waves. Traces from selected electrodes along the line labeled A-F are presented in the subfigure D. 
@@ -221,7 +314,7 @@ In the figure \textbf{Tururu3} we present our method using the peak moment as an
 
 \subsection{Application to evoked activity in idem.}
 
-The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and wanning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
+The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
 
 \subsection{Application to spontaneous activity in idem.}
 
@@ -232,4 +325,5 @@ We had one experiment in which we could trace very nicely the data on DG and CA 
 
 
 \end{document}
+
 
