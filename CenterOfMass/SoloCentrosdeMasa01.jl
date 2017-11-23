@@ -8,16 +8,6 @@ esten en cero.
 =#
 
 
-nombre=ARGS[1]
-
-using JLD
-
-arx=load(nombre)
-#Checa como diablos se llama el CSD en cada archivo
-csd=arx["kCSDCorrecta"]
-(ancho,alto,tmax)=size(csd)
-
-
 # Funciones
 
 function vecindad8(punto::Array)
@@ -56,8 +46,8 @@ function ComponentesSP(DatosSignados::Array)
                     
                     
                     deleteat!(lista, indexin(Any[v], lista))
-                    push!(listaprofundeza, v)
-                    profundidad+=1
+                    push!(listaprofundeza, v) 
+                   profundidad+=1
                     push!(componentecurlab, v)
                 end
             end
@@ -111,8 +101,8 @@ function ObtenComponentesyCM(Datos::Array, tini=1,tfini=tmax, epsilon=1.0)
             #=
         componentesneg/pos son
             conjuntos con las listas de elemenentos de los
-        componentes en un instante dado. Se tiene que "cerar" siempre.
-        =#
+        componentes en un instante dado. Se tiene que "cerar" siempre. 
+       =#
         
         for p in componentesneg
             mu=length(p)        
@@ -135,7 +125,7 @@ function ObtenComponentesyCM(Datos::Array, tini=1,tfini=tmax, epsilon=1.0)
             end
         end
             centrosdemasaneg=centrosdemasaneg[2:end,:]
-            println(t,"hola")
+      #      println(t,"hola")
             CMNegativo[t]=centrosdemasaneg
  
         
