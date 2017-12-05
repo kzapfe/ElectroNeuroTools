@@ -36,8 +36,8 @@ todaslasX=Array[]
 #ancho=64
 
 
-alto=24
-ancho=24
+alto=64
+ancho=64
 for j=1:alto,k=1:ancho
     push!(todaslasX,[j,k])
 end
@@ -151,7 +151,7 @@ end
 function KtildeenTrozos(LasB::Array, LasBtilde::Array, lasX::Array)
     largo=length(lasX)
     cachos=nprocs()
-    aux=SharedArray(Float64,(largo,largo,cachos))
+    aux=SharedArray{Float64}(largo,largo,cachos))
      @sync begin
         for p in procs()
             @async  aux[:,:,p]=remotecall_fetch(obtenKtildeParcial, p, LasB, LasBtilde, lasX)
