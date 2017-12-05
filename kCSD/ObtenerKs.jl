@@ -136,10 +136,10 @@ end
 function sacalaKenTrozos(LasB::Array, lasX::Array)
     largo=length(lasX)
     cachos=nprocs()
-    aux=SharedArray(Float64,(largo,largo,cachos))
+    aux=SharedArray{Float64}(largo,largo,cachos)
      @sync begin
         for p in procs()
-            @async  aux[:,:,p]=remotecall_fetch(p, obtenKParcial, LasB, lasX)
+            @async  aux[:,:,p]=remotecall_fetch( obtenKParcial, p,  LasB, lasX)
         end
         end #cierra el syncbegin
     result=zeros(largo,largo)
@@ -154,7 +154,7 @@ function KtildeenTrozos(LasB::Array, LasBtilde::Array, lasX::Array)
     aux=SharedArray(Float64,(largo,largo,cachos))
      @sync begin
         for p in procs()
-            @async  aux[:,:,p]=remotecall_fetch(p, obtenKtildeParcial, LasB, LasBtilde, lasX)
+            @async  aux[:,:,p]=remotecall_fetch(obtenKtildeParcial, p, LasB, LasBtilde, lasX)
         end
         end #cierra el syncbegin
     result=zeros(largo,largo)
@@ -216,9 +216,10 @@ else
     writedlm("KTilde.dat",KTilde)
 
     println("voy a modififar tu archivo ", archivo)
-    println("va a tener una entrada KTT_Kinv")
+    println("va a tener una entrada K y KTilde")
     paguardar=load(archivo)
-    paguardar["KTT_KInv"]=KTT
+    paguardar["KTilde"]=KTilde
+    paguardar["K"]=K
     paguardar["Nota"]=nota
     save(archivo,paguardar)
 end
