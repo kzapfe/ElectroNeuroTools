@@ -1,0 +1,97 @@
+karel@mezcalina Reportes $more Reporte01.tex 
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+
+\title{Reporte: Centro de Masa para potenciales evocados}
+
+
+\author{W. P. Karel Zapfe}
+
+\begin{document}
+
+\maketitle
+
+\section{Los Datos}
+
+Para llevar a cabo está parte del trabajo, se me proporcionaron
+los siguientes datos experimentales.
+Dos experimentos largos de estimulación ortodrómica y uno
+antidrómica. Cada experimento largo fue llevado a cabo
+en dos etapas, una etapa control y una etapa con biliculina.
+Cada etapa tiene estimulos de varios voltajes, en orden creciente,
+de 1V a 9V.
+El experimento antidrómico tiene una etapa control, una etapa con
+mefluoquina y una etapa con nbqx-apv. La sucesión de estímulos es la misma.
+
+El segundo experimento ortodrómico resultó inútil para los propósitos
+de este análisis, dado que en todas las estimulaciones el número de
+canales saturados sobre la región de interés (de ahora en adelante ROI)
+era excesivo, y obfuscaban el cálculo densidad de fuentes de corriente
+(de ahora en adelante CSD), así que nos concentramos en el primero experimento.
+De ahí las estimulaciónes con 5V y 6V resultarón tener el registro más
+limpio en condiciones de control, y la de 5V y 9V para la etapa
+con biliculina.
+
+El experimento antidrómico tuvo los mejores registros en 5V para control,
+y en 7V para ambas drogas. 
+
+\section{Análisis exploratorio}
+
+El primer paso para llevar a cabo el análisis de CSD-CM (Centro de Masa
+para Densidades de Fuentes de Corriente) es conocer la posición de
+los cuerpos anatómicos de interés en el registro, y simultaneamente,
+conocer cuantos y cuales electrodos muestran respuestas fisiológicas y
+cuales están saturados y resultan inútiles para nuestro propósito.
+Una umbralización de Otsu sobre la variancia de cada canal 1 ms después del
+estímulo nos da una indicación de posibles sedes para los somas de las neuronas.
+complementado con la lista de los electrodos que registraron actividad fisiológica, podemos establecer la posición de CA y GD sobre el MEA. Una foto
+podría ayudar de estar disponible, pero no cuento con ella, así que
+tendremos que descanzar sobre los trazos fisiológicos y nuestro
+conocimiento de la forma de la rebanada a priori. Muestro
+los resultados así obtenidos para los casos analisados.
+
+
+\section{ḱCSD y Regularización de Tikhonov}
+
+Este tipo de experimento suele tener varios electrodos saturados, y pueden
+estar sobre o muy cerca de la ROI. Un cálculo de diferencia finita para
+obtener la CSD como hemos llevado a cabo anteriormente resulta muy inconveniente. Un solo electrodo ruidoso arruina a sus 8 vecinos en general, haciendo
+que perdamos una parte sustancial del registro. En cambio, un análisis
+de tipo inverso, tal como el kCSD \cite{Potworowski2011} nos da un resultado
+mucho más suave y claro, con el costo de mayor tiempo computacional y unas
+suposiciones extra. He decido implementer el proceso de kCSD para
+registros masivos tales como los que proporciona el BIOCAM, paralelizando
+sobre CPU el algorítmo, dado que es un problema trivialmente paralelizable.
+Contamos asimismo con una versión parelela en GPU mucho más veloz
+(desarrollada por Néstor Castillo para su tésis de licenciatura), pero
+que requiere tarjetas gráficas nVidia de buena calidad para ser usada.
+
+El kCSD requiere que hagamos una suposición razonable sobre
+la forma de la función fuente-pozo cerca de un electrodo. La forma especifica
+de la función no es importante mientras cumpla ciertas características
+de regularidad y vaya acorde con nuestro conocimiento de como se puede
+generar un espacio de funciones. He tomado como función modelo
+una función característica circular con un radio de
+media distancia inter electrodo (21 \mu m).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{}
+
+
+\end{document}
