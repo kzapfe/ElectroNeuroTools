@@ -6,6 +6,8 @@ evocados
 using JLD, PyPlot
 
 nombre=ARGS[1]
+ng=nombre[1:end-4]
+nout=ng*"-mapa.png"
 datos=load(nombre)
 
 
@@ -13,13 +15,13 @@ lfp=datos["LFPSaturados"]
 saturados=datos["CanalesSaturados"]
 respuestas=datos["Canalesrespuesta"]
 retrazo=datos["retrazo"]
-frecuencia=datos["freq"]
+freq=datos["freq"]
 
 tantossaturados=length(saturados)
 tantosrespuesta=length(respuestas);
 
 ## Esta es la latencia que recomendo Gis.
-latencia=round(Int, ceil(1.5*frecuencia))
+latencia=round(Int, ceil(1.5*freq))
 tejemplo=136
 ejemplo=lfp[:,:,tejemplo];
 
@@ -47,13 +49,19 @@ figure(figsize=(4.25,4))
 xlim(0,64)
 ylim(0,64)
 grid()
+
+tiempo=round((tejemplo-retrazo)/freq, 2)
+
 limites=200
-imagen=imshow(ejemplo, interpolation="nearest", cmap="Spectral_r", 
+imagen=imshow(ejemplo, origin="lower", interpolation="nearest", cmap="Spectral_r", 
 vmin=-limites,vmax=limites, extent=[0.5,64.5,0.5,64.5])
 cb=colorbar(imagen, fraction=0.046)
-scatter(xxsresp,yysresp, alpha=0.9, c="red", s=2, edgecolor="none", label="Respuestas")   
-scatter(xxssatu,yyssatu, alpha=0.9, c="black",s=2,  edgecolor="none", marker="x", label="Saturados") 
+cb[:set_label]("Voltaje")
+scatter(xxsresp,yysresp, alpha=0.9, c="red", s=3, edgecolor="none", label="Respuestas")   
+scatter(xxssatu,yyssatu, alpha=0.9, c="black",s=3,  edgecolor="none", marker="x", label="Saturados") 
 legend()
 tight_layout()
-savefig("MapaSaturados.png",dpi=90)
+title("t= $tiempo ms")
+
+savefig(nout,dpi=90)
 #scatter(46,31)
