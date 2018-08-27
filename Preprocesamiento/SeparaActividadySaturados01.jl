@@ -80,7 +80,7 @@ end
 function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
     #El array tiene que ser de 4096 por algo mas
     irrrelevante,largo=size(xxs)
-    aux=Array(Int32, 64,64, largo);
+    aux=Array{Int32}(64,64, largo);
     for j=1:64,k=1:64
         aux[k,j,:]=xxs[j+(k-1)*64,:]
     end
