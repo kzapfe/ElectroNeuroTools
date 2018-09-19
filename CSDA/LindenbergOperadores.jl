@@ -134,7 +134,7 @@ function DiscreteLaplacian(Datos)
     temp=vcat(izq, temp, der)
     temp=hcat(temp[:,1], temp, temp[:,end])
     largo,ancho=size(temp)
-    aux=Array(Float64,(3,3))
+    aux=Array{Float32}(3,3)
     result=zeros(temp)
     for j=2:largo-1, k=2:ancho-1
         #los indices van primero, "renglones", luego "columnas", etc
