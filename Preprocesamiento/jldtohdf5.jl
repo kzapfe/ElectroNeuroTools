@@ -14,7 +14,7 @@ end
 
 
 
-nombre=ARG[1]
+nombre=ARGS[1]
 nom=nombre[1:end-3]
 nomout=nom*"h5"
 
@@ -92,5 +92,5 @@ if (haskey(arx, "Canalesrespuesta") ||  haskey(arx, "CanalesSaturados"))
         #close(fid)   
     end
 else
-   intln("No hay ninguno de los datos en conjunto conflictivos en este archivo.")   
+   println("No hay ninguno de los datos en conjunto conflictivos en este archivo.")   
 end
