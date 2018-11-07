@@ -6,7 +6,7 @@ using JLD
 export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaCanalRespActPot
 
 
-function AbreyCheca(x::AbstractString)
+function AbreyCheca(x::String)
     #Abre el archivo de brw (acepta el nombre tal cual)
     archivo=h5open(x)
     #sacatito todas las variables que te interesan
