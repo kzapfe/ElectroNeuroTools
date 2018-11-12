@@ -1,14 +1,20 @@
 module Otsu
 
 using Statistics
+using StatsBase
 
-export stdventana, otsuventana, otsumethod
+export stdventana, otsumethod, otsuumbralizar
 
-function stdventana(datos::Array, ancho::Int)
+
+
+
+
+
+function stdventana(datos::Array, ancho::Int, paso::Int)
     # de un array lineal, sacar la desviacion
     # estandar por ventanas de ancho dado
     anchomedio=floor(ancho/2)
-    tantos=convert(Int, floor((length(datos)-ancho)/paso))
+    tantos=floor(Int, (length(datos)-ancho)/paso)
     result=zeros(tantos)
     for t=1:tantos
         result[t]=std(datos[(t-1)*paso+1:(t-1)*paso+ancho])
@@ -23,10 +29,11 @@ function otsumethod(datos::Array)
     minimo=minimum(datos)
     maximo=maximum(datos)
     binsdefault=2*ceil(Int,sqrt(length(datos)))
-    h=fit(Histogram, vec(datos), nbins=binsdefault)
-    (rango, cuentas)=(h.edges, h.wheights)
+    h=fit(Histogram, vec(datos),closed=:right,nbins=binsdefault)
+    
+    (rango, cuentas)=(h.edges, h.weights)
     tantos=length(rango)
-    # valores
+    #valores
     omega1=0
     omega2=0
     mu1=0
@@ -49,3 +56,16 @@ function otsumethod(datos::Array)
     end
     return (sigmab,tbest,varlim)
 end
+
+
+function otsuumbralizar(datos::Array)
+    # aplanar datos
+    result=zeros(size(datos))
+    umbral=otsumethod(datos)[3]
+    result=map(x->(x>umbral) ? 1 : 0, datos)
+    return result
+end
+
+
+end
+
