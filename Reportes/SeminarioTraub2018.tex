@@ -1,0 +1,131 @@
+\documentclass[serif]{beamer}
+
+%\usepackage[numberedbib]{apacite}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{natbib}
+\usepackage{bibentry}
+\bibliographystyle{apalike}
+
+
+\begin{document}
+
+\begin{frame}
+    \frametitle{The track of activity and MEAs}
+    Given a record of LFP is it possible to discover
+    some track that the neural activity traces in a meaningful
+    way?
+    \begin{center}   
+    \includegraphics[width=0.55\textwidth]{ImagenManjarrez01.jpg}
+    \end{center}
+    
+    ZC Chao et all, \emph{Effects of Random External Background Stimulation
+      on Network Synaptic Stability After Tetanization}, Neuroinformatics, 3, 2007.\\
+
+    Manjarrez et all, \emph{Computing the Center of mass for traveling alpha waves in
+  the human brain}, Brain Research 1145, 2007.   
+  \end{frame}
+
+
+   \begin{frame}
+     \frametitle{CM is good, LFP a mass is not}
+     \begin{equation}
+       \langle x_k(t) \rangle =\frac{\sum_j x_{j,k} (t) m_{j,k} (t)} {\sum_j m_{j,k}(t)}
+     \end{equation}   
+     \begin{itemize}
+       \item LFP (as most Potential measures) has no defined zero.
+       \item The Spike Density is a true density, but has an heuristic parameter.
+     \end{itemize}
+    
+     
+     \begin{tabular}{ c c }
+      \includegraphics[width=0.4\textwidth]{ComoManjarrezHaceCM01.png} &
+       \includegraphics[width=0.4\textwidth]{ComoChaoHaceCM01.png} 
+     \end{tabular}
+
+    \end{frame}
+  
+
+  \begin{frame}
+    \frametitle{A Natural density is at hand}
+    Assuming constant, isotropic propiertes of the extracellular medium:
+      \begin{equation}
+       I_m/\sigma=-\nabla^2 V
+      \end{equation}
+      \begin{equation}
+       \frac{\partial \rho}{\partial t} + \nabla \cdot \mathbf{J}=0 
+      \end{equation}
+      What about the sign?
+      The sign help us to recognize two disjoint sets of activity:
+      the Sources, and the Sinks.
+      We have two different non overlapping measures: the
+      Sink Density and the Source Density.
+  \end{frame}
+     
+     
+
+  \begin{frame}
+     \frametitle{Implementation: naïve search}
+     A direct approach proves useless, as the activity occurs at separated
+     sites along CA1 and CA3. The concave geometry of our slice
+     produces a centre of mass outside the CA, and without physiological
+     interpretation.
+
+       \begin{tabular}{ c c }
+      \includegraphics[width=0.5\textwidth]{CSDSeminarioTraub.png} &
+       \includegraphics[width=0.35\textwidth]{DiagCSDTraub.pdf} 
+     \end{tabular}
+     
+  \end{frame}
+
+    
+  
+  \begin{frame}
+     \frametitle{A Natural Decomposition}
+     Both Sink and Sources Set form patches over the interest region.
+     There is a noice level that forms a ``thick'' zero. This allows us
+     to sepparate each set into Disconnected components.
+     \begin{tabular}{ l r }
+      \includegraphics[width=0.35\textwidth]{DisjuntosUmbral.png} &
+       \includegraphics[width=0.5\textwidth]{CSDCMSemTraub.png} 
+     \end{tabular}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{CM dynamics: putative trajectories for activity}
+    Joining CM to CM at each time frame with a proximity threshold gives us
+    putative trajectories for the activity, allready separated by type (either
+    relasing or absorving positive ions of the enviroment) and
+    site.
+    \begin{center}
+      \includegraphics[width=0.55\textwidth]{TrayectoriasLimpiasNumeros01.png} 
+    \end{center}
+  \end{frame}
+
+  \begin{frame}
+    There is still work to do here, and the Devil hides in the details.
+    \begin{center}
+      \includegraphics[width=0.55\textwidth]{TrayLimpSemTraub.pdf}
+      \end{center}
+  \end{frame}
+
+
+  \begin{frame}
+    \frametitle{And now for something completely different \ldots}
+    There is other density avaible directly from the data:
+    Power density.\\
+    It also admits a decomposition into different interpretable sets:
+    a decomposition by frequency bands.
+    \begin{center}
+      \includegraphics[width=0.55\textwidth]{DisconnectedByBands01.png}
+      \end{center}
+  \end{frame}
+  
+
+ 
+%  \begin{frame}{Bibliography}
+   % \bibliographystyle{apacite}
+  %  \bibliography{BiblioReportes01}
+ % \end{frame}
+\end{document}
+
