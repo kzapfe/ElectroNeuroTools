@@ -1,5 +1,6 @@
 module SeparaActividadySaturados01
 
+using Statistics
 using HDF5
 using JLD
 
@@ -80,11 +81,11 @@ end
 function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
     #El array tiene que ser de 4096 por algo mas
     irrrelevante,largo=size(xxs)
-    aux=Array{Int32}(64,64, largo);
+    aux=Array{Int32}(undef, 64,64, largo);
     for j=1:64,k=1:64
         aux[k,j,:]=xxs[j+(k-1)*64,:]
     end
-    result=(aux*(-1)+2048)*factor;
+    result=(aux.*(-1).+2048).*factor;
     aux=0
     return result
 end
