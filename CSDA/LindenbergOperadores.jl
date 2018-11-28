@@ -30,7 +30,7 @@ function promediasobreconjunto(puntos::Set, datos::Array)
     n=0
     result=0
     for q in puntos
-        result+=datos[q[1],q[2]]
+        result+=datos[q[1],q[2],:]
         n+=1
     end
     result/=n
