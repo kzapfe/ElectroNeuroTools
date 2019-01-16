@@ -91,18 +91,22 @@ function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
 end
 
 function BuscaSaturados(datos::Array, saturavalue=1900, desde=retrazo, hasta=final)
-     #busca saturados por promedio sobre umbral
+    #busca saturados por promedio sobre umbral
+    # cambios para guardar en HDF5 y mandar jld a freir esparragos.
+    # no more Sets, only Arrays
     (alto,ancho,largo)=size(datos)
-    result=Set{Array{Int,1}}()
-    for j=1:ancho, k=1:alto
-        prom=mean(datos[k,j,desde:hasta])
-        
+    #result=Set{Array{Int,1}}()
+    result=[0::Int64 0::Int64 ]
+    for j=1:ancho, k=1:alto 
+        prom=mean(datos[k,j,desde:hasta])  
         if abs(prom)>saturavalue
-            push!(result, [k,j])
+            bla=[k j]
+            result=vcat(result, bla)
         #    println(prom," ",[k,j]," ",saturavalue," ", desde, " ",hasta)
         end
     end
-    return result
+    #result=permutedims(hcat(result[2:end,:]...), [2,1])
+    return result[2:end, :]
 end
 
 function BuscaSaturadosStd(datos::Array, ventana=50, umbral=20)
@@ -110,17 +114,20 @@ function BuscaSaturadosStd(datos::Array, ventana=50, umbral=20)
     (alto,ancho,largo)=size(datos)
     mediaventana=div(ventana,2)
     largoventanasmedias=div(largo-ventana,mediaventana)
-    result=Set{Array{Int,1}}()
+   
+    result=[0::Int64 0::Int64 ]
     for j=1:ancho, k=1:alto
         for l=1:largoventanasmedias-1
             sigma=std(datos[k,j,l*mediaventana:l*mediaventana+ventana])    
             if sigma<umbral
-                push!(result, [k,j])
+                bla=[k j]
+                result=vcat(result, bla)
                 break
             end
         end
     end
-    return result
+    
+    return result[2:end, :]
 end
 
 
@@ -133,14 +140,17 @@ function BuscaCanalRespActPot(datos::Array,freq::Number, tini=tiempopostgolpe, u
     taux1=round(Int, ceil(0.5*freq))
     taux2=round(Int,ceil(8*freq))
     desviacionpostgolpe=std(datosaux[taux1:taux2])
-    result=Set{Array{Int,1}}()
+   
+    result=[0::Int64 0::Int64 ]
     for j=1:ancho, k=1:alto
         fondo=minimum(vec(datosaux[k,j,:]))
         if fondo<umbral && fondo>umbralsaturacion &&desviacionpostgolpe>10
-            push!(result,[k,j])
+            bla=[k j]
+            result=vcat(result,bla)
         end
     end
-    return result
+   
+    return result[2:end, :]
 end
 
 

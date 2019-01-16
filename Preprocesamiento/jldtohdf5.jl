@@ -31,7 +31,7 @@ function deSetaArray!(xname::String, datostotal::Dict)
     for i in datos
         push!(aux1, i)
     end
-    aux2=transpose(hcat(aux1[2:end,:]...))
+    aux2=permutedims(hcat(aux1[2:end,:]...), [2,1])
     aux3=convert(Array{Int64, 2 }, aux2)
     datostotal[xname]=aux3
     return "¡Has modificado el dato catalogado como "*xname*"!"
