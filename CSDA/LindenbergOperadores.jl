@@ -30,10 +30,10 @@ function promediasobreconjunto(puntos::Set, datos::Array)
     n=0
     result=0
     for q in puntos
-        result+=datos[q[1],q[2],:]
+        result=result.+datos[q[1],q[2],:]
         n+=1
     end
-    result/=n
+    result=result./n
     return result
 end
 
@@ -65,7 +65,7 @@ function GaussSuavizarTemporal(Datos,Sigma=3)
 
     medioancho=ceil(Sigma*3)
     colchon=ones(medioancho)
-    result=zeros(Datos)
+    result=zeros(size(Datos))
     datoscolchon=vcat(colchon*Datos[1], Datos, colchon*Datos[end])
     kernel=map(x->UnNormGauss(x,Sigma), collect(-medioancho:medioancho))
     kernel=kernel/(sum(kernel))
@@ -91,7 +91,7 @@ GaussianKernel=[0.00000067	0.00002292	0.00019117	0.00038771	0.00019117	0.0000229
 
 function GaussianSmooth(Datos)
     tamanodatos=size(Datos)
-    result=zeros(Datos)
+    result=zeros(tamanodatos)
     temp=copy(Datos)
     (mu, lu)=size(Datos)
     #Primero, hacemos el padding con copia de los datos para que no se suavice demasiado
@@ -125,17 +125,18 @@ LaplacianTerm2=[[0.5 0 0.5]; [0 -2 0]; [0.5 0 0.5]]
 LaplacianKernel=(1-1/3)*LaplacianTerm1+(1/3)*LaplacianTerm2
 
 function DiscreteLaplacian(Datos)
-    result=zeros(Datos)
+    
     temp=copy(Datos)
     (mu,lu)=size(Datos)
+    
     izq=reshape(temp[1,:],(1,lu))
     der=reshape(temp[end,:],(1,lu))
     #Primero, hacemos el padding con copia de los datos para que no se suavice demasiado
     temp=vcat(izq, temp, der)
     temp=hcat(temp[:,1], temp, temp[:,end])
     largo,ancho=size(temp)
-    aux=Array{Float32}(3,3)
-    result=zeros(temp)
+    aux=Array{Float32}(undef, 3,3)
+    result=zeros(size(temp))
     for j=2:largo-1, k=2:ancho-1
         #los indices van primero, "renglones", luego "columnas", etc
         aux=temp[j-1:j+1,k-1:k+1]

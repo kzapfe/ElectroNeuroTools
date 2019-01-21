@@ -9,38 +9,36 @@ y, optativamente, una lista de electrodos inusables ("saturados").
 
 
 #Los operadores Diferenciales Numericos estan definidos en otro archivo.
-using JLD
-include("LindenbergOperadores.jl")
-importall LindenbergOperadores
+using HDF5
+push!(LOAD_PATH, ".")
+using LindenbergOperadores ParaSets
 
 
 
 if length(ARGS)==0
-    error("Dar el nombre de un archivo *.jld para analizar")
+    error("Dar el nombre de un archivo *.h5 para analizar")
 else
     archivo=ARGS[1]
     println("Voy a trabajar con el archivo ", archivo)
 end
 
-arx=load(archivo)
-
+arx=h5open(archivo)
 
 #Los datos para trabajar
 
-if haskey(arx, "LFPSaturados")
-    LFP=arx["LFPSaturados"]
-else
-    LFP=arx["LFPTotal"]
-end
-saturados=arx["CanalesSaturados"]
-respuestas=arx["Canalesrespuesta"];
-frecuencia=arx["freq"]
-#retrazo=load(archivo)["retrazo"]
 
-#quitemos la terminacion de los nombres de archivo
-palabra=replace(archivo,".jld", "")
-println(palabra)
-#palabrita=replace(palabra,"otroIntento", "")
+if in("LFPSaturados", elementos)
+    LFP=read(arx["LFPSaturados"])
+else
+    LFP=read(arx["LFPTotal"])
+end
+saturadosarray=read(arx["CanalesSaturados"])
+respuestasarray=read(arx["Canalesrespuesta"]);
+frecuencia=read(arx["freq"])
+close(arx)
+
+saturados=arraytoset(saturadosarray)
+respuestas=arraytoset(respuestasarray)
 
 
 #Una copia del LFP para trabajar sobre ella
@@ -90,13 +88,9 @@ for t=1:lu
 end
 CSD=-aux2
 
-#Descartamos variables auxiliares
-lfpParchado=0
-aux1=0
-aux2=0
 
-#Observa que vas a guardar en el mismo archivo todo. 
-paguardar=load(archivo)
-paguardar["CSDLindenberg"]=CSD
-save(archivo,paguardar)
+h5open(archivo, "r+") do file
+    write(file, "CSDALindenberg", CSD)  # alternatively, say "@write file A"
+end
+
 
