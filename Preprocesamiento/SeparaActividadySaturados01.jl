@@ -132,13 +132,16 @@ end
 
 
 
-function BuscaCanalRespActPot(datos::Array,freq::Number, tini=tiempopostgolpe, umbral=-100, umbralsaturacion=-1500)
+function BuscaCanalRespActPot(datos::Array,freq::Number, tini=0.5,
+                              tfin=8,
+                              umbral=-100, umbralsaturacion=-1500)
     #Busquemos los canales con probable respuesta de potencial de accion
     (ancho,alto,largo)=size(datos)
+    cini=round(Int, ceil(tini*freq))
     datosaux=datos[:,:,tini:largo] #fuera de la accion maxima del potencial de accion.
     #tiempos post golpe para ver si el canal esta pegado en un valor
-    taux1=round(Int, ceil(0.5*freq))
-    taux2=round(Int,ceil(8*freq))
+    taux1=round(Int, ceil(tini*freq))
+    taux2=round(Int,ceil(tfin*freq))
     desviacionpostgolpe=std(datosaux[taux1:taux2])
    
     result=[0::Int64 0::Int64 ]
@@ -153,5 +156,5 @@ function BuscaCanalRespActPot(datos::Array,freq::Number, tini=tiempopostgolpe, u
     return result[2:end, :]
 end
 
+end #module
 
-end
