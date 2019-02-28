@@ -85,20 +85,23 @@ function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
     for j=1:64,k=1:64
         aux[k,j,:]=xxs[j+(k-1)*64,:]
     end
-    result=(aux.*(-1).+2048).*factor;
+    result=(aux.-2048).*factor;
     aux=0
     return result
 end
 
-function BuscaSaturados(datos::Array, saturavalue=1900, desde=retrazo, hasta=final)
+function BuscaSaturados(datos::Array, freq::Number, saturavalue=1900,
+                        desde=0.5, hasta=10)
     #busca saturados por promedio sobre umbral
     # cambios para guardar en HDF5 y mandar jld a freir esparragos.
     # no more Sets, only Arrays
     (alto,ancho,largo)=size(datos)
+    cini=round(Int, ceil(desde*freq))
+    cfin=round(Int, ceil(hasta*freq))
     #result=Set{Array{Int,1}}()
     result=[0::Int64 0::Int64 ]
     for j=1:ancho, k=1:alto 
-        prom=mean(datos[k,j,desde:hasta])  
+        prom=mean(datos[k,j,cini:cfin])  
         if abs(prom)>saturavalue
             bla=[k j]
             result=vcat(result, bla)
@@ -109,9 +112,11 @@ function BuscaSaturados(datos::Array, saturavalue=1900, desde=retrazo, hasta=fin
     return result[2:end, :]
 end
 
-function BuscaSaturadosStd(datos::Array, ventana=50, umbral=20)
+function BuscaSaturadosStd(datos::Array, ventms=7, umbral=20)
+    #ventms es la ventana en milisegundos
     #busca saturardos por desviación por ventana por umbral
     (alto,ancho,largo)=size(datos)
+    ventana=round(Int, ceil(freq*ventms))
     mediaventana=div(ventana,2)
     largoventanasmedias=div(largo-ventana,mediaventana)
    
@@ -121,8 +126,7 @@ function BuscaSaturadosStd(datos::Array, ventana=50, umbral=20)
             sigma=std(datos[k,j,l*mediaventana:l*mediaventana+ventana])    
             if sigma<umbral
                 bla=[k j]
-                result=vcat(result, bla)
-                break
+                result=vcat(result, b                break
             end
         end
     end
@@ -134,27 +138,36 @@ end
 
 function BuscaCanalRespActPot(datos::Array,freq::Number, tini=0.5,
                               tfin=8,
-                              umbral=-100, umbralsaturacion=-1500)
+                              maxvolt=-100, minvolt=-1500, 
+        minstd=10, maxstd=35)
     #Busquemos los canales con probable respuesta de potencial de accion
     (ancho,alto,largo)=size(datos)
     cini=round(Int, ceil(tini*freq))
-    datosaux=datos[:,:,tini:largo] #fuera de la accion maxima del potencial de accion.
-    #tiempos post golpe para ver si el canal esta pegado en un valor
+
     taux1=round(Int, ceil(tini*freq))
     taux2=round(Int,ceil(tfin*freq))
-    desviacionpostgolpe=std(datosaux[taux1:taux2])
-   
+    
+    println("Estoy buscando del cuadro " , taux1, " al , ", taux2)
+    
     result=[0::Int64 0::Int64 ]
     for j=1:ancho, k=1:alto
-        fondo=minimum(vec(datosaux[k,j,:]))
-        if fondo<umbral && fondo>umbralsaturacion &&desviacionpostgolpe>10
+        fondo=minimum(vec(datos[k,j,taux1:taux2]))
+        dpgs=std(datos[k,j,taux1:taux2])
+
+        if  (maxvolt >fondo>minvolt) && ( maxstd > dpgs > minstd)
+            print(dpgs, " ")
             bla=[k j]
             result=vcat(result,bla)
         end
     end
+
+    #= Esta rutina no es muy confiable. Solo da buenos resultados
+    con actividad evocada. Necesitamos algo mas estricto =#
    
     return result[2:end, :]
 end
 
-end #module
 
+                                                          
+
+end #module
