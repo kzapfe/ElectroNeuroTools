@@ -1,4 +1,4 @@
-module SeparaActividadySaturados01
+module PreprocTools
 
 using Statistics
 using HDF5
