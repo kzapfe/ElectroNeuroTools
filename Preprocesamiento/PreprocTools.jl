@@ -6,6 +6,22 @@ using JLD
 
 export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaCanalRespActPot, desviacionventanas
 
+#= Muchas funciones aqui presentes son para limpiar,
+manipular, cortar y suavizar datos. Ellas dependen
+del parametero de la frecuencia de muestreo de
+un experimento. Damos el valor por omision
+de 17.8555 kHz, que es el del modelo del BrainWave BioCam 2017.
+Hay que tener esto presente.
+
+Las funciones afectadas son:
+
+desviacionventanas
+tari
+
+=#
+
+ # no exportar esto, es para uso interno
+deffreq=17.8555 # freq por omision para BrainWave BioCam 2017.
 
 function AbreyCheca(x::String)
     #Abre el archivo de brw (acepta el nombre tal cual)
@@ -47,7 +63,7 @@ function EncuentraTrancazosRaw(datos::Array, tolerancia=1400)
     return result
 end
 
-function ActivAlrededorTrancazo(Lista::Array, xxs::Array, freq::Number)
+function ActivAlrededorTrancazo(Lista::Array, xxs::Array, freq=deffreq)
     #Aqui no se le ha hecho reshape a las matrices todavia
     result=Dict{AbstractString, Array}()
     q=1
@@ -62,7 +78,7 @@ function ActivAlrededorTrancazo(Lista::Array, xxs::Array, freq::Number)
     return result
 end
 
-function ActividadFueraTrancazo(Lista::Array, xxs::Array, freq::Number)
+function ActividadFueraTrancazo(Lista::Array, xxs::Array, freq=deffreq)
     q=1
     desde=round(Int, ceil(5*freq))
     hasta=round(Int, ceil(30*freq))
@@ -90,7 +106,7 @@ function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
     return result
 end
 
-function BuscaSaturados(datos::Array, freq::Number, saturavalue=1900,
+function BuscaSaturados(datos::Array, freq=deffreq, saturavalue=1900,
                         desde=0.5, hasta=10)
     #busca saturados por promedio sobre umbral
     # cambios para guardar en HDF5 y mandar jld a freir esparragos.
@@ -112,7 +128,7 @@ function BuscaSaturados(datos::Array, freq::Number, saturavalue=1900,
     return result[2:end, :]
 end
 
-function BuscaSaturadosStd(datos::Array, ventms=7, umbral=20)
+function BuscaSaturadosStd(datos::Array, freq=deffreq, ventms=7, umbral=20)
     #ventms es la ventana en milisegundos
     #busca saturardos por desviación por ventana por umbral
     (alto,ancho,largo)=size(datos)
@@ -136,10 +152,10 @@ end
 
 
 
-function BuscaCanalRespActPot(datos::Array,freq::Number, tini=0.5,
+function BuscaCanalRespActPot(datos::Array,freq=deffreq, tini=0.5,
                               tfin=8,
                               maxvolt=-100, minvolt=-1500, 
-        minstd=10, maxstd=35)
+                              minstd=10, maxstd=35)
     #Busquemos los canales con probable respuesta de potencial de accion
     (ancho,alto,largo)=size(datos)
     cini=round(Int, ceil(tini*freq))
@@ -168,7 +184,7 @@ function BuscaCanalRespActPot(datos::Array,freq::Number, tini=0.5,
 end
 
 
-function desviacionventanas(data,ventmiliseg=100)
+function desviacionventanas(data, ventmiliseg=100, freq=deffreq)
     ventana=round(Int, ventmiliseg*freq)
     longi=length(data)
     longicorrected=div(longi,ventana)
@@ -178,5 +194,76 @@ function desviacionventanas(data,ventmiliseg=100)
     end
     return result
 end                                                          
+
+
+function tari(it,ft, freq=17.8555)
+    # funtion que pasa de tiempo en ms a intervalos enteros de indices
+    auxi=round(Int, it*freq)
+    auxf=round(Int, ft*freq)
+    result=auxi:auxf
+end
+
+
+function mediamov(trazo::Array, ms=0.5, freq=deffreq)
+#Media Movil es el termino en español para moving Average.    
+# funcion que promedia cada punto sobre sus vecinos, avanzando
+    
+    l=length(trazo)
+    nv=round(Int,ms*freq)
+    cabeza=repeat([trazo[1]],nv)ege
+    cola=repeat([trazo[end]],nv)
+    aux=vcat(cabeza,trazo,cola)
+    result=zeros(l)
+    for j=1:l
+        result[j]=mean(aux[j:j+nv*2])
+    end
+    return result 
+end
+
+
+gauss(x, sigma)=exp(-(x/sigma)^2/2) #gaussiana en cuadros enteros
+    
+
+function pesosgauss(desv::Real,n::Int)
+    # arreglo de pesos gaussianos
+    g=zeros(2*n+1)
+    for j=-n:n
+        g[j+n+1]=gauss(j,desv)
+    end
+    return g
+end
+        
+function suavegauss(trazo::Array, ms=0.5, freq=deffreq)
+    # funcion que promedia cada punto sobre sus vecinos,
+    # pero con peso gaussiano
+    #ms es la desviacion o medio ancho en ms
+
+    #= una desviacion en  x ms equivale a un filtro guassiano con
+    # medio corte (es decir desviacion en kHz) de  1/(2 pi  x)
+    e.g. 1ms va dar un filtro de 159.16 Hz de medio corte.
+    e.g. 0.05 ms nos va dar practicamente un muestro igual al original (17kHz)
+    =#
+    aux=trazo   
+    # la sigma NO tiene porque ser entera, pero los cuadros si
+    sigma=ms*freq
+    cuatronv=round(Int, ceil(4*sigma)) # ¿que tan precisa la cola?
+    pesos=pesosgauss(sigma,cuatronv)
+    pesoT=sum(pesos)
+    l=length(trazo)
+    cabeza=repeat([trazo[1]],cuatronv)
+    cola=repeat([trazo[end]],cuatronv)
+    aux=vcat(cabeza,trazo,cola)
+    result=zeros(l)
+    for j=1:l
+        for k=0:cuatronv
+        result[j]+=aux[j+k]*pesos[k+1]
+        end
+    end
+    result=result./pesoT
+    return result 
+
+    
+end
+
 
 end #module
