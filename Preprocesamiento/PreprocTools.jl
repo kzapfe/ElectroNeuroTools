@@ -128,23 +128,42 @@ function BuscaSaturados(datos::Array, freq=deffreq, saturavalue=1900,
     return result[2:end, :]
 end
 
-function BuscaSaturadosStd(datos::Array, freq=deffreq, ventms=7, umbral=20)
+function BuscaSaturadosStd(datos::Array, ini, fin,
+                           freq=deffreq, umbral=30)
     #ventms es la ventana en milisegundos
     #busca saturardos por desviación por ventana por umbral
     (alto,ancho,largo)=size(datos)
-    ventana=round(Int, ceil(freq*ventms))
-    mediaventana=div(ventana,2)
-    largoventanasmedias=div(largo-ventana,mediaventana)
-   
+    cini=round(Int, ceil(freq*ini))
+    cfin=round(Int, ceil(freq*fin))
     result=[0::Int64 0::Int64 ]
-    for j=1:ancho, k=1:alto
-        for l=1:largoventanasmedias-1
-            sigma=std(datos[k,j,l*mediaventana:l*mediaventana+ventana])    
-            if sigma<umbral
-                bla=[k j]
-                result=vcat(result, bla)
-            end
+    for j=1:ancho, k=1:alto        
+        sigma=std(datos[k,j,cini:cfin])    
+        if sigma>umbral
+            bla=[k j]
+            result=vcat(result, bla)
         end
+        
+    end
+    
+    return result[2:end, :]
+end
+
+
+function BuscaRuidosos(datos::Array, ini, fin,
+                           freq=deffreq, umbral=120, tantos=3)
+    #ventms es la ventana en milisegundos
+    #busca saturardos por desviación por ventana por umbral
+    (alto,ancho,largo)=size(datos)
+    cini=round(Int, ceil(freq*ini))
+    cfin=round(Int, ceil(freq*fin))
+    result=[0::Int64 0::Int64 ]
+    for j=1:ancho, k=1:alto        
+        pasados=findall(x-> x>umbral, datos[j,k,cini:cfin])
+        if length(pasados)>tantos
+            bla=[k j]
+            result=vcat(result, bla)
+        end
+        
     end
     
     return result[2:end, :]
@@ -158,8 +177,6 @@ function BuscaCanalRespActPot(datos::Array,freq=deffreq, tini=0.5,
                               minstd=10, maxstd=35)
     #Busquemos los canales con probable respuesta de potencial de accion
     (ancho,alto,largo)=size(datos)
-    cini=round(Int, ceil(tini*freq))
-
     taux1=round(Int, ceil(tini*freq))
     taux2=round(Int,ceil(tfin*freq))
     
@@ -169,9 +186,9 @@ function BuscaCanalRespActPot(datos::Array,freq=deffreq, tini=0.5,
     for j=1:ancho, k=1:alto
         fondo=minimum(vec(datos[k,j,taux1:taux2]))
         dpgs=std(datos[k,j,taux1:taux2])
-
+       
         if  (maxvolt >fondo>minvolt) && ( maxstd > dpgs > minstd)
-            print(dpgs, " ")
+           #  print(dpgs, " ")
             bla=[k j]
             result=vcat(result,bla)
         end
@@ -181,6 +198,12 @@ function BuscaCanalRespActPot(datos::Array,freq=deffreq, tini=0.5,
     con actividad evocada. Necesitamos algo mas estricto =#
    
     return result[2:end, :]
+end
+
+
+function quitasatura(buenos::Array, malos::Array)
+    # quitemos del array de pares bueno los malos #
+    return 0
 end
 
 
@@ -243,12 +266,11 @@ function suavegauss(trazo::Array, ms=0.5, freq=deffreq)
     e.g. 1ms va dar un filtro de 159.16 Hz de medio corte.
     e.g. 0.05 ms nos va dar practicamente un muestro igual al original (17kHz)
     =#
-    aux=trazo   
+    
     # la sigma NO tiene porque ser entera, pero los cuadros si
     sigma=ms*freq
     cuatronv=round(Int, ceil(4*sigma)) # ¿que tan precisa la cola?
-    pesos=pesosgauss(sigma,cuatronv)
-    pesoT=sum(pesos)
+    pesos=pesosgauss(simg    pesoT=sum(pesos)
     l=length(trazo)
     cabeza=repeat([trazo[1]],cuatronv)
     cola=repeat([trazo[end]],cuatronv)
