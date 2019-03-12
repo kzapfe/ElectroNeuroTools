@@ -26,31 +26,72 @@
 
 \section{Introduction}
 
-Spatially tracking the activity of electro-physiological data in a concise, rigorous and interpretable manner poses a challenging problem. Measurement recordings are usually presented first as a series of traces that correspond each to a sampling point on the tissue. As Micro Electrode Arrays (MEAs) become denser, this representation of the data becomes saturated and the discovery of patterns turns into a difficult task. Novel information is obfuscated by the same high density acquisition that allows us to discover it. Representing  the recorded data in ways which can unveil previously obfuscated information is a necessity. Various techniques for separation of functional generators are available now, most come from the application of blind source separation analysis, such as ICA. 
-Our task in this paper is to present a method for tracing out ``functional connectivity'', which would bring independent information that is complementary to those analysis.  Our  method would be applicable mostly to activity in highly structured neural tissue. We shall exemplify it by application to the data obtained from recordings of the rats hippocampus, taking advantage of its lamminar
-orderer structure. 
+Spatially tracking succesive activity of electro-physiological data in a concise,
+rigorous and interpretable manner poses a challenging problem. Measurement recordings
+are usually presented first as a series of traces that correspond each to a sampling
+point on the tissue. As Micro Electrode Arrays (MEAs) become denser, this representation
+of the data becomes saturated and the discovery of patterns turns into a difficult task.
+Novel information is obfuscated by the same high density acquisition that allows us to
+discover it. Representing  the recorded data in ways which can unveil previously
+invisible patterns is a necessity. Various techniques for separation of functional
+generators are available now, most derived from the application of blind source
+separation analysis, such as ICA. 
+Our task in this paper is to present a method for tracing out
+``functional local connectivity'', which would bring independent information
+that is complementary to those analysis.  Our  method would be applicable mostly to
+activity in highly structured neural tissue. We shall exemplify it by application to
+the data obtained from recordings of the rats hippocampus, taking advantage of its lammiar orderer structure. 
 
-Succesive activation  of distinct nearby units on structured tissue would trace a ``trajectory'' of the activity. A tracing of such trajectories would help to indicate causal or correlated ``functional conections'' over the tissue. Neighbouring neurons that fire in succesion, integrated subthreshold activity and ephaptic coupling could all be represented as pathways for transmission of activity. Nevertheless, how to define and acquire the putative paths is an open question.
+Local field potential can be regarded as produced by local multiunitary activity.
+A patch of simultaneous, similar, nearby traces can be regarded as one of those
+multiunitary elements. 
+Succesive activation  of distinct neighbouring elements on structured
+tissue would trace a
+``trajectory'' of the activity. A tracing of such trajectories would help to indicate
+causal or correlated ``functional local conections'' over the tissue. Neighbouring
+neurons that fire in succesion, integrated subthreshold activity and ephaptic coupling
+could all be represented as pathways for transmission of activity. Nevertheless,
+how to define and acquire the putative paths is an open question.
 
-In previous works some form of vector averaging has been proposed and shown to reveal some trajectrories drawn by the activity. We shall call such methods Center of Mass Analyses (CMA).  The \emph{wheights} that have been chosen for obtaining the average have been selected on heuristic grounds. In the works of Chao \emph{et al.} \cite{Chao05, Chao07}, the density of spikes in a certain time interval was used, a sort of ``density of action'', while Manjarrez \emph{et al.} \cite{Manjarrez07, Manjarrez09} used the positive half of the LFP recording as their weight. 
+In previous works some form of vector averaging has been proposed and shown to reveal some trajectrories drawn by the activity. We shall call such methods Center of Mass Analyses (CMA).  The ``wheights'' that have been chosen for obtaining the average have been selected on heuristic grounds. In the works of Chao \emph{et al.} \cite{Chao05, Chao07}, the density of spikes in a certain time interval was used, a sort of ``averaged density of action'', while Manjarrez \emph{et al.} \cite{Manjarrez07, Manjarrez09} used the positive half of the LFP recording as their weight. 
 Here we advance on such methods by incorporating mathematically sound definitions and concepts which allow us to rigorously separate spatially distinct traces. Our weight is actually the natural density function provided by the data: the Current Source Density. This representation not only provides a mathematical rigorous  measure for the weights in the vector averaging process, but helps to separate the data into disjoint components. This allows us to track separate process in the same region of interest (r.o.i.) by tracking sepparately the poles of action: influx and eflux of charged ions. 
 
 The application of the method requires electro-physiological data acquired through bi-dimensional MEAs, although the extension to three dimensional arrays would be possible in principle. The MEA should have dense enough spatial and temporal samplings, so as to obtain good estimates of the CSD and their changes in time.
 
-Our method permits us to map possible trajectories of activity inside structured neuronal tissue, without requiring ad hoc geometric constraints. As a prime example, non-convex structures which may show simultaneous activity in separate parts could test the robustness of our method. We have tested then the method on slices of rat's hippocampus, concentrating in the CA region. We exemplify the usage of the method with data that has been obtained by an experiment with ...\textbf{bla bla bla describr experimentos}.
+Our method permits us to map possible trajectories of activity inside structured neuronal tissue, without requiring ad hoc geometric constraints. As a prime example, non-convex structures which may show simultaneous activity in separate parts could show the robustness of our method. We have tested then the method on slices of rat's hippocampus, concentrating in the CA region. We exemplify the usage of the method with data that has been obtained by an experiment with ...\textbf{bla bla bla describr experimentos}.
 
 
 
 
-\section{Method and Calculations}
+\section{Methods and Calculations}
+
+\subsection{Preprocessing}
+
+After aquiring data from experiment, we pass the data through some preprocessing
+routines. For the most part, these serve to detect and discard unusable channels,
+such as saturated or failling electrodes. These vary from data set to data set,
+as they can be produced by bubbles or by saturation after electrical stimulation.
+We call this step the elimination of bad channels. We use a simple criterion for this:
+if the absolute value of the signal is above certain threshold (wich must be
+adjusted for evocated vs spontaneous acttivity) or if the standar deviation is
+larger than certain heuristically determined value, the channel is discarded.
+A similar but orthogonal criterium can be used for detection of channels with
+spikes. 
+
+
 
 
 \subsection{CSD for high density MEAS}
 
-The concepts presented here require first obtaining the CSD from the recorded LFP. Any method would present the same utility. The first method is a  finite difference operator, while the second is the kCSDA presented by Potworowski \emph{et all} \cite{Potworowski2011}, which is an inverse problem approach.  Where both methods are usable, we prefer the former, as is faster and requires less assumptions. We present both methods and show the robustness of the result for the Center of Mass tracking. 
+The concepts presented here require first obtaining the CSD from the recorded LFP. Any method would present the same utility. The first method is a  finite difference operator, while the second is the kCSDA presented by Potworowski \emph{et all} \cite{Potworowski2011}, which is an inverse problem approach.  Where both methods are usable, we prefer the former, as is faster and requires less assumptions. We have used both methods, kCSDA where
+the difference method is not applicable. The results are
+independent of the method save for multiplicative factor, which
+are irrelevant in the Center of Mass tracking. 
 
 Thanks to the density and scales of the BioCAM 4096, a numerical finite difference method
-can give a good approximation to the CSD, if the number of failing channels is low. For experiments that were made without electrical stimulation this was the case, where the order of saturated or otherwise failing electrodes was around 10.  A  numerical Laplacian Operator which reduces the cross effect of rectangular grids is the convolution of the data with the following matrix \cite{Lindberg90}:
+can give a good approximation to the CSD, if the number of failing channels is low or
+are outside the r.o.i.
+For experiments that were made without electrical stimulation this turned out to be true, with the order of saturated or otherwise failing electrodes in the tens.  A  numerical Laplacian Operator which reduces the cross effect of rectangular grids is the convolution of the data with the following matrix \cite{Lindberg90}:
 \begin{equation}
 \nabla^2_{1/3}=2/3
 \begin{pmatrix}
