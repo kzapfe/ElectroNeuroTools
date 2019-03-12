@@ -4,7 +4,7 @@ using Statistics
 using HDF5
 using JLD
 
-export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaCanalRespActPot, desviacionventanas
+export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, BuscaCanalRespActPot, desviacionventanas
 
 #= Muchas funciones aqui presentes son para limpiar,
 manipular, cortar y suavizar datos. Ellas dependen
@@ -270,7 +270,8 @@ function suavegauss(trazo::Array, ms=0.5, freq=deffreq)
     # la sigma NO tiene porque ser entera, pero los cuadros si
     sigma=ms*freq
     cuatronv=round(Int, ceil(4*sigma)) # ¿que tan precisa la cola?
-    pesos=pesosgauss(simg    pesoT=sum(pesos)
+    pesos=pesosgauss(sigma, cuatronv)
+    pesoT=sum(pesos)
     l=length(trazo)
     cabeza=repeat([trazo[1]],cuatronv)
     cola=repeat([trazo[end]],cuatronv)
