@@ -2,9 +2,8 @@ module PreprocTools
 
 using Statistics
 using HDF5
-using JLD
 
-export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, BuscaCanalRespActPot, desviacionventanas
+export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, BuscaCanalRespActPot, desviacionventanas, tari, mediamov, gauss, pesosgauss, suavegauss
 
 #= Muchas funciones aqui presentes son para limpiar,
 manipular, cortar y suavizar datos. Ellas dependen
@@ -200,12 +199,8 @@ function BuscaCanalRespActPot(datos::Array,freq=deffreq, tini=0.5,
     return result[2:end, :]
 end
 
-
-function quitasatura(buenos::Array, malos::Array)
-    # quitemos del array de pares bueno los malos #
-    return 0
-end
-
+## Funciones mas numericas, que tienen que ver con
+## suavizar o resumir datos
 
 function desviacionventanas(data, ventmiliseg=100, freq=deffreq)
     ventana=round(Int, ventmiliseg*freq)
@@ -287,6 +282,7 @@ function suavegauss(trazo::Array, ms=0.5, freq=deffreq)
 
     
 end
+
 
 
 end #module
