@@ -228,7 +228,7 @@ function mediamov(trazo::Array, ms=0.5, freq=deffreq)
     
     l=length(trazo)
     nv=round(Int,ms*freq)
-    cabeza=repeat([trazo[1]],nv)ege
+    cabeza=repeat([trazo[1]],nv)
     cola=repeat([trazo[end]],nv)
     aux=vcat(cabeza,trazo,cola)
     result=zeros(l)
