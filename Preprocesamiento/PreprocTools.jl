@@ -31,7 +31,7 @@ function AbreyCheca(x::String)
     maxvolt=archivo["/3BRecInfo/3BRecVars/MaxVolt"][1][1]
     minvolt=archivo["/3BRecInfo/3BRecVars/MinVolt"][1][1]
     bitdepth=archivo["/3BRecInfo/3BRecVars/BitDepth"][1][1]
-    inversion=archivo["SignalInversion"][1][1]
+    inversion=archivo["/3BRecInfo/3BRecVars/SignalInversion"][1][1]
     duracionexperimento=numcuadros/frecuencia
     factordeescala=(maxvolt-minvolt)/2^bitdepth*inversion
     DatosCrudos=read(archivo["/3BData/Raw"])
