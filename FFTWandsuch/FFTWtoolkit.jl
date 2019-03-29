@@ -21,7 +21,7 @@ function indicecercano(a::Number, freqs::StepRangeLen)
     return result
 end
 
-function filtrobanda(freqs, yys::Array, a::Float64, b::Float64 )
+function filtrobanda(freqs, yys::Array, a::Real, b::Real )
     #filtro pasa banda para DFT anular con rango [0, freqmax)
     if a>b
         b,a=a,b
