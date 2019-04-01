@@ -220,14 +220,18 @@ Once the separation into sinks and sources has been made, we would have two dens
 
 \subsection{CSD and Disconnected Components}
 
-A first visual inspection of the CSD color map at a given instant in time shows that both sources and sinks appear in rather large and significant patches. These appear to correspond to the expected double and triple poles of firing neurons in structured tissue \cite{Buzsaki2012} and inspired us to separate the sink and source  sets into their \emph{disconnected components}. This concept is used in mathematics to denote subsets of a given geometric set that do not touch each other  \cite{Halmos}. Their rough correspondence to poles of firing neurons would be most useful in tracking the successive locus of the activity.
+A first visual inspection of the CSD color map at a given instant in time shows that both sources and sinks appear in rather large and significant patches, with typical
+cross lengths around somo 150 $\mu m$.
+
+These appear to correspond to the expected poles of firing neurons in structured tissue \cite{Buzsaki2012} and inspired us to separate the sink and source  sets into their \emph{disconnected components}. This concept is used in mathematics to denote subsets of a given geometric set that do not touch each other  \cite{Halmos}. Their rough correspondence to poles of firing neurons is most useful in tracking the successive locus of the activity.
 
 
 To clarify the concept and how we are we using it an example is in order. In figure \ref{disconnectedsets} A we show geometrical sets enclosed by simple curves as color patches, where every color indicates a Set. The set $A$ consists of a single connected component, that means that one can make  path between any two points in the set that consist entirely of points of the same set. In contrast, the set $B$ is made of two disconnected components, labeled $B1$ and $B2$. If one chooses a point in each of the components, one cannot draw a path joining them without leaving the set. But each one of those components is connected, meaning that if we choose the pair of points in one component, then again we can trace a path joining them in the set. So the set $B$ consists of two disconnected components, but each component can be regarded as a connected set on their own. Likewise the set $C$ is made of three disconnected components. In the subfigure \ref{disconnectedsets} Aiii we show the center of mass of the sets. The set $A$ is concave, so, it can have a center of mass outside the set. The
 set $B$ has also a center of mass outside the set. It has two disconnected components that are aproximatelly
-equal and separated by a long distance (this is not an implication: a set can be disjoint and have
-a CM inside the set). For the set $C$ our aproach has been used: we treat every disjoint component of the
-set as an independent entity and calculate the center of mass for each one. Notice that this doesn't preclude the posibility of having a concave subset with a CM that lies outside. But, as we shall see,
+equal and separated by a long distance (this is not an implication: a set can be disconnected and have
+a CM inside the set). For the set $C$ our aproach has been used: we treat every disconnected component of the
+set as an independent entity and calculate the center of mass for each one. Notice that this doesn't preclude t
+he posibility of having a concave subset with a CM that lies outside. But, as we shall see,
 as the electrode resolution is finite, the posibility of having highly non compact shapes is unlikely, and they
 tend to have a CM inside or near their borders. In the figure \ref{disconnectedsets} B we show this with experimental
 data (we are using evoked activity data, as explained in section \ref{sec:evocada}). In graph Bi we
@@ -237,6 +241,9 @@ the biggest two are not strictly convex but they have tolerable deviations from 
 subfigure Biii we indicate the CM of only those components that are above certain threshold of
 integrated intensity (the dot is proportional in area to such intensity, there are five CM to be
 seen). Each CM gets listed as a probable step in a trajectory.
+
+
+%%%% *********** Vas aqui
 
 \begin{figure}
   \includegraphics[width=0.9\textwidth]{Figuras/Disjuntos01.pdf}
