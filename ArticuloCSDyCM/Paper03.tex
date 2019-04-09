@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
@@ -9,9 +9,13 @@
 \usepackage{courier}
 
 \usepackage{setspace}
+\usepackage{lineno} %ambos paquetes para borrador
+
 \usepackage{graphicx}
 \usepackage{longtable}
 
+\doublespacing
+\linenumbers
 
 \DeclareMathOperator{\arcsinh}{arcsinh}
 \newcommand{\rd}{\mathrm{d}}
@@ -243,56 +247,106 @@ integrated intensity (the dot is proportional in area to such intensity, there a
 seen). Each CM gets listed as a probable step in a trajectory.
 
 
-%%%% *********** Vas aqui
+
 
 \begin{figure}
   \includegraphics[width=0.9\textwidth]{Figuras/Disjuntos01.pdf}
-  \caption{ Explanation of the geometrical concepts used on our analysis. In subfigure A we show
-    with an artificial example the concepts of connectedness and convexivity. The subfigure Ai shows
-    three sets, $A$, $B$, and $C$. $A$ fails to be convex because it is concave, and $C$ fails to be
-    be convex because it is made of two disconnected components. In each of them is possible to draw a line
-    connecting two points inside the set that is not entirely inside the set. In $B$ that is not possible, the set $B$ is convex in a mathematical sense. In subfigure Aii we made some modification to show that
-    each set can be made of many disconnected components, and each one of them can be convex or not.  In Aiii we show the center of mass for $A$ and $B$ taken as a whole, while for $C$ we break the set into each of the disjoint components and calculate each CM separately. There is no guarantee that each disconnected component would be convex, but as the resolution of the data is finite,  small components are more likely to
-    be convex. In figure B we show everything with a frame of experimental data. In Bi we sepparate the
-    data into three sets, Sources, Sinks, and Zeros. We discard the Zeros and keep the active ones.
+  \caption{ Explanation of the geometrical concepts used on our analysis.
+    In subfigure A we show
+    with an artificial example the concepts of connectedness and convexivity.
+    The subfigure Ai shows
+    three sets, $A$, $B$, and $C$. $A$ fails to be convex because it is concave,
+    and $C$ fails to be
+    be convex because it is made of two disconnected components.
+    In each of them is possible to draw a line
+    connecting two points inside the set that is not entirely inside the set.
+    In $B$ that is not possible, the set $B$ is convex in a mathematical sense.
+    In subfigure Aii we made some modification to show that
+    each set can be made of many disconnected components,
+    and each one of them can be convex or not.  In Aiii we show the center of
+    mass for $A$ and $B$
+    taken as a whole, while for $C$ we break the set into each of the disconnected
+    components and calculate each CM separately. There is no guarantee that each
+    disconnected component would be convex, but as the resolution of the data is finite,
+    small components are more likely to
+    be convex. In figure B we show everything with a frame of experimental data.
+    In Bi we sepparate the
+    data into three sets, Sources, Sinks, and Zeros.
+    We discard the Zeros and keep the active ones.
     In Figure Bii we take the Sink Set and separate it into disconnected components,
     they are labeled from one to 25 in this particular example.
     From this subsets we calculate the total mass of each one and only
-    considerate for the next step those who are above certain threshold of integrated intensity. The
-    next step is shown in Biii, where we plot the Center of Mass for each of such subsets. Deviations
-    from convexity seem to be unimportant, as most of the mass is concentrated in the inner electrodes
+    considerate for the next step those who are above certain threshold. The
+    next step is shown in Biii, where we plot the Center of Mass for each of
+    such subsets. Deviations
+    from convexity are tolerable,
+    as most of the mass is concentrated in the inner electrodes
     of each set.
   }
   \label{disconnectedsets}
 \end{figure}
 
-Theoretically, CSD would divide the set of measuring points into three subsets: the set of all sources, the set of all sinks, and the border between them i.e, the set of all measuring points that have a CSD positive value, the set of those who have a negative CSD value, and the set of those points having exactly the zero value in CSD space.
-Due to the finite precision of the measurement, the validity of the mean field approach, and the noise in the measurements, the sinks and sources sets can make contact with each other. Said measurements produce a function over a discrete point set. Noise between patches corresponding to a single set often makes a ``bridges'' between components, making identification of poles inexact. In order to avoid this we create a ``thick zero'' set of all the recording points whose CSD values are inside a small error interval around zero. This separates more sharply the components of the set, represents our ignorance of precise borders and helps us to simplify the following analysis.
 
-The ``thick zero'' would help us to sepparate the sinks and sources sets into its disconnected components, which would correspond then to clear patches of definite activity. If each one of these patches could be interpreted as an active unit, we may asign to it a ``center of activity'' in order to follow their displacements. A Center of Mass for each instantaneous disconnected sink/source would provide us a pragmatic measurement of an ``active locus''. We can then calculate at each time frame the CM for each one of those components before tracking displacements of activity.
 
-At each component at a precise time $t$, indexed $k$, we have a number of points with CSD of the same sign, indexed $j$. Then, the CM of the $k$ component would have the usual definition:
+Theoretically, CSD would divide the set of measuring points into three subsets: the set of all sources, the set of all sinks, and the border between them i.e, the set of all measuring points that have a positive CSD  value, the set of those who have a negative CSD value, and the set of those points having exactly the zero value in CSD space.
+Due to the finite precision of the measurement,
+the sinks and sources sets can make contact with each other.
+Said measurements produce a function over the grid elements (the electrodes).
+Noise between patches corresponding to a single set often makes a ``bridge''
+between components, making identification of poles inexact.
+In order to avoid this we create a ``thick zero'' set of all the recording
+points whose CSD values are inside an error interval around zero.
+This separates more sharply the components of the set,
+represents our ignorance of precise borders and helps
+us to simplify the following analysis.
+
+The ``thick zero'' would help us to sepparate the sinks and sources sets into
+its disconnected components, which would correspond then to clear patches of
+definite activity. If each one of these patches could be interpreted as an active unit,
+we may asign to it a ``center of activity'' in order to follow their displacements.
+A Center of Mass for each instantaneous disconnected sink/source would provide us
+a pragmatic measurement of an ``active locus''. We can then calculate at each time
+frame the CM for each one of those components before tracking displacements of activity.
+
+
+
+In each component, indexed $k$, at a given time $t$,, we have a number of points
+with CSD of the same sign, indexed $j$. Then, the CM of the $k$-th
+component would have the usual definition:
 \begin{equation}\label{cmparadisj}
    \langle q(t) \rangle_k =\frac{\sum_j q_{j,k} (t) I_{j,k} (q_{j,k},t)}
            {\sum_j I(q_{j,k},t)},
 \end{equation}
 where $I(q_{j,k},t)$ is the CSD at point $q_{j,k}=(x_{j,k}, y_{j,k})$ at time $t$, and the
 sign of our ``mass'' eliminates itself graciously.
-These disconnected components, while not rigorously convex, are less spread over the space of the measurements
-and tend to have their CM over the actual active points, or at the border of the active channels. 
+These disconnected components, while not rigorously convex,
+are less spread over the space of the measurements
+and tend to have their CM inside the are covered by the active elements
+of the grid. 
 
 
 \subsection{CM and trajectories}
 
-We must not take out of sight the phenomena which is producing the CSD distribution: neurons have a finite size, and the effect of their action a delimited extent. Every patch that we can identify as a disconnected component of the Sources/Sink sets indicates a  joint active set of units. A center of mass for each disjoint component would then indicate an average locus for this active group, a putative center of activity to which we can give a position, intensity and time. An instantaneous snapshot of such information would depict the centers of activity of an ordered structure of neurons and their relative intensities. But it is in the successive depiction of a series of such snapshots that this analysis can show interpretative power. The appearance , displacement, and disappearance of such centers could reveal very subtle details of the dynamics of neural activity. Very small, fast displacements of the Centers of mass, may be occur due to slight asynchronous between neurons which belong to the same active group. Larger displacements and  longer intervals (more than two or so firing periods) could indicate physiological connections between different groups or units.
+We must not take out of sight the phenomena which is producing the CSD distribution:
+neurons have a finite size, and the effect of their action a delimited extent.
+Every patch that we can identify as a disconnected component of the Sources/Sink
+sets indicates a  joint active set of units. A center of mass for each disjoint
+component would then indicate an average locus for this active group, a putative center of activity to which we can give a position, intensity and time. An instantaneous snapshot of such information would depict the centers of activity of an ordered structure of neurons and their relative intensities. But it is in the successive depiction of a series of such snapshots that this analysis can show interpretative power. The appearance , displacement, and disappearance of such centers could reveal very subtle details of the dynamics of neural activity. Very small, fast displacements of the Centers of mass, may be occur due to slight asynchronous action between neurons which belong to the same active group.
+Larger displacements and  longer intervals (more than two or so firing periods)
+could indicate physiological connections between different groups or units.
 
-The next step in our analysis is a procedure to systematically associate to each CM at time $t$ a ``successor'' at time $t+\Delta t$, where $\Delta t$ is the sampling time step. Let $q_1=(x_1, y_1)$ be the coordinates of the first point and $q_2=(x_2,y_2)$, the corresponding coordinates of the second. Remember that these coordinates can be now rational numbers
+The next step in our analysis is a procedure to systematically associate to each CM
+at time $t$ a ``successor'' at time $t+\Delta t$, where $\Delta t$ is the sampling
+time step. Let $q_1=(x_1, y_1)$ be the coordinates of the first point and $q_2=(x_2,y_2)$,
+the corresponding coordinates of the second. Remember that these coordinates can be now
+rational numbers
 respect to the grid of electrodes, as CM are not restricted to be  at the grid points.
 The distance is:
 \begin{equation}
 d(q_1,q_2):=\sqrt{(x_1-x_2)^2+(y_1+y_2)^2}.
 \end{equation}
-The integrated intensity of a CM is simply the denominator in the eq. \ref{cmparadisj}, that is, the total ``mass'' obtained by integrating the CSD in a specific component:
+The integrated intensity of a CM is simply the denominator in the eq. \ref{cmparadisj},
+that is, the total ``mass'' obtained by integrating the CSD in a specific component:
 \begin{equation}
   I_k(t)=\sum_j I (q_{j,k}, t).
 \end{equation}
@@ -300,41 +354,54 @@ We specify then a tolerance $\delta$. If a certain $t$ a CM is below $\delta$ di
 
 When a specific trajectory cannot find a successor point that is above the
 threshold intensity, we assume that it has ended, so we do not concatenate
-points that are separated in time by more than $\Delta t$. In order to paste different
-trajectories, more rigorous analysis of their origin and interpretation should be used and is
+points that are separated in time by more than $\Delta t$.
+In order to concatenate different
+trajectories, more rigorous analysis of their origin and interpretation
+should be used and is
 beyond the scope of this work.
 
- 
+
+
  \subsection{The Procedure}
  
  In order to perform the analysis described here, we summarize the steps.
  \begin{enumerate}
- \item Acquire high density electro-physiological data. The data must be two dimensional in space. Distance between the recording sites must be of the order of the typical size of the neurons involved or less, and such sites must be on a dense enough grid to perform numerical difference operations over them. The sampling frequency should be enough to detect sub-threshold activity, of at least 5kHz. Also, the data should come from structured tissue. Unordered, highly homogeneous tissue, will not yield significant results. 
- \item Calculate the CSD from the data. Any method may be used, but computer expensive techniques are discouraged if the
+ \item Acquire high density electro-physiological data. The data must be two dimensional
+   in space. Distance between the recording sites must be of the order of the typical
+   size of the neurons involved or less, and such sites must be on a dense enough grid to perform numerical difference operations over them.
+   The sampling frequency should be enough to detect sub-threshold activity,
+   of at least 3kHz. Also, the data should come from structured tissue.
+   Unordered, highly homogeneous tissue, will not yield iterpretable results. 
+ \item Calculate the CSD from the data. Any method may be used,
+   but computer expensive techniques are discouraged if the
    number of channels is over the thousands.
-   Common sense and tests are guidelines here. We recommend simpler, difference based approaches wherever possible. If many electrodes fail near the r.o.i., kCSD is a good alternative if done with
-   parallel routines.  If too many electrodes are failing over the r.o.i., it is better to discard the data. 
+   Common sense and tests are guidelines here. We recommend simpler, difference based approaches wherever possible. If many electrodes fail near the r.o.i.,
+   kCSD is a good alternative if done with
+   parallel routines.
+   If too many electrodes are failing over the r.o.i., it is better to discard the data. 
  \item Separate the CSD data into three sets: sources, sinks, and border or indiscernible (below error magnitude) data
-   which we call the zero set. Again, sensible criteria have to be defined. A rule of thumb would be to use the mean of the peaks of the noise  of the recording as the amplitude for the ``thick zero'' range of values. 
+   which we call the zeros set. Again, sensible criteria have to be defined.
+   A rule of thumb would be to use the mean of the peaks of the noise  of the recording as the amplitude for the ``thick zero'' range of values. 
 \item Perform disconnected component analysis in the sources and sinks sets, frame by frame.
-  A single pass algorithm is adequate \cite{Vincent91, Abubaker07}.
+  A single pass algorithm here is  adequate \cite{Vincent91, Abubaker07}.
 \item  Obtain the CM for each component, using eq. \ref{cmparadisj}. Discard
   all CM that are below some significant threshold value. A rule of thumb is one tenth of the average value for all CM,
-  or that are in the lesser decil. 
+  or those who are in the lesser decil. Anything that is around the peak
+  values of the noise integrated over around 5 electrodes would have to be discarded.
 \item For each frame and its successor, and for each CM, perform a ``most probable successor'' detection. Here we must put numerical criteria according to the data avaible, i.e. how far away and how different in intensity should be allowed a CM to be at time $t+1$ to be considered succesor in time of another at time $t$.
 \item ``Connect the dots'', that is, apply succesively the step above for each CM, until it stops having a succesor or its intensity falls below the error criteria. Then plot the succesive CMs as one trayectory.
 \item Plot all the trayectories and sort visually those that may have physiological interpretation from those who may be artifacts of the method. This may need some form of expert validation.
-\end{enumerate}
-
+ \end{enumerate}
+ 
 
  
 \section{Examples from Electro physiological data}
 
-The necessity to create such analysis came originally from the study of electro-physiological data obtained from the rat's hippocampus. The highly layered CA structure of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the pattern of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the somatic layer. Using CSD and disconnected component tracking over the data provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacological induced. The proposed analysis would not produce vector averages over different simultaneously active areas, on the contrary, it would separate them and track them independently. So the most violent epileptic burst provided us with the data necessary to prove the robustness of the method.
+The necessity to create such analysis came originally from the study of
+electro-physiological data obtained from the rat's hippocampus.
+The highly layered CA structure of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the pattern of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the somatic layer. Using CSD and disconnected component tracking over the data provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacological induced. The proposed analysis would not produce vector averages over different simultaneously active areas, on the contrary, it would separate them and track them independently. So the most violent epileptic burst provided us with the data necessary to prove the robustness of the method.
 All the experimental data comes from a series of experiments
 performed on slices of the rats hippocampus. 
-
-\subsection{Application to facilitated activity}
 
 
 
@@ -345,13 +412,13 @@ measurements. This facilitates the exemplification of our analysis, so we shall
 start the exposition of the usage with these kind of data.
 The data was obtained by stimulating certain specific points on the dentate gyrus
 of the slice of hippocampus with different voltage intensities. Details of the experiment
-have been published elsewhere \cite{FrancoGut2017}. We shall borrow some of
-the best experimental data for our purposes.
+have been published elsewhere \cite{Franco2018}. We shall borrow some of
+the experimental data for our purposes.
 
 The LFP is averaged over three events, produced by three succesive
 electrical stimuli in the same point at constant voltage. The
-response of the cels is allmost identical in each event, which
-allows us to use the average as a denoizing mechanism. After averaging
+response of the cells is allmost identical in each event, which
+allows us to use averages as a denoizing mechanism. After averaging
 the syncronized data we perform kCSDA, as in this case we end up
 with many saturated electrodes and dCDSA is not viable.
 Once that we have the CSD representation, we select noisy channels outside
@@ -370,7 +437,7 @@ pyramidal stratum.  In the subfigure D we show the CSD for a series of time fram
 over the square delimited in the subfigure A. The idea for treating the different
 patches separately becomes evident here. The sources and sinks form patches
 with an apparent anterograde movement from CA3 to CA1. The patches change polarity
-as especteed, with the somatic layer becoming a strong sink between 3 to 4 ms
+as espected, with the somatic layer becoming a strong sink between 3 to 4 ms
 after the stimulus, and then, at the 6 ms, inverting its polarity in a way that suggest
 successive activation of groups that are represented as movement of the patch.
 
@@ -385,7 +452,8 @@ successive activation of groups that are represented as movement of the patch.
     selected electrodes. In C we present the same information as a color map,
     with blue for sinks and red for sources, and a shorter time interval. The
     map covers the 8ms after the stimulus is made (shown in the temporal axis by a
-    green doted line). The change of polarity around and over the str. pyr. (between b and
+    green doted line). The change of polarity around and over the
+    str. pyr. (between b and
     d) is clearly visible. In D we show the CSDA for various timestamps in the sub-region
     indicated in A as the r.o.i, which covers a square of 24 by 24 electrodes over CA3.
     in the first plot, 1ms before the stimulus, we show the grid of electrodes and a
@@ -405,7 +473,9 @@ successive activation of groups that are represented as movement of the patch.
 
 The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
 
+\subsection{Application to facilitated activity}
 
+%%%% *********** Vas aqui
 
 \subsection{Application to epileptic-like activity in the hippocampus}
 Chronologically speaking, we performed first the analysis to the most complicated data (numerically and qualitatively), which where a series of epileptic burst that occurred after 15 minutes of application of 4AP to living slices of hippocampus. The burst occurred with activity spreading over many sites simultaneously. This turned out to be a test of the applicability and robustness of our method. The necessity of having good error value for the zero set was more apparent here than anywhere else. Also the posibilty to create new structures of numerical data was first seen here.  But also the most strickig features of the propagation of activity, coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole CA structure. A sample of the raw data in $\mu V$ can be seen in the figure \textbf{Tururu}. Three key moments in the epileptic burst have been selected, one before the onset of the attack, one at the peak and one at the middle of the subsequent waves. Traces from selected electrodes along the line labeled A-F are presented in the subfigure D. 
