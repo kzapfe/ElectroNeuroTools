@@ -1,6 +1,14 @@
 Trabajos en Neurociencias desarrollados con el equipo del Dr. R. Gutiérrez
 =====================================================================
 
+-------------------------------------------------------------------
+
+(c) Copyright  2015,2016,2017,2018,2019
+Wilhelm Pablo Karel Zapfe Zaldivar.
+Este software se distribuye con la licencia general pública GNU 3.0
+
+--------------------------------------------------------------------
+
 
 Aquí está un repositorio con los problemas tratados en el laboratorio 19
 del CINVESTAV sede sur. El ataque a los problemas proviene de técnicas
@@ -55,4 +63,6 @@ intentos de varios cálculos y cálculos tentativos de otras soluciones que aún
 no hemos concluido con seriedad.
 
 
-
+(c) Copyright  2015,2016,2017,2018,2019
+Wilhelm Pablo Karel Zapfe Zaldivar.
+Este software se distribuye con la licencia general pública GNU-3.0
