@@ -83,12 +83,13 @@ a interelectrode distance of the order of magnitude of a typical pyramidal soma
 
 After aquiring data from experiment, we pass the data through some preprocessing
 routines. These serve to detect and discard unusable channels,
-such as saturated or failling electrodes. These vary from data set to data set,
+such as saturated or failling electrodes. The
+set of failling electrodes varies from data set to data set,
 as they can be produced by bubbles or by saturation after electrical stimulation
-or other random causes. 
+or other causes. 
 We call this step the elimination of bad channels. We use a simple criterion for this:
-if the absolute value of the signal is above certain threshold (wich must be
-adjusted for evocated vs spontaneous acttivity) or if the standar deviation is
+if the absolute value of the signal is above certain threshold (which must be
+adjusted for evocated vs spontaneous acttivity) or if the standard deviation is
 larger than certain heuristically determined value, the channel is discarded.
 
 %% esto puede no ser necesario. 
@@ -217,7 +218,7 @@ Current Source Density as a mathematical density (a quasi-probability density fu
 the mathematician and electrophysiologicist interpretations presents we can
 perform the following analysis with clear readings. 
 
-Apparently, CSD would not fit the requirements of non-negativity for its use as a mathematical density, but this is not a real problem.  CSD separates the measured activity into three distinct sets, namely, the set of all sources, the set of all sinks and the zero set. The separation is not quantitative but qualitative: even when the signs of electric charge are arbitrary, the distinction between them is not. Therefore, CSD represents on each of the two active sets (sinks and sources) exactly what we need, a unit of concentration of changing charges per unit of space (in this case, per area), and the sign can be ignored, as long as we perform the operations in each set separately. Also, the separation by the zero value set of the CSD is in contrast to the zero value of the LFP, where it has no precise meaning as it only represents a practical reference value. This is acknowledged in most of the literature, where only the scales of the LFP recording are shown, without reference to the sign of the values. In the CSD representation,  the so called zero set (all the points in our space which have a recorded CSD of zero)  has a precise meaning: it is an instantaneous lack of activity and the border between sinks and sources. This shall be exploited further in the section below.
+Apparently, CSD would not fit the requirements of non-negativity for its use as a mathematical density, but this is not a problem.  CSD separates the measured activity into three distinct sets, namely, the set of all sources, the set of all sinks and the zero set. The separation is not quantitative but qualitative: even when the signs of electric charge are arbitrary, the distinction between them is not. Therefore, CSD represents on each of the two active sets (sinks and sources) exactly what we need, a unit of concentration of changing charges per unit of space (in this case, per area), and the sign can be ignored, as long as we perform the operations in each set separately. Also, the separation by the zero value set of the CSD is in contrast to the zero value of the LFP, where it has no precise meaning as it only represents a practical reference value. This is acknowledged in most of the literature, where only the scales of the LFP recording are shown, without reference to the sign of the values. In the CSD representation,  the so called zero set (all the points in our space which have a recorded CSD of zero)  has a precise meaning: it is an instantaneous lack of activity and the border between sinks and sources. This shall be exploited further in the section below.
 
 Once the separation into sinks and sources has been made, we would have two densities, or more precisely, two different density functions defined over two separate sets. Trying to use this for obtaining vector averages would still be crude and inexact. If these sets spread out over large non-convex areas, the vector averages could lie outside the sets, having little or none physiological interpretation. Therefore we decided to introduce another concept from geometrical sets in order to reduce the analysis to local effects.
 
@@ -225,7 +226,7 @@ Once the separation into sinks and sources has been made, we would have two dens
 \subsection{CSD and Disconnected Components}
 
 A first visual inspection of the CSD color map at a given instant in time shows that both sources and sinks appear in rather large and significant patches, with typical
-cross lengths around somo 150 $\mu m$.
+cross lengths around 150 $\mu m$.
 
 These appear to correspond to the expected poles of firing neurons in structured tissue \cite{Buzsaki2012} and inspired us to separate the sink and source  sets into their \emph{disconnected components}. This concept is used in mathematics to denote subsets of a given geometric set that do not touch each other  \cite{Halmos}. Their rough correspondence to poles of firing neurons is most useful in tracking the successive locus of the activity.
 
