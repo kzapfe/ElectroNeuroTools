@@ -442,6 +442,19 @@ as espected, with the somatic layer becoming a strong sink between 3 to 4 ms
 after the stimulus, and then, at the 6 ms, inverting its polarity in a way that suggest
 successive activation of groups that are represented as movement of the patch.
 
+The figure \ref{lfpcsdcm}  compares the representation of the activity in
+the LFP, CSD and CM spaces. It has been exhaustively proven that the CSD
+representation provides better spatial localization of active sites, but the
+CM can serve as better dinamical tracker of action. The figure ilustrates
+that point by choosing the time interval of response in CA3 after the stimulus.
+CM representation permits us to track the activity with less
+interference from the saturated region. The small, clearly localized centers of
+mass separate clearly from the big patch over the saturated region.
+In the figure \ref{evotracks} we concatenate the succesive centers of mass
+for both sinks and sources and show how the anterograde reaction is
+very well localized over the Pyramidal Stratum at precise moments after
+stimulus.
+
 \begin{figure}[h]
   \includegraphics[width=0.9\textwidth]{Figuras/CSD_Evocada01.pdf}
   \caption{ CSDA for evoked activity and visual inspection of disjoint
@@ -471,6 +484,25 @@ successive activation of groups that are represented as movement of the patch.
 \end{figure}
 
 
+\begin{figure}[h]
+  \includegraphics[width=0.9\textwidth]{Figuras/CSD_Evocada01.pdf}
+  \caption{ A comparision of the representations of the displacement of the
+    activity. We show several timeframes after stimulus in three representations.
+    the leftmost column shows the averaged LFP as measured by the BioCAM.
+    In the center column we have the CSD representation, as obtained by
+    the kCSD method. In the right column we superimpose over the CSD representation
+    the Centers of Mass of each disconnected component, for both sinks and
+    sources. In the three columns the saturation of electrodes near
+    the point of stimulus is quite evident. Nevertheless, the CSD representation
+    provides much better contrast and the patches are better localized as espected.
+    The Centers of Mass provide a clear locus of the active subsets of units.
+    The area of the circular dots represent the integrated density. The
+    bigger ones at the right edge cover the saturated electrodes.
+    The anterograde movement of activity follows a high ``sink center'' in the
+    first three rows, and then it is followed by a ``source center'', of aproximately
+    the same integrated ``mass'', that ends spliting in three smaller components.    
+  }\label{lfpcsdcm}
+\end{figure}
 
 The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
 
