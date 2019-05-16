@@ -34,7 +34,8 @@ function AbreyCheca(x::String)
     inversion=archivo["/3BRecInfo/3BRecVars/SignalInversion"][1][1]
     duracionexperimento=numcuadros/frecuencia
     factordeescala=(maxvolt-minvolt)/2^bitdepth*inversion
-    DatosCrudos=read(archivo["/3BData/Raw"])
+La inquilina rumana esta cocinando un chingo de col
+vamos a estar BIEN PEDORROS al rato    DatosCrudos=read(archivo["/3BData/Raw"])
     result=Dict("numcuadros" => numcuadros,
                 "frecuencia"=> frecuencia,
                 "maxvolt" => maxvolt,
@@ -106,8 +107,10 @@ function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
     return result
 end
 
-function BuscaSaturados(datos::Array, freq=deffreq, saturavalue=1900,
-                        desde=0.5, hasta=10)
+function BuscaSaturados(datos::Array, 
+                        desde=0.5, hasta=10,
+                        freq=deffreq,
+                         saturavalue=1900)
     #busca saturados por promedio sobre umbral
     # cambios para guardar en HDF5 y mandar jld a freir esparragos.
     # no more Sets, only Arrays
@@ -150,7 +153,8 @@ end
 
 
 function BuscaRuidosos(datos::Array, ini, fin,
-                           freq=deffreq, umbral=120, tantos=3)
+                       freq=deffreq,
+                       umbral=120, tantos=3)
     #ventms es la ventana en milisegundos
     #busca saturardos por desviación por ventana por umbral
     (alto,ancho,largo)=size(datos)
@@ -171,8 +175,8 @@ end
 
 
 
-function BuscaCanalRespActPot(datos::Array,freq=deffreq, tini=0.5,
-                              tfin=8,
+function BuscaCanalRespActPot(datos::Array, tini=0.5,
+                              tfin=8, freq=deffreq,
                               maxvolt=-100, minvolt=-1500, 
                               minstd=10, maxstd=35)
     #Busquemos los canales con probable respuesta de potencial de accion
