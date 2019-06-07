@@ -32,8 +32,8 @@ function problock(xxs::Array, yys::Array)
     ly=length(yys)
     lp=lx-ly+1
     result=0
-    if(lx<ly)
-        error("La secuencia objetivo es mayor a la secuencia para buscar.")
+    if(lx<ly)   
+     error("La secuencia objetivo es mayor a la secuencia para buscar.")
     else
         for j=1:lp
             if xxs[j:j+ly-1]==yys

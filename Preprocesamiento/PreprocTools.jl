@@ -34,8 +34,7 @@ function AbreyCheca(x::String)
     inversion=archivo["/3BRecInfo/3BRecVars/SignalInversion"][1][1]
     duracionexperimento=numcuadros/frecuencia
     factordeescala=(maxvolt-minvolt)/2^bitdepth*inversion
-La inquilina rumana esta cocinando un chingo de col
-vamos a estar BIEN PEDORROS al rato    DatosCrudos=read(archivo["/3BData/Raw"])
+    DatosCrudos=read(archivo["/3BData/Raw"])
     result=Dict("numcuadros" => numcuadros,
                 "frecuencia"=> frecuencia,
                 "maxvolt" => maxvolt,
@@ -98,12 +97,17 @@ end
 function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
     #El array tiene que ser de 4096 por algo mas
     irrrelevante,largo=size(xxs)
-    aux=Array{Int32}(undef, 64,64, largo);
+    #Los datos originales son UInt16. No podemos
+    # tener mas bits que eso. No sirve de nada.
+    aux=Array{Int16}(undef, 64,64, largo);
+    result=Array{Float16}(undef, 64,64, largo);
     for j=1:64,k=1:64
         aux[k,j,:]=xxs[j+(k-1)*64,:]
     end
-    result=(aux.-2048).*factor;
+    result=((aux.-2048).*factor);
+    
     aux=0
+    result=convert.(Float16, result)
     return result
 end
 
@@ -180,7 +184,7 @@ function BuscaCanalRespActPot(datos::Array, tini=0.5,
                               maxvolt=-100, minvolt=-1500, 
                               minstd=10, maxstd=35)
     #Busquemos los canales con probable respuesta de potencial de accion
-    (ancho,alto,largo)=size(datos)
+    (alto,ancho,largo)=size(datos)
     taux1=round(Int, ceil(tini*freq))
     taux2=round(Int,ceil(tfin*freq))
     
