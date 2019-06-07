@@ -1,6 +1,6 @@
 using HDF5
-using Plots
-gr(show=false)
+using PyPlot
+
 
 nombre="/home/karel/BRWFiles/Eduardo/Control/Completo_193005_CTRL_Rtn_EMAD_01_subdatos.h5"
 
@@ -16,23 +16,25 @@ limites=150
 #for interpol in lista
 
 
-for n =115000:25:2*10^5
+for n =10^5:25:2*10^5
 
+    figure(figsize=(2.5,2.5))
     ejemplo=csd[:,:,n]
     tiempo=round(Int,n/freq)
-    
-    p=plot(figsize=(2.5,2.5), title="t= $tiempo ms", show=false)
 
-    xxs=xmin:xmax
-    yys=ymin:ymax
-    heatmap!(xxs, yys, ejemplo,
-                color=:bluesreds, aspectratio=1, clims=(-limites,limites)) 
-    zlims!(-15,15)
+    title("t = $tiempo ms")
+    
+   
+    imshow(ejemplo, origin="lower",
+           cmap="coolwarm", interpolation="nearest",
+           vmin=-limites, vmax=limites,
+           extent=[xmin,xmax,ymin,ymax]) 
+  
 
     nomine="csd_eduardo_193005_control_01_$n.png"
 
-    savefig(p, nomine)
-    
+    savefig(nomine, dpi=92)
+    close()
     print(" n = ", n, "; ")
 end
     
