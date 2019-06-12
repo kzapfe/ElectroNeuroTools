@@ -101,14 +101,14 @@ function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
     #Los datos originales son UInt16. No podemos
     # tener mas bits que eso. No sirve de nada.
     aux=Array{Int16}(undef, 64,64, largo);
-    result=Array{Float16}(undef, 64,64, largo);
+    result=Array{Float32}(undef, 64,64, largo);
     for j=1:64,k=1:64
         aux[k,j,:]=xxs[j+(k-1)*64,:]
     end
     result=((aux.-2048).*factor);
     
     aux=0
-    result=convert.(Float16, result)
+    result=convert.(Float32, result)
     return result
 end
 
