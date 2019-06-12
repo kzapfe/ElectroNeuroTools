@@ -2,8 +2,9 @@ module PreprocTools
 
 using Statistics
 using HDF5
+using Dates
 
-export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, BuscaCanalRespActPot, desviacionventanas, tari, mediamov, gauss, pesosgauss, suavegauss
+export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, BuscaCanalRespActPot, desviacionventanas, tari, mediamov, gauss, pesosgauss, suavegauss, stringtomiliseconds, parseatiempos
 
 #= Muchas funciones aqui presentes son para limpiar,
 manipular, cortar y suavizar datos. Ellas dependen
@@ -230,6 +231,21 @@ function tari(it,ft, freq=17.8555)
     result=auxi:auxf
 end
 
+function stringtomiliseconds(str, form="MM:SS.s")
+    result=round(Time(str, form).instant, Millisecond)
+end
+
+function parseatiempos(str::String, freq=deffreq)
+    result=[]
+    for q in split(str, "\n")
+    l=split(q, "-")
+    at=stringtomiliseconds(l[1])
+    et=stringtomiliseconds(l[2])
+    r=tari(at.value, et.value, freq)
+    push!(result,r)
+    end
+    return result
+end
 
 function mediamov(trazo::Array, ms=0.5, freq=deffreq)
 #Media Movil es el termino en español para moving Average.    
