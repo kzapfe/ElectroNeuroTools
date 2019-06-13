@@ -3,8 +3,19 @@ using PreprocTools
 using HDF5
 
 
-abrestring="/home/karel/BRWFiles/Eduardo/Control/193005_CTRL_Rtn_EMAD_01.brw"
+
+
+abrestring=ARGS[1]
 stringgeneral=replace(abrestring, ".brw"=>"")
+
+if length(ARGS)==2
+    texttiempos=ARGS[2]
+    autorebana=false
+else
+    texttiempos=""
+    autorebana=true
+end
+
 
 Datos=AbreyCheca(abrestring)
 
@@ -14,26 +25,14 @@ factor=Datos["factor"] #Factor de conversion de numeros enteros a microVolts
 
 
 
-autorebana=false
+
 if autorebana
     tamax=400*1024*1024  #maximo tamaño tolerable de archivo en tu lap
-    tam=filesize(abrestring)
+    tam=filesize(arbestring)
     cachos=div(tam,tamax)+1
 else
     #tiempos interesantes es una lista de intervalos en segundos. 
-tstr="00:01.1-00:02.3
-00:04.5-00:05.7
-00:08.9-0:11.0
-00:15.7-00:16.7
-00:18.7-00:20.1
-00:23.0-00:24.6
-00:33.9-00:34.8
-00:38.0-00:39.0
-00:42.0-00:43.0
-00:47.1-00:48.5
-00:51.3-00:52.5
-00:54.2-00:55.7
-00:58.0-00:59.0"
+tstr=read(texttiempos, String)
     tinteres=parseatiempos(tstr, freq)
     cachos=length(tinteres)
 end
@@ -46,14 +45,14 @@ println( "Esto corresponde a  ", tiempototalms, "ms." )
 
 
 fmemlibre=Sys.free_memory()/Sys.total_memory()
-println("Te queda libre, " fmemlibre, " del total del RAM")
+println("Te queda libre, ", fmemlibre, " del total del RAM")
 
 
 # Si los datos andan en un arreglo de lista en lugar de cuadrado, los ponemos cuadrados
 if size(Datos["DatosCrudos"])[1] != 4096
-DatosCrudosArreglados=reshape(Datos["DatosCrudos"], (4096, Datos["numcuadros"]))
+    DatosCrudosArreglados=reshape(Datos["DatosCrudos"], (4096, Datos["numcuadros"]))
 else
-DatosCrudosArreglados=Datos["DatosCrudos"]
+    DatosCrudosArreglados=Datos["DatosCrudos"]
 end;
 
 

@@ -4,7 +4,7 @@ using Statistics
 using HDF5
 using Dates
 
-export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, BuscaCanalRespActPot, desviacionventanas, tari, mediamov, gauss, pesosgauss, suavegauss, stringtomiliseconds, parseatiempos
+export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, BuscaCanalRespActPot, desviacionventanas, tari, mediamov, gauss, pesosgauss, suavegauss, stringtomiliseconds, parseatiempos, abrecacho
 
 #= Muchas funciones aqui presentes son para limpiar,
 manipular, cortar y suavizar datos. Ellas dependen
@@ -44,9 +44,24 @@ function AbreyCheca(x::String)
                 "duracion" => duracionexperimento,
                 "factor" => factordeescala,
                 "DatosCrudos"=>DatosCrudos )
-    return result
-                    
+    return result                    
 end
+
+
+function abrecacho(x::String)
+    # para abrir los cachos hechos a mano.
+    arx=h5open(abrestring)
+    
+    lfp=read(arx["lfp"])
+    intervalo=read(arx["intervalo"])
+    freq=read(arx["freq"])
+    
+    result=Dict("lfp"=>lfp, 
+    "intervalo"=>intervalo,
+    "freq"=>freq)
+    return result
+end
+
 
 function EncuentraTrancazosRaw(datos::Array, tolerancia=1400)
     result=Int[]
@@ -238,11 +253,13 @@ end
 function parseatiempos(str::String, freq=deffreq)
     result=[]
     for q in split(str, "\n")
-    l=split(q, "-")
-    at=stringtomiliseconds(l[1])
-    et=stringtomiliseconds(l[2])
-    r=tari(at.value, et.value, freq)
-    push!(result,r)
+        if q != ""
+            l=split(q, "-")
+            at=stringtomiliseconds(l[1])
+            et=stringtomiliseconds(l[2])
+            r=tari(at.value, et.value, freq)
+            push!(result,r)
+            end
     end
     return result
 end
