@@ -50,7 +50,7 @@ end
 
 function abrecacho(x::String)
     # para abrir los cachos hechos a mano.
-    arx=h5open(abrestring)
+    arx=h5open(x)
     
     lfp=read(arx["lfp"])
     intervalo=read(arx["intervalo"])
@@ -152,7 +152,7 @@ function BuscaSaturados(datos::Array,
 end
 
 function BuscaSaturadosStd(datos::Array, ini, fin,
-                           freq=deffreq, umbral=30)
+                           freq=deffreq, bajo=10, alto=40)
     #ventms es la ventana en milisegundos
     #busca saturardos por desviación por ventana por umbral
     (alto,ancho,largo)=size(datos)
@@ -161,7 +161,7 @@ function BuscaSaturadosStd(datos::Array, ini, fin,
     result=[0::Int64 0::Int64 ]
     for j=1:ancho, k=1:alto        
         sigma=std(datos[k,j,cini:cfin])    
-        if sigma>umbral
+        if sigma>alto || sigma < bajo
             bla=[k j]
             result=vcat(result, bla)
         end
