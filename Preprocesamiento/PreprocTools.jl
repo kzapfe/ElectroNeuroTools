@@ -138,17 +138,17 @@ function BuscaSaturados(datos::Array,
     cini=round(Int, ceil(desde*freq))
     cfin=round(Int, ceil(hasta*freq))
     #result=Set{Array{Int,1}}()
-    result=[0::Int64 0::Int64 ]
+    result=Set(Array{Int8, 1}[])
     for j=1:ancho, k=1:alto 
         prom=mean(datos[k,j,cini:cfin])  
         if abs(prom)>saturavalue
-            bla=[k j]
-            result=vcat(result, bla)
+            bla=[k, j]
+            result=push!(result, bla)
         #    println(prom," ",[k,j]," ",saturavalue," ", desde, " ",hasta)
         end
     end
     #result=permutedims(hcat(result[2:end,:]...), [2,1])
-    return result[2:end, :]
+    return result
 end
 
 function BuscaSaturadosStd(datos::Array, ini, fin,
@@ -158,17 +158,17 @@ function BuscaSaturadosStd(datos::Array, ini, fin,
     (alto,ancho,largo)=size(datos)
     cini=round(Int, ceil(freq*ini))
     cfin=round(Int, ceil(freq*fin))
-    result=[0::Int64 0::Int64 ]
+    result=Set(Array{Int8, 1}[])
     for j=1:ancho, k=1:alto        
         sigma=std(datos[k,j,cini:cfin])    
         if sigma>alto || sigma < bajo
-            bla=[k j]
-            result=vcat(result, bla)
+            bla=[k, j]
+            result=push!(result, bla)
         end
         
     end
     
-    return result[2:end, :]
+    return result
 end
 
 
@@ -180,22 +180,22 @@ function BuscaRuidosos(datos::Array, ini, fin,
     (alto,ancho,largo)=size(datos)
     cini=round(Int, ceil(freq*ini))
     cfin=round(Int, ceil(freq*fin))
-    result=[0::Int64 0::Int64 ]
+    result=Set(Array{Int8, 1}[])
     for j=1:ancho, k=1:alto        
         pasados=findall(x-> x>umbral, datos[j,k,cini:cfin])
         if length(pasados)>tantos
-            bla=[k j]
-            result=vcat(result, bla)
+            bla=[k, j]
+            result=push!(result, bla)
         end
         
     end
     
-    return result[2:end, :]
+    return result
 end
 
 
 
-function BuscaCanalRespActPot(datos::Array, tini=0.5,
+function buscaCanalPicos(datos::Array, tini=0.5,
                               tfin=8, freq=deffreq,
                               maxvolt=-100, minvolt=-1500, 
                               minstd=10, maxstd=35)
@@ -205,24 +205,29 @@ function BuscaCanalRespActPot(datos::Array, tini=0.5,
     taux2=round(Int,ceil(tfin*freq))
     
     println("Estoy buscando del cuadro " , taux1, " al , ", taux2)
+
+    result=Set(Array{Int8, 1}[])
     
-    result=[0::Int64 0::Int64 ]
     for j=1:ancho, k=1:alto
         fondo=minimum(vec(datos[k,j,taux1:taux2]))
         dpgs=std(datos[k,j,taux1:taux2])
        
         if  (maxvolt >fondo>minvolt) && ( maxstd > dpgs > minstd)
            #  print(dpgs, " ")
-            bla=[k j]
-            result=vcat(result,bla)
+            bla=[k, j]
+            result=push!(result,bla)
         end
     end
 
     #= Esta rutina no es muy confiable. Solo da buenos resultados
     con actividad evocada. Necesitamos algo mas estricto =#
    
-    return result[2:end, :]
+    return result
 end
+
+
+function buscasigmaactiva(datos::Array)
+    end
 
 ## Funciones mas numericas, que tienen que ver con
 ## suavizar o resumir datos
