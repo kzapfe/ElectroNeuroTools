@@ -8,8 +8,6 @@ export stdventana, otsumethod, otsuumbralizar
 
 
 
-
-
 function stdventana(datos::Array, ancho::Int, paso::Int)
     # de un array lineal, sacar la desviacion
     # estandar por ventanas de ancho dado
@@ -31,7 +29,7 @@ function otsumethod(datos::Array)
     binsdefault=2*ceil(Int,sqrt(length(datos)))
     h=fit(Histogram, vec(datos),closed=:right,nbins=binsdefault)
     
-    (rango, cuentas)=(h.edges, h.weights)
+    (rango, cuentas)=(h.edges[1], h.weights) #stupid Statistics.
     tantos=length(rango)
     #valores
     omega1=0

@@ -4,7 +4,7 @@ using Statistics
 using HDF5
 using Dates
 
-export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, BuscaCanalRespActPot, desviacionventanas, tari, mediamov, gauss, pesosgauss, suavegauss, stringtomiliseconds, parseatiempos, abrecacho
+export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, buscaCanalPicos, desviacionventanas, tari, mediamov, gauss, pesosgauss, suavegauss, stringtomiliseconds, parseatiempos, abrecacho
 
 #= Muchas funciones aqui presentes son para limpiar,
 manipular, cortar y suavizar datos. Ellas dependen
