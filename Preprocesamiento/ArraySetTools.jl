@@ -22,7 +22,7 @@ function elemtorow(xxs::Set)
     #pasa los elementos de un conjunto a rengoles de un array
     result=[0 0] 
     for k in xxs
-        result=vcat(result, k)
+        result=vcat(result, transpose(k))
     end
     return result[2:end,:]
 end
