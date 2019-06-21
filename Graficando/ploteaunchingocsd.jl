@@ -2,24 +2,30 @@ using HDF5
 using PyPlot
 
 
-nombre="/home/karel/BRWFiles/Eduardo/Control/Completo_193005_CTRL_Rtn_EMAD_01_subdatos.h5"
+nombre=ARGS[1]
 
 arxivo=h5open(nombre)
 elementos=names(arxivo)
 
-csd=read(arxivo["CSDALindenberg"])
-(xmin, xmax)=read(arxivo["cols"])
-(ymin, ymax)=read(arxivo["rengs"])
+csdlind=read(arxivo["CSDALindenberg"])
+(alto,ancho,nmax)=size(csdlind)
+#(xmin, xmax)=read(arxivo["cols"])
+#(ymin, ymax)=read(arxivo["rengs"])
 freq=read(arxivo["freq"])
 
-limites=150
+(mincsd, maxcsd)=extrema(csdlind)
+limites=min(abs(mincsd),abs(maxcsd))/1.5
+
 #for interpol in lista
 
 
-for n =10^5:25:2*10^5
+for n =1:nmax
 
-    figure(figsize=(2.5,2.5))
-    ejemplo=csd[:,:,n]
+    xlim(0,ancho+1)
+    ylim(0, alto+1)
+    
+    fafa=figure(figsize=(4,4))
+    ejemplo=csdlind[:,:,n]
     tiempo=round(Int,n/freq)
 
     title("t = $tiempo ms")
@@ -27,14 +33,16 @@ for n =10^5:25:2*10^5
    
     imshow(ejemplo, origin="lower",
            cmap="coolwarm", interpolation="nearest",
-           vmin=-limites, vmax=limites,
-           extent=[xmin,xmax,ymin,ymax]) 
-  
+           vmin=-limites, vmax=limites,extent=[0.5,ancho+0.5,0.5,alto+0.5])
 
-    nomine="csd_eduardo_193005_control_01_$n.png"
+    nstring=lpad(n, 8, "0")
+    
+    nomine="csd_eduardo_193005_control_01_$nstring.png"
 
     savefig(nomine, dpi=92)
-    close()
-    print(" n = ", n, "; ")
+    close(fafa)
+    if mod(n,10)==0
+        print(" n = ", n, "; ")
+    end
 end
     
