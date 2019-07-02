@@ -159,7 +159,7 @@ would generate.
 \item Then one procedess to calculate
   the coefficients for the entire family by projecting the
   experimental data over this ideal LFP model function family.
-\end{enumarate}
+\end{enumerate}
 
 We shall borrow the notation in the original paper \cite{Potworowski2011}. Our model function for the CSD is a hard disk function, described by:
 \begin{equation}
@@ -266,9 +266,9 @@ seen). Each CM gets listed as a probable step in a trajectory.
 
 
 \begin{figure}
-  \includegraphics[width=0.9\textwidth]{Figuras/Disjuntos01.pdf}
+  \includegraphics[width=0.9\textwidth]{Figuras/ExplicaDisconexos01.pdf}
   \caption{ Explanation of the geometrical concepts used on our analysis.
-    In subfigure A we show
+    In the Row A of fiugres
     with an artificial example the concepts of connectedness and convexivity.
     The subfigure Ai shows
     three sets, $A$, $B$, and $C$. $A$ fails to be convex because it is concave,
@@ -290,8 +290,9 @@ seen). Each CM gets listed as a probable step in a trajectory.
     data into three sets, Sources, Sinks, and Zeros.
     We discard the Zeros and keep the active ones.
     In Figure Bii we take the Sink Set and separate it into disconnected components,
-    they are labeled from one to 25 in this particular example.
-    From this subsets we calculate the total mass of each one and only
+    they are labeled from one to 25 in this particular example,
+    indicated by color
+    For each subset we sum over its mass, and 
     considerate for the next step those who are above certain threshold. The
     next step is shown in Biii, where we plot the Center of Mass for each of
     such subsets. Deviations
@@ -488,21 +489,17 @@ successive activation of groups that are represented as movement of the patch.
 
 
 \begin{figure}[h]
-  \includegraphics[width=0.9\textwidth]{Figuras/CSD_Evocada01.pdf}
+  \includegraphics[width=0.9\textwidth]{Figuras/CSD_EvocadaYTrazos.pdf}
   \caption{ CSDA for evoked activity and visual inspection of disjoint
     components. In A we present a diagram of the hippocampus slice over
     the acquisition device. The somatic layers of CA and DG are represented as
     thick black lines, and the stimulus site is indicated by a blue arrow. A selection
-    of six contiguous electrodes labeled $a,b,c,d,e$ in the r.o.i. are presented as blue
+    of six contiguous electrodes labeled $A-F$ in the r.o.i. are presented as blue
     dots. In B we show the LFP traces and their CSD representation for those
-    selected electrodes. In C we present the same information as a color map,
-    with blue for sinks and red for sources, and a shorter time interval. The
-    map covers the 8ms after the stimulus is made (shown in the temporal axis by a
-    green doted line). The change of polarity around and over the
-    str. pyr. (between b and
-    d) is clearly visible. In D we show the CSDA for various timestamps in the sub-region
+    selected electrodes.
+    In C we shoe the CSDA for various timestamps in te sub-region
     indicated in A as the r.o.i, which covers a square of 24 by 24 electrodes over CA3.
-    in the first plot, 1ms before the stimulus, we show the grid of electrodes and a
+    in the first image,  4ms after the stimulus,  a
     shaded strip indicating the approximate location of str. pyr. A model neuron is
     drawn for scale. At 4ms after the stimulus, the saturation of the electric shock
     recedes and we can began to appreciate real neuronal activity on the responsive
@@ -516,25 +513,14 @@ successive activation of groups that are represented as movement of the patch.
 \end{figure}
 
 
-\begin{figure}[h]
-  \includegraphics[width=0.9\textwidth]{Figuras/CSD_Evocada01.pdf}
-  \caption{ A comparision of the representations of the displacement of the
-    activity. We show several timeframes after stimulus in three representations.
-    the leftmost column shows the averaged LFP as measured by the BioCAM.
-    In the center column we have the CSD representation, as obtained by
-    the kCSD method. In the right column we superimpose over the CSD representation
-    the Centers of Mass of each disconnected component, for both sinks and
-    sources. In the three columns the saturation of electrodes near
-    the point of stimulus is quite evident. Nevertheless, the CSD representation
-    provides much better contrast and the patches are better localized as espected.
-    The Centers of Mass provide a clear locus of the active subsets of units.
-    The area of the circular dots represent the integrated density. The
-    bigger ones at the right edge cover the saturated electrodes.
-    The anterograde movement of activity follows a high ``sink center'' in the
-    first three rows, and then it is followed by a ``source center'', of aproximately
-    the same integrated ``mass'', that ends spliting in three smaller components.    
-  }\label{lfpcsdcm}
-\end{figure}
+ \includegraphics[width=0.9\textwidth]{Figuras/CMVariousTimes01.pdf}
++  \caption{ The CM analysis over the same images as figure \ref{CSD_Evocada01} C. Some trajectories
++    are calculated before the 4ms time stamp. The triangular mark shows the later point of the
++    trajectory, either the end or the last calculated position until that moment. The circular
++    mark is the start of the trajectory. We can see that activity moves form CA3 distal to
++    proximal in alternating waves of action (hiperpolarization, firing and repolarization).
++  }\label{cmevocada}
+
 
 The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
 
