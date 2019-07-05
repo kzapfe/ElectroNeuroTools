@@ -1,3 +1,6 @@
+module CentrosdeMasa
+
+
 #=
 Solo el calculo del centro de masa a partir
 de un JLD que contenga un arreglo 3D que
@@ -9,6 +12,8 @@ esten en cero.
 
 
 # Funciones
+
+export vecindad8, ComponentesSP, ObtenComponentesyCM
 
 function vecindad8(punto::Array)
     j=punto[1]
@@ -163,3 +168,4 @@ function ObtenComponentesyCM(Datos::Array, tini=1,tfini=tmax, epsilon=1.0)
     
        
 
+end # modulo
