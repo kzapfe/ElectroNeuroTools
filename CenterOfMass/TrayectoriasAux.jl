@@ -4,6 +4,10 @@ de trayectorias) y que quitan puntos "antes que" o "despues que"
 cierto tiempo
 =#
 
+module TrayectoriasAux
+
+export reducecatenario, AntesQue, DespuesQue, distprom
+
 dist(x1,y1,x2,y2)=sqrt((x1-x2)^2+(y1-y2)^2)
 
 function reducecadetenario(Catenario::Dict, gordmin=25,minlong=7,maxlong=100, distmin=0)
@@ -64,3 +68,5 @@ function distprom(Catenario::Dict)
     end
     return result
 end
+
+end # module

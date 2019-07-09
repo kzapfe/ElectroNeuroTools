@@ -22,6 +22,7 @@
 
 \DeclareMathOperator{\arcsinh}{arcsinh}
 \newcommand{\mum}[1]{\SI{#1}{\micro\metre}}
+\newcommand{\muV}[1]{\SI{#1}{\micro\volt}}
 \newcommand{\rd}{\mathrm{d}}
 
 
@@ -529,11 +530,47 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 %%%% *********** Vas aqui
 
 \subsection{Application to epileptic-like activity in the hippocampus}
-Chronologically speaking, we performed first the analysis to the most complicated data (numerically and qualitatively), which where a series of epileptic burst that occurred after 15 minutes of application of 4AP to living slices of hippocampus. The burst occurred with activity spreading over many sites simultaneously. This turned out to be a test of the applicability and robustness of our method. The necessity of having good error value for the zero set was more apparent here than anywhere else. Also the posibilty to create new structures of numerical data was first seen here.  But also the most strickig features of the propagation of activity, coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole CA structure. A sample of the raw data in $\mu V$ can be seen in the figure \textbf{Tururu}. Three key moments in the epileptic burst have been selected, one before the onset of the attack, one at the peak and one at the middle of the subsequent waves. Traces from selected electrodes along the line labeled A-F are presented in the subfigure D. 
+We performed first the analysis to the most complicated data, numerically and qualitatively, which comes from a series of epileptic burst that occurred after 15 minutes of application of 4AP to living slices of hippocampus. Each burst occurrs with activity spreading over many sites allmost simultaneously. This turned out to be a test of the applicability and robustness of our method. The necessity of having a good error value for the inactive set was more apparent here than anywhere else. Aulso the most strickig features of the propagation of activity, coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole CA structure. A sample of the raw data in $\mu V$ can be seen in the figure \ref{lfpycsd4ap}. Five key moments in the epileptic burst have been selected, one just before the onset of the attack, the next one at the peak and one  following it, and the last at the subsiding moments. The figure compares the Raw data
+in $\muV{}$ in the first row, then the crude CSD representation in the second row, and
+in the third raw a CSD after a Gaussian Blur Filter has been applied,
+with a $\sigma$ value of $ \mum{42}$. After the Gaussian Blur acts a sort of
+spatial denoizing mechanism, the disjoint components are apparent to the eye.
+In the figure \ref{csdfrontera} we apply the border criterion for the disconnected
+components. Again, in the first row we have the CSD without the Gaussian Blur.
+Even though well localizated patches of activity are to be seen over the
+stratum pyramidale, large parts of the activity remain hidden by the noice.
+After the Gaussian Blur has been applied the joint sets of activity are evident. 
 
-In figure \textbf{Tururu2} we present the CSD for the same selected moments.
 
-In the figure \textbf{Tururu3} we present our method using the peak moment as an example. 
+
+\begin{figure}
+  \includegraphics[width=0.9\textwidth]{./Figuras/LFPvsCSD_4AP.pdf}
+  \caption{Comparison of LFP and CSD representations
+    at the moments of the epileptic burst. In the first row
+    we present the data as meassured, no denoizing or filtering has
+    been applied. The units of measurement are in $\muV{}$. In
+    the middle row a direct application of a difference operator
+    gives us the CSD. This sort of operators are very sensitive
+    to noice, in this case, spatial hard edges, which become
+    greatly exagerated. In the third row we present the same
+    data after a Gaussian spatial filter ( Gaussian Blur) has
+    been applied. }\label{lfpycsd4ap}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=0.9\textwidth]{./Figuras/Fronteras2sigma.png}
+  \caption{The detection of disconnected components for the Sink and Source
+    Sets. We take the the threshold value as two times the
+    standard deviation of the whole data in CSD representation. In
+    the upper row the data without the Gaussian Blur filtering is shown.
+    Altough the location of some of the active sets is clear, a lot of the
+    joint activity gets hidden under the spatial noice. In the lower
+    row we repeat the detection with the smoothed data. Large, coherent
+    patches of activity are clearly shown, and the structure of the
+    stratum pyramidale is apparent. 
+  }\label{csdfrontera}
+\end{figure}
+
 
 \subsection{Application to spontaneous activity in idem.}
 
