@@ -10,19 +10,24 @@ export reducecatenario, AntesQue, DespuesQue, distprom
 
 dist(x1,y1,x2,y2)=sqrt((x1-x2)^2+(y1-y2)^2)
 
-function reducecadetenario(Catenario::Dict, gordmin=25,minlong=7,maxlong=100, distmin=0)
+function reducecatenario(Catenario::Dict;
+                         gordmin=25,minlong=7,maxlong=100, distmin=0)
+    
     result=Dict{Integer, Array{Any}}()
     
-for (k,p) in Catenario
+    for (k,p) in Catenario
     
         distrec=dist(p[1,1],p[1,2],p[end,1],p[end,2])
         
-    gordura=abs.(p[:,3])
-    longus,gordus=size(p)
-    if (mean(gordura)>gordmin) && (longus>minlong) && longus < maxlong && distrec>distmin
+        gordura=abs.(p[:,3])
+        longus,gordus=size(p)
+        if (mean(gordura)>gordmin) &&
+            (longus>minlong) &&
+            longus < maxlong && distrec>distmin
             result[k]=p
+        end
     end
-end
+
     return result
 end
 
