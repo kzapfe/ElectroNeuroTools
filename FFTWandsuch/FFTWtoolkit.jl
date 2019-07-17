@@ -8,7 +8,7 @@ export filtrobanda, wfft
 function indicecercano(a::Number, freqs::Array)
     #encuentra en índice que tiene el número  más cercano a "a" en el Array freqs
     # si a está más lejos de alguno de ellos que su paso
-    tol=abs((max(freqs)-min(freqs))/length(freqs))
+    tol=abs((maximum(freqs)-minimum(freqs))/length(freqs))
     result=findfirst(x->isapprox(a,x, atol=tol), freqs)
     return result
 end

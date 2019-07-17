@@ -115,7 +115,7 @@ function FormaMatrizDatosCentrados(xxs::Array, factor::Number)
     irrrelevante,largo=size(xxs)
     #Los datos originales son UInt16. No podemos
     # tener mas bits que eso. No sirve de nada.
-    aux=Array{Int16}(undef, 64,64, largo);
+    aux=Array{UInt16}(undef, 64,64, largo);
     result=Array{Float32}(undef, 64,64, largo);
     for j=1:64,k=1:64
         aux[k,j,:]=xxs[j+(k-1)*64,:]

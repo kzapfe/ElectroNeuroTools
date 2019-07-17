@@ -28,7 +28,7 @@ factor=Datos["factor"] #Factor de conversion de numeros enteros a microVolts
 
 if autorebana
     tamax=400*1024*1024  #maximo tamaño tolerable de archivo en tu lap
-    tam=filesize(arbestring)
+    tam=filesize(abrestring)
     cachos=div(tam,tamax)+1
 else
     #tiempos interesantes es una lista de intervalos en segundos. 

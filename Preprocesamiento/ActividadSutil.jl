@@ -33,7 +33,7 @@ function buscasigmaactiva(datos::Array; malos=Set(), venms=50, freq=deffreq)
     return pur
 end
 
-end.
+end
 
 
 
