@@ -234,7 +234,7 @@ Due to conservation of charges, this is the same as as the temporal variation of
   C=-\frac{\partial \rho}{\partial t}
 \end{equation}
 Current Source Density as a mathematical density (a quasi-probability density function)  allows  to rigorously apply the concepts of vector averaging. This use has been overlooked. This might have occurred because  samplings at lesser spatial resolution did not permit estimations of this quantity with enough precision to make reliable spatial implications, even with the use of sophisticated CSD estimation methods. In our case, we want to use the density as a mathematician would: a function which assigns weights to points in the space of interest and permits us to carry linear operations over them.  The space here is the sampling points of the electrodes at a given instant in time, and the weight, the CSD, is amount of interchange of charged ions from the inside to the outside of cellular membranes, per unit space.  This is an indicator of activity in the neurons, therefore the CSD is also, indirectly, a \emph{``density of local activity''}. Having both
-the mathematician and electrophysiologicist interpretations presents we can
+the mathematician and electrophysiologist interpretations presents we can
 perform the following analysis with clear readings. 
 
 Apparently, CSD would not fit the requirements of non-negativity for its use as a mathematical density, but this is not a problem.  CSD separates the measured activity into three distinct sets, namely, the set of all sources, the set of all sinks and the zero set. The separation is not quantitative but qualitative: even when the signs of electric charge are arbitrary, the distinction between them is not. Therefore, CSD represents on each of the two active sets (sinks and sources) exactly what we need, a unit of concentration of changing charges per unit of space (in this case, per area), and the sign can be ignored, as long as we perform the operations in each set separately. Also, the separation by the zero value set of the CSD is in contrast to the zero value of the LFP, where it has no precise meaning as it only represents a practical reference value. This is acknowledged in most of the literature, where only the scales of the LFP recording are shown, without reference to the sign of the values. In the CSD representation,  the so called zero set (all the points in our space which have a recorded CSD of zero)  has a precise meaning: it is an instantaneous lack of activity and the border between sinks and sources. This shall be exploited further in the section below.
@@ -250,7 +250,7 @@ cross lengths around \mum{150}. .
 These appear to correspond to the expected poles of firing neurons in structured tissue \cite{Buzsaki2012} and inspired us to separate the sink and source  sets into their \emph{disconnected components}. This concept is used in mathematics to denote subsets of a given geometric set that do not touch each other  \cite{Halmos}. Their rough correspondence to poles of firing neurons is most useful in tracking the successive locus of the activity.
 
 To clarify the concept and how we are we using it an example is in order. In figure \ref{disconnectedsets} A we show geometrical sets enclosed by simple curves as color patches, where every color indicates a Set. The set $A$ consists of a single connected component, that means that one can make  path between any two points in the set that consist entirely of points of the same set. In contrast, the set $B$ is made of two disconnected components, labeled $B1$ and $B2$. If one chooses a point in each of the components, one cannot draw a path joining them without leaving the set. But each one of those components is connected, meaning that if we choose the pair of points in one component, then again we can trace a path joining them in the set. So the set $B$ consists of two disconnected components, but each component can be regarded as a connected set on their own. Likewise the set $C$ is made of three disconnected components. In the subfigure \ref{disconnectedsets} Aiii we show the center of mass of the sets. The set $A$ is concave, so, it can have a center of mass outside the set. The
-set $B$ has also a center of mass outside the set. It has two disconnected components that are aproximatelly
+set $B$ has also a center of mass outside the set. It has two disconnected components that are approximately
 equal and separated by a long distance (this is not an implication: a set can be disconnected and have
 a CM inside the set). For the set $C$ our approach has been used: we treat every disconnected component of the
 set as an independent entity and calculate the center of mass for each one. Notice that this doesn't preclude t
@@ -442,6 +442,26 @@ of the slice of hippocampus with different voltage intensities. Details of the e
 have been published elsewhere \cite{Franco2018}. We shall borrow some of
 the experimental data for illustrating our purposes.
 
+
+
+%The treatment of the data is shown in figure
+%\ref{CSD_Evocada01}.  The subfigure A  shows a diagram of the hippocampus, with
+%the somatic layers (CA and DG) as thick black lines and the stimulus point
+%shown as a blue arrow. The $a,b,c,d,e$ dots are selected electrodes for
+%showing LFP and CSD traces. Those are shown in the subfigure B. In subfigure
+%C the same data is presented as a spatiotemporal color map that
+%shows the expected poles of firing neurons transverse to the
+%pyramidal stratum.  In the subfigure D we show the CSD for a series of time frames
+%over the square delimited in the subfigure A. The idea for treating the different
+%patches separately becomes evident here. The sources and sinks form patches
+%with an apparent anterograde movement from CA3 to CA1.
+%The patches change polarity
+%as expected, with the somatic layer becoming a strong sink between 3 to 4 ms
+%after the stimulus, and then, at the 6 ms, inverting its polarity in a way that suggest
+%successive activation of groups that are represented as movement of the patch.
+
+
+
 The LFP is averaged over three events, produced by three successive
 electrical stimuli in the same point at constant voltage. The
 response of the cells is almost identical in each event, which
@@ -457,70 +477,117 @@ restrict the CM track analysis to the respondent area in CA3.
 
 Once that we have the CSD representation, we select channels outside
 the r.o.i. and use them to obtain the threshold for separating
-the Sink and Sources sets. Then we procede as stated in the previous section.
+the Sink and Sources sets. Then we proceed as stated in the previous section.
 
 The figure \ref{lfpcsdcm}  compares the representation of the activity in
-the LFP, CSD and CM spaces. It has been exhaustively proven that the CSD
+the LFP, CSD and CM spaces. The CSD
 representation provides better spatial localization of active sites, but the
 CM can serve as better dynamical tracker of action. The figure illustrates
 that point by choosing the time interval of response in CA3 after the stimulus.
 CM representation permits us to track the activity with less
 interference from the saturated region. The small, clearly localized centers of
 mass separate clearly from the big patch over the saturated region.
+In the figure \ref{lfpcsdcmsub} we repeat the procedure but focusing in
+the r.o.i., which includes CA3 str. pyr. We take advantage of the
+detailed frame to show the borders of the disconnected sets that
+we have chosen for the CM analysis in the right column.
+
+
 In the figure \ref{evotracks} we concatenate the successive centers of mass
 for both sinks and sources and show how the anterograde reaction is
 very well localized over the Pyramidal Stratum at precise moments after
-stimulus.
+stimulus. This dataset provides us with a very clean example of the
+trajectory analysis. The very well localized activity and coherent
+action gives us trajectories that are in accordance with the canonical
+source and sink distribution, but adding the temporal dynamical displacement
+to it. We have been very thorough with this example as it will help us
+to understand the more complicated data that shall be presented in
+the next examples. 
 
-The treatment of the data is shown in figure
-\ref{CSD_Evocada01}.  The subfigure A  shows a diagram of the hippocampus, with
-the somatic layers (CA and DG) as thick black lines and the stimulus point
-shown as a blue arrow. The $a,b,c,d,e$ dots are selected electrodes for
-showing LFP and CSD traces. Those are shown in the subfigure B. In subfigure
-C the same data is presented as a spatiotemporal color map that
-shows the expected poles of firing neurons transverse to the
-pyramidal stratum.  In the subfigure D we show the CSD for a series of time frames
-over the square delimited in the subfigure A. The idea for treating the different
-patches separately becomes evident here. The sources and sinks form patches
-with an apparent anterograde movement from CA3 to CA1.
-The patches change polarity
-as expected, with the somatic layer becoming a strong sink between 3 to 4 ms
-after the stimulus, and then, at the 6 ms, inverting its polarity in a way that suggest
-successive activation of groups that are represented as movement of the patch.
 
+
+\begin{figure}
+  \includegraphics[width=0.9\textwidth]{Figuras/lfpevocado01.pdf}
+  \caption{A set of frames showing the stimulus and posterior activity.
+    The frame titled ``0 ms'' is just before the stimulus was
+    made.  A diagram of the Granular and Pyramidal Layers is shown
+    against the noice background. The black rectangle delimites the
+    r.o.i. and the black arrow shows the site of stimulation in GD.
+  }\label{lfpevocada}
+\end{figure}
 
 \begin{figure}[h]
-  \includegraphics[width=0.9\textwidth]{Figuras/CSD_EvocadaYTrazos.pdf}
-  \caption{ CSDA for evoked activity and visual inspection of disjoint
-    components. In A we present a diagram of the hippocampus slice over
-    the acquisition device. The somatic layers of CA and DG are represented as
-    thick black lines, and the stimulus site is indicated by a blue arrow. A selection
-    of six contiguous electrodes labeled $A-F$ in the r.o.i. are presented as blue
-    dots. In B we show the LFP traces and their CSD representation for those
-    selected electrodes.
-    In C we shoe the CSDA for various timestamps in the sub-region
-    indicated in A as the r.o.i, which covers a square of 24 by 24 electrodes over CA3.
-    in the first image,  4ms after the stimulus,  a
-    shaded strip indicating the approximate location of str. pyr. A model neuron is
-    drawn for scale. At 4ms after the stimulus, the saturation of the electric shock
-    recedes and we can began to appreciate real neuronal activity on the responsive
-    sector of CA3. A great sink appears over the somatic layer, surrounded by two
-    sources and some smaller patches of activity. At the following frame the patch
-    appears to have moved anterogradly, towards CA1. Next frame, the sink appears
-    to have inverted its polarity as do their surrounding patches, and the movement
-    continues until approximately 9ms after stimulus, where the activity ceases to be
-    discernible from noise.}
-  \label{CSD_Evocada01}
+\includegraphics[width=0.9\textwidth]{Figuras/lfpcsdcm01.pdf}
+\caption{ Comparison of the activity represented as LFP, CSD and CM.
+  The time after
+  stimulation in ms is shown in the central column for each row.
+  In this series of frames a relatively big patch of the electrodes
+  still appear saturated, but even so the CSD shows good localization
+  of the relevant deflections from the neutral or noise base signal.
+  The CM representation concentrates the locus of action even more.
+  The circular dots in the third column represent the center of mass
+  of coherent active subsets.
+}\label{lfpcsdcm}
 \end{figure}
 
 
+
+\begin{figure}[h]
+\includegraphics[width=0.9\textwidth]{Figuras/lfpcsdcm02.pdf}
+\caption{ The same as previous figure, but focusing on the
+  region of interest, including the stratum pyramidale of CA3.
+}\label{lfpcsdcmsub}
+\end{figure}
+
+
+%\begin{figure}[h]
+%  \includegraphics[width=0.9\textwidth]{Figuras/CSD_EvocadaYTrazos.pdf}
+%  \caption{ CSDA for evoked activity and visual inspection of disjoint
+%    components. In A we present a diagram of the hippocampus slice over
+%    the acquisition device. The somatic layers of CA and DG are represented as
+%    thick black lines, and the stimulus site is indicated by a blue arrow. A selection
+%    of six contiguous electrodes labeled $A-F$ in the r.o.i. are presented as blue
+%    dots. In B we show the LFP traces and their CSD representation for those
+%    selected electrodes.
+%    In C we shoe the CSDA for various timestamps in the sub-region
+%    indicated in A as the r.o.i, which covers a square of 24 by 24 electrodes over CA3.
+%    in the first image,  4ms after the stimulus,  a
+%    shaded strip indicating the approximate location of str. pyr. A model neuron is
+%    drawn for scale. At 4ms after the stimulus, the saturation of the electric shock
+%    recedes and we can began to appreciate real neuronal activity on the responsive
+%    sector of CA3. A great sink appears over the somatic layer, surrounded by two
+%    sources and some smaller patches of activity. At the following frame the patch
+%    appears to have moved anterogradly, towards CA1. Next frame, the sink appears
+%    to have inverted its polarity as do their surrounding patches, and the movement
+%    continues until approximately 9ms after stimulus, where the activity ceases to be
+%    discernible from noise.}
+%  \label{CSD_Evocada01}
+% \end{figure}
+
+
+
+\begin{figure}
  \includegraphics[width=0.9\textwidth]{Figuras/CMVariousTimes01.pdf}
-+  \caption{ The CM analysis over the same images as figure \ref{CSD_Evocada01} C. Some trajectories
-+    are calculated before the 4ms time stamp. The triangular mark shows the later point of the
-+    trajectory, either the end or the last calculated position until that moment. The circular
-+    mark is the start of the trajectory. We can see that activity moves form CA3 distal to
-+    proximal in alternating waves of action (hiperpolarization, firing and repolarization).
-+  }\label{cmevocada}
+  \caption{ The CM analysis over the same images as figure \ref{lfpcsdcmsub} C. Some trajectories
+    are calculated before the 4ms time stamp. The triangular mark shows the later point of the
+    trajectory, either the end or the last calculated position until that moment. The circular
+    mark is the start of the trajectory. We can see that activity moves form CA3 distal to
+    proximal in alternating waves of action (hiperpolarization, firing and repolarization).
+  }\label{cmevocada}
+\end{figure} 
+
+
+
+\begin{figure}
+  \includegraphics[width=0.9\textwidth]{./Figuras/trayevocadasub01.pdf}
+  \caption{The evoked trajectories in the r.o.i. We begin to track them
+    at the 0.9 ms mark, after letting the saturation of the stimulus recede.
+    At 3ms a very clear sink trajectory is moving retrogradly towards CA2,
+    sheepherd by two shorter source trayectories. At 5.6 a depolarization
+    trajectory starts, following almost the same path and presenting also its
+    two companions, ending around the 7.7ms timestamp. No significant
+  trajectories are observed after the 10ms mark. }\label{trayevo}
+\end{figure}
 
 
 The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
@@ -548,13 +615,16 @@ the onset of the epileptiform attack in CA1. At around 60ms after the 4AP dose a
 of localized trajectories appear near CA2. By the 70ms mark, the activity has spread
 retrograde through most of the CA structure. Between the 80 and 90 ms marks
 GD shows knot-like trajectories. By 140ms the remaining activity is in the proximal
-area of CA1. 
+area of CA1.
+
+
+
 
 \begin{figure}
   \includegraphics[width=0.9\textwidth]{./Figuras/LFPvsCSD_4AP.pdf}
   \caption{Comparison of LFP and CSD representations
     at the moments of the epileptic burst. In the first row
-    we present the data as measured, no denoizing or filtering has
+    we present the data as measured, no denoising or filtering has
     been applied. The units of measurement are in $\muV{}$. In
     the middle row a direct application of a difference operator
     gives us the CSD. This sort of operators are very sensitive
@@ -599,6 +669,7 @@ bla bla.
 
 \bibliographystyle{abstract}
 \bibliography{../Reportes/BiblioReportes01} 
+
 
 
 \end{document}
