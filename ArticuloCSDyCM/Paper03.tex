@@ -425,7 +425,7 @@ should is due and is beyond the scope of this work.
 The necessity to create such analysis came originally from the study of
 electro-physiological data obtained from the rat's hippocampus, using
 a very dense MEA, the BioCAM of 3Brain \cite{BioCAM}. 
-The highly layered CA structure of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the pattern of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the somatic layer. Using CSD and disconnected component tracking over the data provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacological
+The highly layered CA structure of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the paths of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the somatic layer. Using CSD and disconnected component tracking over the data provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacological
 or traumatically induced. The proposed analysis would not produce vector averages over different simultaneously active areas. On the contrary, it would separate them and track them independently. So the most violent epileptic burst provided us with the data necessary to prove the robustness of the method.
 All the experimental data comes from a series of experiments
 performed on slices of the rats hippocampus. 
@@ -481,8 +481,8 @@ the Sink and Sources sets. Then we proceed as stated in the previous section.
 
 The figure \ref{lfpcsdcm}  compares the representation of the activity in
 the LFP, CSD and CM spaces. The CSD
-representation provides better spatial localization of active sites, but the
-CM can serve as better dynamical tracker of action. The figure illustrates
+representation provides better spatial localization of active sites, and the
+CM serves as better dynamical tracker. The figure illustrates
 that point by choosing the time interval of response in CA3 after the stimulus.
 CM representation permits us to track the activity with less
 interference from the saturated region. The small, clearly localized centers of
@@ -566,7 +566,7 @@ the next examples.
 
 
 
-\begin{figure}
+\begin{figure}[h]
  \includegraphics[width=0.9\textwidth]{Figuras/CMVariousTimes01.pdf}
   \caption{ The CM analysis over the same images as figure \ref{lfpcsdcmsub} C. Some trajectories
     are calculated before the 4ms time stamp. The triangular mark shows the later point of the
@@ -578,7 +578,7 @@ the next examples.
 
 
 
-\begin{figure}
+\begin{figure}[h]
   \includegraphics[width=0.9\textwidth]{./Figuras/trayevocadasub01.pdf}
   \caption{The evoked trajectories in the r.o.i. We begin to track them
     at the 0.9 ms mark, after letting the saturation of the stimulus recede.
@@ -597,7 +597,12 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 %%%% *********** Vas aqui
 
 \subsection{Application to epileptic-like activity in the hippocampus}
-We performed first the analysis to the most complicated data, numerically and qualitatively, which comes from a series of epileptic burst that occurred after 15 minutes of application of 4AP to living slices of hippocampus. Each burst occurs with activity spreading over many sites almost simultaneously. This turned out to be a test of the applicability and robustness of our method. The necessity of having a good error value for the inactive set was more apparent here than anywhere else. Also the most striking features of the propagation of activity, coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole CA structure. A sample of the raw data in $\mu V$ can be seen in the figure \ref{lfpycsd4ap}. Five key moments in the epileptic burst have been selected, one just before the onset of the attack, the next one at the peak and one  following it, and the last at the subsiding moments. The figure compares the Raw data
+We performed first the analysis to the most complicated data,
+numerically and qualitatively, which comes from a series of epileptic burst
+that occurred after 15 minutes of application of 4AP to living slices of
+hippocampus. Each burst occurs with activity spreading over many sites almost
+simultaneously. This turned out to be a test of the applicability and
+robustness of our method. The necessity of having a good error value for the inactive set was more apparent here than anywhere else. Also the most striking features of the propagation of activity, coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole CA structure. A sample of the raw data in $\mu V$ can be seen in the figure \ref{lfpycsd4ap}. Five key moments in the epileptic burst have been selected, one just before the onset of the attack, the next one at the peak and one  following it, and the last at the subsiding moments. The figure compares the Raw data
 in $\muV{}$ in the first row, then the crude CSD representation in the second row, and
 in the third raw a CSD after a Gaussian Blur Filter has been applied,
 with a $\sigma$ value of $ \mum{42}$. After the Gaussian Blur acts a sort of
