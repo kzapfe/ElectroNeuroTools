@@ -152,7 +152,7 @@ function BuscaSaturados(datos::Array,
 end
 
 function BuscaSaturadosStd(datos::Array, ini, fin,
-                           freq=deffreq, bajo=10, alto=40)
+                           freq=deffreq, bajo=10, arriba=40)
     #ventms es la ventana en milisegundos
     #busca saturardos por desviación por ventana por umbral
     (alto,ancho,largo)=size(datos)
@@ -161,7 +161,7 @@ function BuscaSaturadosStd(datos::Array, ini, fin,
     result=Set(Array{Int8, 1}[])
     for j=1:ancho, k=1:alto        
         sigma=std(datos[k,j,cini:cfin])    
-        if sigma>alto || sigma < bajo
+        if sigma>arriba || sigma < bajo
             bla=[k, j]
             result=push!(result, bla)
         end
@@ -182,7 +182,7 @@ function BuscaRuidosos(datos::Array, ini, fin,
     cfin=round(Int, ceil(freq*fin))
     result=Set(Array{Int8, 1}[])
     for j=1:ancho, k=1:alto        
-        pasados=findall(x-> x>umbral, datos[j,k,cini:cfin])
+        pasados=findall(x-> x>umbral, datos[k,j,cini:cfin])
         if length(pasados)>tantos
             bla=[k, j]
             result=push!(result, bla)
