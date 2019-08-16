@@ -8,9 +8,13 @@ export rowstoset, elemtorow
 
 
 
-function rowstoset(xxs::Array)
+function rowstoset(xxs::Array; enteros=true)
     # pasa los renglones de un arreglo a un conjunto como si jueran elementos
-    result=Set{Array{Int64,2}}()
+    if enteros
+        result=Set{Array{Int64,2}}()
+    else
+        result=Set{Array{Float64,2}}()
+    end
     (nrow,ncol)=size(xxs)
     for j in 1:nrow
         push!(result, reshape(xxs[j,:], 1, ncol))
