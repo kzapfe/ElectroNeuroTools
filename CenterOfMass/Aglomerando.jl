@@ -71,8 +71,8 @@ Ponemos los datos listos para trabajar y les damos un oclayo
 datcmp=dictatablaord(DatosCMP)
 datcmn=dictatablaord(DatosCMN)
 
-fig=plot4Ddiscs(datcmp)
-fig=plot4Ddiscs(datcmn)
+#fig=plot4Ddiscs(datcmp)
+#fig=plot4Ddiscs(datcmn)
 
 datcmp=filtraquantil(datcmp)
 datcmn=filtraquantil(datcmn)
@@ -83,8 +83,8 @@ m4ddistneg=hazmatrizdist(datcmn)
 herclustpos=hclust(m4ddistpos)
 herclustneg=hclust(m4ddistneg)
 
-clustpos=cutree(herclustpos, h)
-clustneg=cutree(herclustneg, h)
+clustpos=cutree(herclustpos, h=h)
+clustneg=cutree(herclustneg, h=h)
 
 tantospos=length(unique(clustpos))
 tantosneg=length(unique(clustneg))
@@ -99,3 +99,11 @@ scatterclust(datcmp, clustpos)
 scatterclust(datcmn, clustneg)
 
 
+temp=hcat(datcmp, clustpos)
+dict4delectrodos=declustaset(temp, enteros=true)
+electrodosgruposgrandes=filtraclusterchicos(dict4delectrodos, 3);
+
+for k in keys(electrodosgruposgrandes)
+    l=length(electrodosgruposgrandes[k])
+    println(" el grupo $k tiene $l electrodos para regiones de Sources")
+ end

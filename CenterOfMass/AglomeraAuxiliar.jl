@@ -6,7 +6,7 @@ push!(LOAD_PATH, ".")
 
 using Aglomerar
 using StatsBase # para nquantil
-using Distances # para pairwise euclidian matrix
+using Distances # para pairwise euclidean matrix
 
 
 export dictatablaord, filtraquantil, hazmatrizdist
@@ -42,7 +42,7 @@ function hazmatrizdist(datos::Array)
     datosaux=permutedims(datos)
     datosaux[3,:]=normalizar1(datosaux[3,:]).*64
     datosaux[4,:]=normalizar1(datosaux[4,:]).*64
-    result=pairwise(Euclidian(), datosaux, dims=2)
+    result=pairwise(Euclidean(), datosaux, dims=2)
     return result
 
 end

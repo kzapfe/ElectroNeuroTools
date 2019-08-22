@@ -9,7 +9,7 @@ using Distances  # Este es necesario para hacer la matriz de distancia, es compl
 
 using ArraySetTools  # pa aprovechar las cosas que ya tenemos.
 
-export normalizar, filtraclusterchicos, declustaset,
+export normalizar1, filtraclusterchicos, declustaset,
      dictatabla, plot4Ddiscs, scatterclust
 
 
@@ -58,10 +58,10 @@ function declustaset(puntosyclust::Array; enteros=true)
     
     for q in clustnames
         subt=puntosyclust[puntosyclust[:,end].==q,:]
-       if enteros
-        punt=rowstoset(round.(Int64,subt[:,end]))
+        if enteros
+        punt=rowstoset(round.(Int64,subt[:,1:end-1]))
         else
-            punt=rowstoset(subt[:,end], enteros=enteros)
+            punt=rowstoset(subt[:,1:end-1], enteros=enteros)
         end    
         qindez=round(Int64,q)
         result[qindez]=punt
