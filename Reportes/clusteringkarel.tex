@@ -1,12 +1,22 @@
+\documentclass{article}
+
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+
+\begin{document}
+
 As an extension to the trajectory concept in the CSD-CM we
-shall propose a more general concept: spatio-temporal clustering of the CM.
+shall propose another,  more general, concept: spatial-temporal
+clustering of the CM.
 This extends the notion of trajectory to more general grouping of the
 CM data.
 
-In view ot the necesity of clasifing the CM by anatomical location,
-the need of an automatic, unsupervised clasification of the various CM
-over the underlying physiological structure was possed.  The CM data
-consists of 4 continous numerical dimenisons and a binary categorical
+In view of the need of classifying the CM by anatomical location,
+the need of an automatic, unsupervised classification of the various CM
+over the underlying physiological structure was seen.  The CM data
+consists of 4 continuous numerical dimensions and a binary categorical
 one. These are the 2 dimensions of of spatial location, which are constrained
 to the dimensions of the MEA, the temporal variable (which can be
 considered discrete if we use sampling frames as time unit), and the intensity of the CM.
@@ -19,19 +29,57 @@ in the MEA coordinates obtained from an experiment with facilitated activity
 during a burst of spikes ( around 285 ms of recording ). A visual inspection
 seems to suggest a clustering of the points in layers and segments over and near the
 Cornu Ammonis Structure, with fewer points over other structures. Most interesting
-is the three layered clustering that seems to be around CA3 and the two layeered
+is the three layered clustering that seems to be around CA3 and the two layered
 structure in CA1. 
 
-In the figure \ref{puntosconcolor} we also colorize the dost by temporal emergence.
-This also reveals that the layering has also a reccurent order of appearance. Intensity
+\begin{figure}
+\centering
+\begin{subfigure}{0.40\textwidth}
+\includegraphics[width=\textwidth]{puntoscmfacneg.png}
+\caption{Sinks}
+\end{subfigure}
+\begin{subfigure}{0.40\textwidth}
+\includegraphics[width=\textwidth]{puntoscmfacpos.png}
+\caption{Sources}
+\end{subfigure}
+
+\caption{The distribution of the CM of 285ms of data of facilitated activity
+during a burst. We have of the order of 9000 points in each
+set. Visual inspection seems to reveal a multilayered structure in the
+CA3 and CA1 region, with more ambigous clustering in the putative
+CA2 location.}\label{puntostodos}
+
+\end{figure}
+
+In the figure \ref{puntosconcolor} we also colorize the dots by temporal emergence.
+This also reveals that the layering has also a recurrent order of appearance. Intensity
 layering was also explored, but heuristic reasons based on previous trajectory
-analysis put doubts on the validity of this clasification. Namely, we expect
-that the genaralization of trajectories to also have a rising and fading behaviour,
-and thus the intensity should not be used to sepparate different cluster, but to
+analysis put doubts on the validity of this classification. Namely, we expect
+that the generalization of trajectories to also have a rising and fading behavior,
+and thus the intensity should not be used to separate different cluster, but to
 find regular activity inside each cluster. It could be argued that intensity also
-classifies multiunitary activity by type and number of putative units, but then,
+classifies multi-unitary activity by type and number of putative units, but then,
 this classification would require using intervals of intensity instead of mere
 points and would complicate the analysis considerably.
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.40\textwidth}
+\includegraphics[width=\textwidth]{puntoscmfacnegtcolor.png}
+\caption{Sinks}
+\end{subfigure}
+\begin{subfigure}{0.40\textwidth}
+\includegraphics[width=\textwidth]{puntoscmfacpostcolor.png}
+\caption{Sources}
+\end{subfigure}
+
+\caption{Same data as in fig. \ref{puntostodos} but colorized using
+the temporal appearence. The colorbar is in miliseconds.
+}\label{puntosconcolor}
+
+\end{figure}
+
 
 We decided to  use only the spatiotemporal variables for classification. 
 The temporal variable has different units, so a prudent normalization is due
@@ -40,22 +88,22 @@ spatial ones. In absence of any other information, the sensible thing to do is t
 scale it so that its maximum span is of the same order of magnitude to the
 spatial length of the data, namely 64 arbitrary units, which is the convenient unit
 of measurement of the MEA ( 64 electrodes correspond to 2.27 mm).
-With this normalizazion, the data of the CM exist in a 3 dimensioanl cube of 64 a.u.
-of length on each dise. We can then procede to cluster the data acording to
+With this normalization, the data of the CM exist in a 3 dimensional cube of 64 a.u.
+of length on each side. We can then proceed to cluster the data according to
 certain criteria.
 
-Clustering algorhytms vary not only in implementation, but in design criteria.
+Clustering algorithms vary not only in implementation, but in design criteria.
 Thus they produce different results. We had to test a few of them. Our choice at the
-end was the so called DBSCAN (density based spatial clustering of applications with noice).
-This algorhytm is conceptually clean and can produce heteregenous clusters, in contrast
-to others such as HDC ( Hierarquical Data clustering). The DBSCAN clustering depends
-on two parameters: a radio of neighboorhood and a minimal number of neighbours. Each
-point that is demed to be part of a certain cluster has to have that number of neighbours
-that are also part of the same set inside an sphere of the choosen radius. These
-parameters can be choosen on physioligical grounds altough we can device a more
+end was the so called DBSCAN (density based spatial clustering of applications with noise).
+This algorithm is conceptually clean and can produce heterogeneous clusters, in contrast
+to others such as HDC ( Hierarchical Data clustering). The DBSCAN clustering depends
+on two parameters: a radio of neighborhood and a minimal number of neighbors. Each
+point that is deemed to be part of a certain cluster has to have that number of neighbors
+that are also part of the same set inside an sphere of the chosen radius. These
+parameters can be chosen on physiological grounds although we can device a more
 abstract way of optimizing them. 
 
-We decided to use a certain ``esthetic'' criterium for choosing the optimal parameters
+We decided to use a certain ``aesthetic'' criterium for choosing the optimal parameters
 for the DBSCAN algorythm.  It is its accordance with Zipf's Law.  This could post out
 the accordance with the allometric inverse algebraic laws that are observed in
 anatomical studies, but it is, in the end, a somewhat arbitrary criterium. Even thou, a good
@@ -65,3 +113,6 @@ behaviour, that it gives a good fit to allmost any set of reazonable parameters
 that one encounters. So we had to come up with criteria for what these ``reasonable
 parameters'' may be.  We settled that we shouldn't have to many unasigned points, and
 that no cluster should be too big, or that there were to many clusters. 
+
+
+\end{document}
