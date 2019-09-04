@@ -3,7 +3,8 @@
 
 \usepackage{graphicx}
 \usepackage{subcaption}
-
+%\usepackage{natbib}
+\usepackage{caption}
 
 \author{K. Zapfe}
 \title{Spatiotemporal clusters in the CSD-CM representation}
@@ -14,6 +15,7 @@
 
 \maketitle
 
+\section{Problem Statement}
 
 As an extension to the trajectory concept in the CSD-CM we
 shall propose another,  more general, concept: spatial-temporal
@@ -23,20 +25,39 @@ CM data.
 
 In view of the need of classifying the CM by anatomical location,
 the need of an automatic, unsupervised classification of the various CM
-over the underlying physiological structure was seen.  The CM data
-consists of 4 continuous numerical dimensions and a binary categorical
-one. These are the 2 dimensions of of spatial location, which are constrained
-to the dimensions of the MEA, the temporal variable (which can be
-considered discrete if we use sampling frames as time unit), and the intensity of the CM.
-The sign of the last one can be considered a separate categorical variable which
-has the values ``Sink'' or negative, and ``Source'' or positive. 
+over the underlying physiological structure began to increase.  The CM data
+consists of 4  numerical dimensions and a binary categorical
+one, detailed as follows:
+\begin{itemize}
+\item Two spatial dimensions, namely the location of the CM over the
+  area covered by the MEA. In our case this is a 64 by 64 microelectrode
+  array that spans over a square with a side of 2.27 mm. A convenient unit
+  of length is to use the grid interspacing, so we have a 64 by 64
+  cartesian grid. The CM data can have in principle continous values in
+  these coordinates, as it obtained by vector averaging over
+  CSD data.
+\item The temporal coordinate. This one is actually discrete, as it
+  is constrained to the sampling rate of the MEA, which for experimental
+  apparatus that we have, can vary between 7kHz and 18kHz. A timestep unit
+  then is is a fraction of milisecond. Proper normalization shall be done so
+  that it appears comparable to the spatial coordinates.
+\item The intensity of the CM. This can be also treated as a continous
+  variable, whose resolution depends on the noise level of the apparatus
+  and experiment in question.
+\item The sign of the mentioned intensity. Rather than incluiding this as
+  part of the numerical value, we use it as a categorical clasifcator that
+   separates ``Sink'' and ``Source'' data.
+\end{itemize}
+      
+
 Our problem was then to use the numerical variables to group the CM data in
 a way that could sheed some light over the anatomical structure that
 generates it. In the figure \ref{puntostodos} we present the CM data
 in the MEA coordinates obtained from an experiment with facilitated activity
 during a burst of spikes ( around 285 ms of recording ). A visual inspection
 seems to suggest a clustering of the points in layers and segments over and near the
-Cornu Ammonis Structure, with fewer points over other structures. Most interesting
+Cornu Ammonis Structure, with fewer and sparser
+points over other structures. Most interesting
 is the three layered clustering that seems to be around CA3 and the two layered
 structure in CA1. 
 
@@ -64,7 +85,7 @@ This also reveals that the layering has also a recurrent order of appearance. In
 layering was also explored, but heuristic reasons based on previous trajectory
 analysis put doubts on the validity of this classification. Namely, we expect
 that the generalization of trajectories to also have a rising and fading behavior,
-and thus the intensity should not be used to separate different cluster, but to
+and thus the intensity should not be used to separate different clusters, but to
 find regular activity inside each cluster. It could be argued that intensity also
 classifies multi-unitary activity by type and number of putative units, but then,
 this classification would require using intervals of intensity instead of mere
@@ -91,6 +112,8 @@ between other visual groupings.
 \end{figure}
 
 
+\section{The Approach}
+
 We decided to  use only the spatiotemporal variables for classification. 
 The temporal variable has different units, so a prudent normalization is due
 in order to not to give to it a preponderant or negligible weight in relation to the
@@ -98,16 +121,17 @@ spatial ones. In absence of any other information, the sensible thing to do is t
 scale it so that its maximum span is of the same order of magnitude to the
 spatial length of the data, namely 64 arbitrary units, which is the convenient unit
 of measurement of the MEA ( 64 electrodes correspond to 2.27 mm).
-With this normalization, the data of the CM exist in a 3 dimensional cube of 64 a.u.
-of length on each side. We can then proceed to cluster the data according to
-certain criteria.
+With this normalization, the data of the CM exist in a 3 dimensional cube of 64
+arbitrary units at each  side. We can then proceed to test clustering methods.
 
 
 Clustering algorithms vary not only in implementation, but in design criteria.
 Thus they produce different results. We had to test a few of them. Our choice at the
-end was the so called DBSCAN (Density Based Spatial Clustering of Applications with Noise).
+end was the so called DBSCAN
+(Density Based Spatial Clustering of Applications with Noise \cite{DBSCAN}).
 This algorithm is conceptually clean and can produce heterogeneous clusters, in contrast
-to others such as HDC ( Hierarchical Data clustering). The DBSCAN clustering depends
+to others such as HDC ( Hierarchical Data clustering \cite{ClustHB}).
+The DBSCAN clustering depends
 on two parameters: a radio of neighborhood and a minimal number of neighbors. Each
 point that is deemed to be part of a certain cluster has to have that number of neighbors
 that are also part of the same set inside an sphere of the chosen radius. These
@@ -119,8 +143,14 @@ very dense clusters and a lot of unasigned points. A laxer choice (a big radius
 with one to three neighboors) produces few clusters, with sparcely populated
 areas,  and fewer unasigned points. A quick testing of the algorythm 
 shows that we have to explore the validity of clusters in the range of
-$r \in [0.75, 2 ]$ ( electrode lengths) and $ n \in \lbrace 2,3,4,5 \rbrace$.
+$r \in [0.75, 3 ]$ ( electrode lengths) and $ n \in \lbrace 2,3,4,5 \rbrace$.
 
+In order to give a sensible interpretation we must not forget the
+fact that
+our neighborhoods are three dimensional balls with one temporal dimension.
+We are allowing for many CMs to be predecesors of a single one and
+the other way around, to have many succesors of each point. Strict causality
+is not tested at this stage of the analysis. 
 
 \begin{figure}[h]
 \centering
@@ -146,7 +176,26 @@ $r \in [0.75, 2 ]$ ( electrode lengths) and $ n \in \lbrace 2,3,4,5 \rbrace$.
 
 
 We decided to use a certain ``aesthetic'' criterium for choosing the optimal parameters
-for the DBSCAN algorythm.  It is its accordance with Zipf's Law.  This could post out
+for the DBSCAN algorythm.  It is its accordance with Zipf's Law. We expected
+a general allometric scalling law of algebraic decay as expected
+from other biological systems \cite{WestBrown2004, West99}, with unspecified
+exponent, but the universality of Zipf's Law imposed itself. This may be
+due to the fact that Zipfian distribution appears when there is some
+sort of hierarchy between the sets.
+
+We started by proposing a
+relation between rank and size of given by the general expression
+\begin{equation}
+s(k)=c \cdot k^a 
+\end{equation}
+where $s$ is size of the cluster, $k$ is its rank ( taking the bigger as the
+first) and $a, c$ constants to be determined. We used a least squares fitting
+over the logarithmic values and the linearized model, so as not to give
+preponderance to the bigger sets in the fitting, and we tested fits by
+comparing the $a$ exponent and the $R^2$ coefficent of deerminantion (see table
+\ref{tablarquad}).
+
+This could post out
 the accordance with the allometric inverse algebraic laws that are observed in
 anatomical studies, but it is, in the end, a somewhat arbitrary criterium.
 Nevertheless, a good
@@ -160,54 +209,67 @@ that no cluster should be too big, or that there were to many clusters. In the
 table \ref{tablarquad} we show the fitting results for some values of
 $r$ and $n$. The model that was fitted did not specify the exponent, it
 is remarkable how the various models gave values for this parameter so close
-to the ideal $-1$. 
+to the ideal $-1$. The unasigned points form also a set that is taken into
+account. 
 
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{zipfexample.png}
   \caption{An instance of Zipf's Law, with DBSCAN parameters
-    $r=1.5$ a.u. and $n=4$. The agreement with Zipf's
-    gives an exponent of $-1.007$ against the ideal $-1$ and
+    $r=1.5$ a.u. and 4 neighbors ($n=5$). The agreement with Zipf's
+    gives an exponent of $-1.008$ against the ideal $-1$ and
     an $R^2$ of $0.986$.}
 \end{figure}
 
+\begin{table}
 \begin{center}
-\begin{tabular}{|r|r|r|r|r|r|}
- r &  n  & $R^2$ & u & m & ng  \\ \hline
-  1 &  2 &  0.978 & 606 & 606 & 1285 \\
-  1 &  3 &  0.984 & 1346 & 1346 & 915 \\
-  1 &  4 &  0.974 & 2300 & 2300 & 658 \\
-  1 &  5 &  0.951 & 3193 & 3193 & 493 \\
-  1 &  6 &  0.918 & 4023 & 4023 & 375 \\
-  1.5 &  2 &  0.987 & 276 & 1007 & 691 \\
-  1.5 &  3 &  0.987 & 660 & 1007 & 499 \\
-  1.5 &  4 &  0.985 & 1060 & 1060 & 391 \\
-  1.5 &  5 &  0.986 & 1523 & 1523 & 315 \\
-  1.5 &  6 &  0.99 & 2040 & 2040 & 258 \\
-  2 &  2 &  0.95 & 156 & 5355 & 343 \\
-  2 &  3 &  0.928 & 382 & 5355 & 230 \\
-  2 &  4 &  0.912 & 566 & 5349 & 174 \\
-  2 &  5 &  0.906 & 777 & 5308 & 132 \\
-  2 &  6 &  0.915 & 976 & 3734 & 112 \\
-  2.5 &  2 &  0.911 & 113 & 6144 & 225 \\
-  2.5 &  3 &  0.875 & 243 & 6144 & 160 \\
-  2.5 &  4 &  0.849 & 349 & 6142 & 127 \\
-  2.5 &  5 &  0.828 & 475 & 6127 & 100 \\
-  2.5 &  6 &  0.849 & 602 & 6008 & 81 \\
-  3 &  2 &  0.909 & 89 & 7408 & 163 \\
-  3 &  3 &  0.874 & 187 & 7408 & 114 \\
-  3 &  4 &  0.847 & 267 & 7404 & 89 \\
-  3 &  5 &  0.829 & 343 & 7402 & 71 \\
-  3 &  6 &  0.817 & 418 & 7400 & 58 
+  \begin{tabular}{|r|r||r|r|r|r|r|}
+ $r$ &  $n$  & $a$ & $ R^2$ & $U$ & $M$ & $N$  \\ \hline 
+  1 &  2 & -0.755 &  0.978 & 606 & 606 & 1285 \\
+  1 &  3 & -0.71 &  0.984 & 1346 & 1346 & 915 \\
+  1 &  4 & -0.683 &  0.974 & 2300 & 2300 & 658 \\
+  1 &  5 & -0.655 &  0.951 & 3193 & 3193 & 493 \\
+  1 &  6 & -0.647 &  0.918 & 4023 & 4023 & 375 \\
+  1.5 &  2 & -0.99 &  0.987 & 276 & 1007 & 691 \\
+  1.5 &  3 & -0.974 &  0.987 & 660 & 1007 & 499 \\
+  1.5 &  4 & -0.994 &  0.985 & 1060 & 1060 & 391 \\
+  1.5 &  5 & -1.008 &  0.986 & 1523 & 1523 & 315 \\
+  1.5 &  6 & -1.006 &  0.99 & 2040 & 2040 & 258 \\
+  2 &  2 & -0.962 &  0.95 & 156 & 5355 & 343 \\
+  2 &  3 & -0.976 &  0.928 & 382 & 5355 & 230 \\
+  2 &  4 & -1.013 &  0.912 & 566 & 5349 & 174 \\
+  2 &  5 & -1.081 &  0.906 & 777 & 5308 & 132 \\
+  2 &  6 & -1.203 &  0.915 & 976 & 3734 & 112 \\
+  2.5 &  2 & -1.002 &  0.911 & 113 & 6144 & 225 \\
+  2.5 &  3 & -1.006 &  0.875 & 243 & 6144 & 160 \\
+  2.5 &  4 & -1.034 &  0.849 & 349 & 6142 & 127 \\
+  2.5 &  5 & -1.092 &  0.828 & 475 & 6127 & 100 \\
+  2.5 &  6 & -1.213 &  0.849 & 602 & 6008 & 81 \\
+  3 &  2 & -1.043 &  0.909 & 89 & 7408 & 163 \\
+  3 &  3 & -1.05 &  0.874 & 187 & 7408 & 114 \\
+  3 &  4 & -1.083 &  0.847 & 267 & 7404 & 89 \\
+  3 &  5 & -1.138 &  0.829 & 343 & 7402 & 71 \\
+  3 &  6 & -1.206 &  0.817 & 418 & 7400 & 58 \\
 \end{tabular}
-\caption{Table of $R^2$ values fitting Zipf's Law to the clustering
-  rank and size for various parameters. Here $r$ is the neighborhood
-  radius, $n$ the number of required neighboors including itself,
-  $R^2$ is the coefficient of determination, $u$ is the number of
-  unasigned points, $m$ the size in points of the largest
-  cluster, and $ng$ the number of clusters. }
+\caption{Table of resulting values fitting algebraic laws to the clustering
+  rank and size for various parameters. The inputs are $r$, the neighborhood 
+  radius and $n$, the number of required neighboors including itself.
+  The resultants are the following.
+  $a$ is the exponent,
+  $R^2$ is the coefficient of determination, 
+  $U$ is the number of
+  unasigned points, $M$ the size in points of the largest
+  cluster, and $N$ the number of clusters. }
 \label{tablarquad}
 \end{center}
+\end{table}
+
+%\bibliographystyle{te}
+
+
+\bibliographystyle{abstract}
+\bibliography{BiblioReportes01}
+
 
 \end{document}
