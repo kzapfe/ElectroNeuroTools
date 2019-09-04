@@ -5,7 +5,15 @@
 \usepackage{subcaption}
 
 
+\author{K. Zapfe}
+\title{Spatiotemporal clusters in the CSD-CM representation}
+
+
+
 \begin{document}
+
+\maketitle
+
 
 As an extension to the trajectory concept in the CSD-CM we
 shall propose another,  more general, concept: spatial-temporal
@@ -94,27 +102,100 @@ With this normalization, the data of the CM exist in a 3 dimensional cube of 64 
 of length on each side. We can then proceed to cluster the data according to
 certain criteria.
 
+
 Clustering algorithms vary not only in implementation, but in design criteria.
 Thus they produce different results. We had to test a few of them. Our choice at the
-end was the so called DBSCAN (density based spatial clustering of applications with noise).
+end was the so called DBSCAN (Density Based Spatial Clustering of Applications with Noise).
 This algorithm is conceptually clean and can produce heterogeneous clusters, in contrast
 to others such as HDC ( Hierarchical Data clustering). The DBSCAN clustering depends
 on two parameters: a radio of neighborhood and a minimal number of neighbors. Each
 point that is deemed to be part of a certain cluster has to have that number of neighbors
 that are also part of the same set inside an sphere of the chosen radius. These
 parameters can be chosen on physiological grounds although we can device a more
-abstract way of optimizing them. 
+abstract way of optimizing them. An example of the results of this
+algorythm is shown on fig. \ref{puntoscluster}.
+A strict choice of parameters (small radius and many neighbors) produces
+very dense clusters and a lot of unasigned points. A laxer choice (a big radius
+with one to three neighboors) produces few clusters, with sparcely populated
+areas,  and fewer unasigned points. A quick testing of the algorythm 
+shows that we have to explore the validity of clusters in the range of
+$r \in [0.75, 2 ]$ ( electrode lengths) and $ n \in \lbrace 2,3,4,5 \rbrace$.
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.40\textwidth}
+\includegraphics[width=\textwidth]{dbscannegejem01.png}
+\caption{Sinks}
+\end{subfigure}
+\begin{subfigure}{0.40\textwidth}
+\includegraphics[width=\textwidth]{dbscanposejem01.png}
+\caption{Sources}
+\end{subfigure}
+
+\caption{Same data as in previous figures, but the colorization is
+  from a realization of DBSCAN clustering. The parameters used were
+  $r=1.75$ a.u. for the neighborhood radius and 3 neighbors for each point.
+  Those parameters give around 300 clusters, many of them with less than
+  10 points. A good choice of parameters requires balancing
+  the number of clusters and the number of unasigned points. 
+}\label{puntoscluster}
+
+
+\end{figure}
+
 
 We decided to use a certain ``aesthetic'' criterium for choosing the optimal parameters
 for the DBSCAN algorythm.  It is its accordance with Zipf's Law.  This could post out
 the accordance with the allometric inverse algebraic laws that are observed in
-anatomical studies, but it is, in the end, a somewhat arbitrary criterium. Even thou, a good
+anatomical studies, but it is, in the end, a somewhat arbitrary criterium.
+Nevertheless, a good
 fit with Zipfs Law could be an indictor of a natural clustering of data points.
 A problem that appeard using this criterium is that it is such a pervarsive
-behaviour, that it gives a good fit to allmost any set of reazonable parameters
+behaviour of ranked data
+that it gives a good fit to allmost any set of reazonable parameters
 that one encounters. So we had to come up with criteria for what these ``reasonable
 parameters'' may be.  We settled that we shouldn't have to many unasigned points, and
 that no cluster should be too big, or that there were to many clusters. 
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{zipfexample.png}
+  \caption{An instance of Zipf's Law, with DBSCAN parameters
+    $r=1.5$ a.u. and $n=4$. The agreement with Zipf's
+    gives an exponent of $-1.007$ against the ideal $-1$ and
+    an $R^2$ of $0.986$.}
+\end{figure}
+
+\begin{tabular}{|r|r|r|r|r|r|}
+ radius &  n  & $R^2$ & u & m & ng  \\ \hline
+  1 &  2 &  0.978 & 606 & 606 & 1285 \\
+  1 &  3 &  0.984 & 1346 & 1346 & 915 \\
+  1 &  4 &  0.974 & 2300 & 2300 & 658 \\
+  1 &  5 &  0.951 & 3193 & 3193 & 493 \\
+  1 &  6 &  0.918 & 4023 & 4023 & 375 \\
+  1.5 &  2 &  0.987 & 276 & 1007 & 691 \\
+  1.5 &  3 &  0.987 & 660 & 1007 & 499 \\
+  1.5 &  4 &  0.985 & 1060 & 1060 & 391 \\
+  1.5 &  5 &  0.986 & 1523 & 1523 & 315 \\
+  1.5 &  6 &  0.99 & 2040 & 2040 & 258 \\
+  2 &  2 &  0.95 & 156 & 5355 & 343 \\
+  2 &  3 &  0.928 & 382 & 5355 & 230 \\
+  2 &  4 &  0.912 & 566 & 5349 & 174 \\
+  2 &  5 &  0.906 & 777 & 5308 & 132 \\
+  2 &  6 &  0.915 & 976 & 3734 & 112 \\
+  2.5 &  2 &  0.911 & 113 & 6144 & 225 \\
+  2.5 &  3 &  0.875 & 243 & 6144 & 160 \\
+  2.5 &  4 &  0.849 & 349 & 6142 & 127 \\
+  2.5 &  5 &  0.828 & 475 & 6127 & 100 \\
+  2.5 &  6 &  0.849 & 602 & 6008 & 81 \\
+  3 &  2 &  0.909 & 89 & 7408 & 163 \\
+  3 &  3 &  0.874 & 187 & 7408 & 114 \\
+  3 &  4 &  0.847 & 267 & 7404 & 89 \\
+  3 &  5 &  0.829 & 343 & 7402 & 71 \\
+  3 &  6 &  0.817 & 418 & 7400 & 58 
+\end{tabular}
 
 
 \end{document}
