@@ -61,17 +61,15 @@ points over other structures. Most interesting
 is the three layered clustering that seems to be around CA3 and the two layered
 structure in CA1. 
 
-cv askjka aj,d cnlaksdasj akljsdaosdasdh 
-
 
 \begin{figure}
 \centering
 \begin{subfigure}{0.40\textwidth}
-\includegraphics[width=\textwidth]{puntoscmfacneg.png}
+\includegraphics[width=\textwidth]{puntoscmneg.png}
 \caption{Sinks}
 \end{subfigure}
 \begin{subfigure}{0.40\textwidth}
-\includegraphics[width=\textwidth]{puntoscmfacpos.png}
+\includegraphics[width=\textwidth]{puntoscmpos.png}
 \caption{Sources}
 \end{subfigure}
 
@@ -212,20 +210,35 @@ that no cluster should be too big, or that there were to many clusters. In the
 table \ref{tablarquad} we show the fitting results for some values of
 $r$ and $n$. The model that was fitted did not specify the exponent, it
 is remarkable how the various models gave values for this parameter so close
-to the ideal $-1$. The unasigned points form also a set that is taken into
+to the ideal $-1$ when the radius is between 1.5 and 2.5 interelectrode
+lengths. The unit sized radius cases result in that the largest dataset
+is also the set of unasigned points. In one case is allmost half of
+the explored points, which may be too much. Also it produces too many
+small sized clusters, which gives an excess of microregions
+that are dificult to interpret with this analysis. On
+the other end of the spectrum, datasets with the $r=2$ value
+produce at least one cluster that encompases more than
+half of the data points. This is because it creates bridges
+between putative layers, and is also undesirable for our
+analyisis. The promising results appear for $r=1.5,
+n \in \lbrace 3,4,5,6 \rbrace$. In the figure \ref{zipfeg}
+we show the remarkably well that one of these results fits
+with Zipf's Law. 
+
+The unasigned points form also a set that is taken into
 account. 
 
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=0.8\textwidth]{zipfexample.png}
   \caption{An instance of Zipf's Law, with DBSCAN parameters
     $r=1.5$ a.u. and 4 neighbors ($n=5$). The agreement with Zipf's
     gives an exponent of $-1.008$ against the ideal $-1$ and
-    an $R^2$ of $0.986$.}
+    an $R^2$ of $0.986$.} \label{zipfeg}
 \end{figure}
 
-\begin{table}
+\begin{table}[h]
 \begin{center}
   \begin{tabular}{|r|r||r|r|r|r|r|}
  $r$ &  $n$  & $a$ & $ R^2$ & $U$ & $M$ & $N$  \\ \hline 
