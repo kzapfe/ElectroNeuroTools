@@ -435,12 +435,13 @@ performed on slices of the rats hippocampus.
 \subsection{Application to evoked activity in idem.}\label{sec:evocada}
 
 Evoked activity by electrical stimulus yields simpler and cleaner patterns in the LFP
-measurements. This facilitates the exemplification of our analysis, so we shall
-start the exposition of the usage with these kind of data.
-The data was obtained by stimulating certain specific points on the dentate gyrus
-of the slice of hippocampus with different voltage intensities. Details of the experiment
+measurements. This facilitates the exemplification of our analysis, and gives us
+a good starting case. It comes at a cost, nonetheless, as many of the electrodes
+remain saturated after the stimulus and well beyond the measurement interval.
+The data was obtained by stimulating  specific points on the dentate gyrus
+in the slice of hippocampus with different voltage intensities. Details of the experiment
 have been published elsewhere \cite{Franco2018}. We shall borrow some of
-the experimental data for illustrating our purposes.
+the experimental data for our purposes.
 
 
 
@@ -466,10 +467,10 @@ The LFP is averaged over three events, produced by three successive
 electrical stimuli in the same point at constant voltage. The
 response of the cells is almost identical in each event, which
 allows us to use averages as a denoising mechanism. After averaging
-the synchronized data we perform kCSDA, as in this case we end up
-with many saturated electrodes and dCDSA is not viable.
+we perform kCSDA. In this case there are
+many saturated electrodes and dCDSA is not viable.
 In the figure \ref{lfpevocada} we show some frames of the post-stimulus
-activity as a heat map, along
+activity as a color map, along
 with a diagram of the somatic layers and the
 stimulus point. The saturated area is quite large, and covers
 a large section of the GD structure. In this case we shall
@@ -481,7 +482,7 @@ the Sink and Sources sets. Then we proceed as stated in the previous section.
 
 The figure \ref{lfpcsdcm}  compares the representation of the activity in
 the LFP, CSD and CM spaces. The CSD
-representation provides better spatial localization of active sites, and the
+representation provides better spatial localization of active sites, but the
 CM serves as better dynamical tracker. The figure illustrates
 that point by choosing the time interval of response in CA3 after the stimulus.
 CM representation permits us to track the activity with less
@@ -495,15 +496,16 @@ we have chosen for the CM analysis in the right column.
 
 In the figure \ref{evotracks} we concatenate the successive centers of mass
 for both sinks and sources and show how the anterograde reaction is
-very well localized over the Pyramidal Stratum at precise moments after
+very well localized over the Pyramidal Stratum at a precise moment after
 stimulus. This dataset provides us with a very clean example of the
-trajectory analysis. The very well localized activity and coherent
-action gives us trajectories that are in accordance with the canonical
+trajectory analysis. The localized activity and coherent
+action gives us trajectories that are in accordance with the expected
 source and sink distribution, but adding the temporal dynamical displacement
 to it. We have been very thorough with this example as it will help us
 to understand the more complicated data that shall be presented in
 the next examples. 
 
+The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
 
 
 \begin{figure}
@@ -590,20 +592,24 @@ the next examples.
 \end{figure}
 
 
-The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
 
 \subsection{Application to facilitated activity}
 
 %%%% *********** Vas aqui
 
 \subsection{Application to epileptic-like activity in the hippocampus}
-We performed first the analysis to the most complicated data,
+This is probably the most complicated data, 
 numerically and qualitatively, which comes from a series of epileptic burst
 that occurred after 15 minutes of application of 4AP to living slices of
 hippocampus. Each burst occurs with activity spreading over many sites almost
 simultaneously. This turned out to be a test of the applicability and
-robustness of our method. The necessity of having a good error value for the inactive set was more apparent here than anywhere else. Also the most striking features of the propagation of activity, coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole CA structure. A sample of the raw data in $\mu V$ can be seen in the figure \ref{lfpycsd4ap}. Five key moments in the epileptic burst have been selected, one just before the onset of the attack, the next one at the peak and one  following it, and the last at the subsiding moments. The figure compares the Raw data
-in $\muV{}$ in the first row, then the crude CSD representation in the second row, and
+robustness of our method.
+The necessity of having a good error value for the inactive set was more apparent here
+than in the other cases. Also, the most striking features of the propagation of activity,
+coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole
+CA structure. A sample of the raw data in $\muV{}$ can be seen in the figure \ref{lfpycsd4ap}.
+Five key moments in the epileptic burst have been selected, one just before the onset of the attack, the next one at the peak and one  following it, and the last at the subsiding moments. The figure compares the Raw data
+in $\muV{}$ in the first row, then the raw CSD representation in the second row, and
 in the third raw a CSD after a Gaussian Blur Filter has been applied,
 with a $\sigma$ value of $ \mum{42}$. After the Gaussian Blur acts a sort of
 spatial denoising mechanism, the disjoint components are apparent to the eye.
@@ -613,8 +619,10 @@ Even though well localized patches of activity are to be seen over the
 stratum pyramidale, large parts of the activity remain hidden by the noise.
 After the Gaussian Blur has been applied the joint sets of activity are evident. 
 
-In the figure \ref{tray4ap} we show the attack on the trajectories representation. Fine lines
-connect the blue (sink) and red (source) dots, that indicate the trajectories along various activation
+In the figure \ref{tray4ap} we show the epileptic burst on the trajectories representation.
+Fine lines
+connect the blue (sink) and red (source) dots, that indicate the trajectories
+along various activation
 sites around the whole CA structure, and part of GD. Very small trajectories precede
 the onset of the epileptiform attack in CA1. At around 60ms after the 4AP dose a burst
 of localized trajectories appear near CA2. By the 70ms mark, the activity has spread
@@ -670,7 +678,7 @@ We had one experiment in which we could trace very nicely the data on DG and CA 
 
 \subsection{Counterexample: the stratial neuronal tissue}
 
-bla bla.
+
 
 \bibliographystyle{abstract}
 \bibliography{../Reportes/BiblioReportes01} 
