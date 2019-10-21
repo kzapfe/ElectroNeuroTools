@@ -130,7 +130,7 @@ end
 function BuscaSaturados(datos::Array, 
                         desde=0.5, hasta=10,
                         freq=deffreq,
-                         saturavalue=1900)
+                         saturavalue=1900, tol=0.1)
     #busca saturados por promedio sobre umbral
     # cambios para guardar en HDF5 y mandar jld a freir esparragos.
     # no more Sets, only Arrays
@@ -139,9 +139,12 @@ function BuscaSaturados(datos::Array,
     cfin=round(Int, ceil(hasta*freq))
     #result=Set{Array{Int,1}}()
     result=Set(Array{Int8, 1}[])
-    for j=1:ancho, k=1:alto 
-        prom=mean(datos[k,j,cini:cfin])  
-        if abs(prom)>saturavalue
+    for j=1:ancho, k=1:alto
+        sepasa=findall(x->x>saturavalue, datos[k,j,cini:cfin])
+        enemalos=length(sepasa)
+        enetotal=length(cini:cfin)
+        # el promedio era mal criterio.
+        if enemalos/enetotal>tol
             bla=[k, j]
             result=push!(result, bla)
         #    println(prom," ",[k,j]," ",saturavalue," ", desde, " ",hasta)
