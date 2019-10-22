@@ -1,55 +1,14 @@
 module LindenbergOperadores
 
-export vecindad8, promediasobreconjunto, TiraOrillas, GaussSuavizarTemporal
-export GaussianSmooth, DiscreteLaplacian
+export GaussianSmooth, DiscreteLaplacian, GaussSuavizarTemporal
 
 #=
 Los operadores, funciones y objetos auxiliares que se usan para el CSDA
 diferencial (dCSD).
+Las funciones auxiliares que lidian sobre conjuntos fueron pasadas
+a ParaSets.jl
+
 =#
-
-
-function vecindad8(punto::Array)
-    # La ocho-vecindad de un punto en una malla cuadrada.
-    j=punto[1]
-    k=punto[2]
-    result=Set{Array{Int64,1}}()
-    push!(result, [j-1,k-1])
-    push!(result, [j-1,k])
-    push!(result, [j-1,k+1])
-    push!(result, [j,k-1])
-    push!(result, [j,k+1])
-    push!(result, [j+1,k-1])
-    push!(result, [j+1,k])
-    push!(result, [j+1,k+1])
-    return result
-end
-
-function promediasobreconjunto(puntos::Set, datos::Array)
-    #Promedia sobre un conjunto un valor.
-    n=0
-    result=0
-    for q in puntos
-        result=result.+datos[q[1],q[2],:]
-        n+=1
-    end
-    result=result./n
-    return result
-end
-
-
-function TiraOrillas(Puntos::Set)
-    #Descarta las orillas de la malla de electrodos
-    result=Set([])
-    for p in Puntos
-        if !(p[1]==1 || p[2]==1 || p[1]==64 ||  p[2]==64)
-            push!(result,p)
-           # println("Añadiendo ", p, " al result") 
-        end
-    end
-    return result
-end
-
 
 
 function UnNormGauss(x,sigma)

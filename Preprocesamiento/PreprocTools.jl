@@ -130,7 +130,7 @@ end
 function BuscaSaturados(datos::Array, 
                         desde=0.5, hasta=10,
                         freq=deffreq,
-                         saturavalue=1900, tol=0.1)
+                        saturavalue=1900, tol=0.04)
     #busca saturados por promedio sobre umbral
     # cambios para guardar en HDF5 y mandar jld a freir esparragos.
     # no more Sets, only Arrays
