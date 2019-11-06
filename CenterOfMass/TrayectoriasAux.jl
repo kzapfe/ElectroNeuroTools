@@ -33,6 +33,26 @@ function reducecatenario(Catenario::Dict;
     return result
 end
 
+
+function cortacatenarios(Catenario::Dict; nini,nfin)
+    # reduce las trayectorias por cuadro de inicio y final
+
+    result=Dict{Integer, Array{Any}}()
+    
+    for (k,p) in Catenario
+
+        paux=AntesQue(p,nfin)
+        paux=DespuesQue(paux,nini)
+        if length(paux) != 0
+            result[k]=paux
+        end
+        
+    end
+
+    return result
+end
+
+
 function AntesQue(Datos::Array, tiempo)
     Cadena=[0 0 0 0]
  

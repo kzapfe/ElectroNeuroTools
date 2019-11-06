@@ -13,7 +13,7 @@ function rowstoset(xxs::Array; enteros=true)
     if enteros
         result=Set{Array{Int64,2}}()
     else
-        result=Set{Array{Float64,2}}()
+        result=Set{Array{Float64,2}}()sp
     end
     (nrow,ncol)=size(xxs)
     for j in 1:nrow
