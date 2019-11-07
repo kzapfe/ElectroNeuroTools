@@ -13,6 +13,7 @@
 
 \usepackage{graphicx}
 \usepackage{longtable}
+\usepackage{float}
 
 \usepackage{siunitx} % para unidades chidas como micrometros.
 
@@ -508,7 +509,7 @@ the next examples.
 The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
 
 
-\begin{figure}
+\begin{figure}[H]
   \includegraphics[width=0.9\textwidth]{Figuras/lfpevocado01.pdf}
   \caption{A set of frames showing the stimulus and posterior activity.
     The frame titled ``0 ms'' is just before the stimulus was
@@ -518,8 +519,8 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
   }\label{lfpevocada}
 \end{figure}
 
-\begin{figure}[h]
-\includegraphics[width=0.9\textwidth]{Figuras/lfpcsdcm01.pdf}
+\begin{figure}[H]
+\includegraphics[width=0.7\textwidth]{Figuras/lfpcsdcm_completa_evocada3R7.pdf}
 \caption{ Comparison of the activity represented as LFP, CSD and CM.
   The time after
   stimulation in ms is shown in the central column for each row.
@@ -534,10 +535,12 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 
 
 
-\begin{figure}[h]
-\includegraphics[width=0.9\textwidth]{Figuras/lfpcsdcm02.pdf}
+\begin{figure}[H]
+\includegraphics[width=0.7\textwidth]{Figuras/lfpcsdcm_sub_evocada3R7.pdf}
 \caption{ The same as previous figure, but focusing on the
-  region of interest, including the stratum pyramidale of CA3.
+  region of interest, including the stratum pyramidale of CA3. A different
+  color scheme was choosen on the last column, so as to provide borders
+  that show how the disconnected componentes where choosen. 
 }\label{lfpcsdcmsub}
 \end{figure}
 
@@ -568,32 +571,74 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 
 
 
-\begin{figure}[h]
- \includegraphics[width=0.9\textwidth]{Figuras/CMVariousTimes01.pdf}
-  \caption{ The CM analysis over the same images as figure \ref{lfpcsdcmsub} C. Some trajectories
-    are calculated before the 4ms time stamp. The triangular mark shows the later point of the
-    trajectory, either the end or the last calculated position until that moment. The circular
-    mark is the start of the trajectory. We can see that activity moves form CA3 distal to
-    proximal in alternating waves of action (hiperpolarization, firing and repolarization).
-  }\label{cmevocada}
-\end{figure} 
+%\begin{figure}[h]
+% \includegraphics[width=0.9\textwidth]{Figuras/CMVariousTimes01.pdf}
+%  \caption{ The CM analysis over the same images as figure \ref{lfpcsdcmsub}. Some trajectories
+%    are calculated before the 4ms time stamp. The triangular mark shows the later point of the
+%    trajectory, either the end or the last calculated position until that moment. The circular
+%    mark is the start of the trajectory. We can see that activity moves form CA3 distal to
+%    proximal in alternating waves of action (hiperpolarization, firing and repolarization).
+%  }\label{cmevocada}
+%\end{figure} 
 
 
 
-\begin{figure}[h]
-  \includegraphics[width=0.9\textwidth]{./Figuras/trayevocadasub01.pdf}
+\begin{figure}[H]
+ \includegraphics[width=0.7\textwidth]{./Figuras/trayevocadasub.pdf}
   \caption{The evoked trajectories in the r.o.i. We begin to track them
     at the 0.9 ms mark, after letting the saturation of the stimulus recede.
     At 3ms a very clear sink trajectory is moving retrogradly towards CA2,
     sheepherd by two shorter source trayectories. At 5.6 a depolarization
     trajectory starts, following almost the same path and presenting also its
     two companions, ending around the 7.7ms timestamp. No significant
-  trajectories are observed after the 10ms mark. }\label{trayevo}
+  trajectories are observed after the 10ms mark. }\label{evotracks}
 \end{figure}
 
 
 
-\subsection{Application to facilitated activity}
+\subsection{Application to facilitated activity through injury}
+
+The facilitated activity through a small injury produces very clean
+and ordered activity in the CA layers, as measured by the CM analysis.
+The results can be seen in the figures
+\ref{diagfaci}, \ref{lfpcsdcmfaci}, \ref{facitracks} and
+\ref{facitracktodas}.
+A previous diagram is on the figure \ref{diagfaci}.
+
+
+\begin{figure}[H]
+  \includegraphics[width=0.7\textwidth]{Figuras/diagfacilitada.pdf}
+  \caption{A diagram of the approximate location of the pyramidal and granular strata on the hippocampus slice, during a peak of activity as measured in \muV{}.
+  }
+  \label{diagfaci}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\includegraphics[width=0.7\textwidth]{Figuras/lfpcsdcm_facilitada.pdf}
+\caption{ Comparison of the activity represented as LFP, CSD and CM,
+  in the same style as fig. \ref{lfpcsdcm}, but for facilitated activity.
+  In this case the time counter starts at some moment around 80 ms. before the
+  onset of the burst of activity.
+}\label{lfpcsdcmfaci}
+\end{figure}
+
+
+
+\begin{figure}[H]
+ \includegraphics[width=0.7\textwidth]{./Figuras/trayfaciljuntas.pdf}
+ \caption{The trajectories for  the facilitated activity, in
+ sequence of aparition around the burst of action.}\label{facitracks}
+\end{figure}
+
+
+
+\begin{figure}[H]
+ \includegraphics[width=0.7\textwidth]{./Figuras/traytodasfacilitada.png}
+ \caption{The trajectories for  the facilitated activity, shown
+ all together.}\label{facitracktodas}
+\end{figure}
 
 %%%% *********** Vas aqui
 
@@ -633,7 +678,7 @@ area of CA1.
 
 
 
-\begin{figure}
+\begin{figure}[H]
   \includegraphics[width=0.9\textwidth]{./Figuras/LFPvsCSD_4AP.pdf}
   \caption{Comparison of LFP and CSD representations
     at the moments of the epileptic burst. In the first row
@@ -647,7 +692,7 @@ area of CA1.
     been applied. }\label{lfpycsd4ap}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
   \includegraphics[width=0.9\textwidth]{./Figuras/Fronteras2sigma.pdf}
   \caption{The detection of disconnected components for the Sink and Source
     Sets. We take the the threshold value as two times the
@@ -662,7 +707,7 @@ area of CA1.
 \end{figure}
 
 
-\begin{figure}
+\begin{figure}[H]
   \includegraphics[width=0.9\textwidth]{./Figuras/SeqTray4AP01.pdf}
   \caption{ The activity in the Center of Mass and Trajectories representation.
     A single epileptic attack is shown from slightly before the onset until the
@@ -672,9 +717,11 @@ area of CA1.
     trajectories 2 ms after they have ended.}\label{tray4ap}.
  \end{figure}
 
-\subsection{Application to spontaneous activity in idem.}
 
-We had one experiment in which we could trace very nicely the data on DG and CA simultaneously without adding excitatory drugs. 
+
+
+
+
 
 \subsection{Counterexample: the stratial neuronal tissue}
 
