@@ -1,4 +1,4 @@
-\documentclass[12pt, letterpaper]{article}
+\documentclass[11pt, letterpaper]{article}
 
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
@@ -8,8 +8,10 @@
 \usepackage[scaled=.90]{helvet}
 \usepackage{courier}
 
+
+
 \usepackage{setspace}
-\usepackage{lineno} %ambos paquetes para borrador
+\usepackage{lineno} %ambos paquetes para borrado
 
 \usepackage{graphicx}
 \usepackage{longtable}
@@ -17,6 +19,7 @@
 
 \usepackage{siunitx} % para unidades chidas como micrometros.
 
+\usepackage{caption}
 
 % \doublespacing
 % \linenumbers
@@ -25,6 +28,8 @@
 \newcommand{\mum}[1]{\SI{#1}{\micro\metre}}
 \newcommand{\muV}[1]{\SI{#1}{\micro\volt}}
 \newcommand{\rd}{\mathrm{d}}
+
+\newenvironment{intension}{\fontfamily{phv}\selectfont}{\par}
 
 
 \author{WPK Zapfe and the Laboratorio 19 Crew}
@@ -226,7 +231,7 @@ have obtained consistent results between them.
 \subsection{CSD as weight density for vectors}
 
 
-Center of Mass Analysis (CMA) has been used previously in order to track putative  ``trajectories'' of the activity or information across neural tissue or even the whole brain \cite{Chao05, Chao07, Manjarrez07, Manjarrez09}. In such works the chosen ``mass'' was an heuristic measure adequate for representing the coarse-grain picture of displacement of activity. These present the problem of justifying the choice made on practical grounds. For calculating a vectorial average, the adequate weight per vector is a density, a positive quantity that measures the concentration of something per space unit, so it is only adequate that we search for a natural density in the electrophysiological experiments. The Current Source Density fits the mathematical and interpretative requirements. We shall denote it in the following as $C$ (following \cite{Potworowski2011}).  This measure is usually presented in arbitrary units, which permits us to interpret it two-fold. One, directly from its definition, as the \emph{differential divergence} of the vectorial electric current density:
+Center of Mass Analysis (CMA) has been used previously in order to track putative  ``trajectories'' of the activity or information across neural tissue or even the whole brain \cite{Chao05, Chao07, Manjarrez07, Manjarrez09}. In such works the chosen ``mass'' was an heuristic measure adequate for representing the coarse-grain picture of displacement of activity. These present the problem of justifying the choice made on practical grounds. For calculating a vectorial average, the adequate weight per vector is a density, a positive quantity that measures the concentration of something per space unit, so it is only adequate that we search for a natural density in the electro-physiological experiments. The Current Source Density fits the mathematical and interpretative requirements. We shall denote it in the following as $C$ (following \cite{Potworowski2011}).  This measure is usually presented in arbitrary units, which permits us to interpret it two-fold. One, directly from its definition, as the \emph{differential divergence} of the vectorial electric current density:
 \begin{equation}
   C:=\nabla \cdot J
 \end{equation}
@@ -235,7 +240,7 @@ Due to conservation of charges, this is the same as as the temporal variation of
   C=-\frac{\partial \rho}{\partial t}
 \end{equation}
 Current Source Density as a mathematical density (a quasi-probability density function)  allows  to rigorously apply the concepts of vector averaging. This use has been overlooked. This might have occurred because  samplings at lesser spatial resolution did not permit estimations of this quantity with enough precision to make reliable spatial implications, even with the use of sophisticated CSD estimation methods. In our case, we want to use the density as a mathematician would: a function which assigns weights to points in the space of interest and permits us to carry linear operations over them.  The space here is the sampling points of the electrodes at a given instant in time, and the weight, the CSD, is amount of interchange of charged ions from the inside to the outside of cellular membranes, per unit space.  This is an indicator of activity in the neurons, therefore the CSD is also, indirectly, a \emph{``density of local activity''}. Having both
-the mathematician and electrophysiologist interpretations presents we can
+the mathematician and electro-physiologist interpretations presents we can
 perform the following analysis with clear readings. 
 
 Apparently, CSD would not fit the requirements of non-negativity for its use as a mathematical density, but this is not a problem.  CSD separates the measured activity into three distinct sets, namely, the set of all sources, the set of all sinks and the zero set. The separation is not quantitative but qualitative: even when the signs of electric charge are arbitrary, the distinction between them is not. Therefore, CSD represents on each of the two active sets (sinks and sources) exactly what we need, a unit of concentration of changing charges per unit of space (in this case, per area), and the sign can be ignored, as long as we perform the operations in each set separately. Also, the separation by the zero value set of the CSD is in contrast to the zero value of the LFP, where it has no precise meaning as it only represents a practical reference value. This is acknowledged in most of the literature, where only the scales of the LFP recording are shown, without reference to the sign of the values. In the CSD representation,  the so called zero set (all the points in our space which have a recorded CSD of zero)  has a precise meaning: it is an instantaneous lack of activity and the border between sinks and sources. This shall be exploited further in the section below.
@@ -267,9 +272,31 @@ integrated intensity (the circle size  is proportional in area to such intensity
 seen). Each CM gets listed as a probable step in a trajectory.
 
 
-\begin{figure}
-  \includegraphics[width=0.9\textwidth]{Figuras/ExplicaDisconexos01.pdf}
-  \caption{ Explanation of the geometrical concepts used on our analysis.
+\begin{figure}[H]
+  \captionsetup{singlelinecheck=off} 
+  \includegraphics[width=0.9\textwidth]{Figuras/explicadisconected.pdf}
+  \caption[tu abuela]{
+   %& \begingroup
+    %  \fontfamily{ppl}\selectfont
+    \begin{intension}
+      El propósito de esta figura es aclarar los conceptos usados
+      para obtener los centros de masa en componentes disconexos.
+      En la parte A
+      se detalla con ejemplos artificiales los conceptos de
+      convexo, disjunto y disconexo, y se muestran sus
+      efectos sobre el cálculo de centros de masa. En la parte B
+      se encuentra una aplicación a un recuadro de datos experimentales
+      para que quede claro como se ven los pasos del análisis
+      en un caso real.
+      La primera parte indica a grosso modo la localización
+      del str. pyr. y como en un cuadro específico
+      se separan los datos en los conjuntos disjuntos de Pozos y Fuentes.
+      En las partes ii y iii se muestra como se separan los componentes
+      disconexos y se obtienen para cada uno su centro de masa.
+      \end{intension}
+   %   \endgroup
+      
+    Explanation of the geometrical concepts used on our analysis.
     In the Row A of figures
     with an artificial example the concepts of connectedness and convexity.
     The subfigure Ai shows
@@ -288,7 +315,7 @@ seen). Each CM gets listed as a probable step in a trajectory.
     disconnected component would be convex, but as the resolution of the data is finite,
     small components are more likely to
     be convex. In figure B we show everything with a frame of experimental data.
-    In Bi we sepparate the
+    In Bi we separate the
     data into three sets, Sources, Sinks, and Zeros.
     We discard the Zeros and keep the active ones.
     In Figure Bii we take the Sink Set and separate it into disconnected components,
@@ -425,7 +452,7 @@ should is due and is beyond the scope of this work.
 
 The necessity to create such analysis came originally from the study of
 electro-physiological data obtained from the rat's hippocampus, using
-a very dense MEA, the BioCAM of 3Brain \cite{BioCAM}. 
+a very dense MEA, the BioCAM of 3Brain \cite{BioCam}. 
 The highly layered CA structure of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the paths of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the somatic layer. Using CSD and disconnected component tracking over the data provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacological
 or traumatically induced. The proposed analysis would not produce vector averages over different simultaneously active areas. On the contrary, it would separate them and track them independently. So the most violent epileptic burst provided us with the data necessary to prove the robustness of the method.
 All the experimental data comes from a series of experiments
@@ -510,18 +537,40 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 
 
 \begin{figure}[H]
+  \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.9\textwidth]{Figuras/lfpevocado01.pdf}
-  \caption{A set of frames showing the stimulus and posterior activity.
+  \caption[tu abuela]{
+    \begin{intension}
+      Aquí mostramos como se ve el registro crudo del potencial
+      en un evento evocado. Tenmos los primeros recuadros super
+      saturados, y a partir del milisegundo 4 podemos
+      empezar a discernir las estructuras. Los electrodos
+      más cercanos al sitio de estimulación quedan inutilizados.
+      Es un ejemplo de las medidas en crudo en un caso dificil de usar.
+     \end{intension}
+
+    A set of frames showing the stimulus and posterior activity.
     The frame titled ``0 ms'' is just before the stimulus was
     made.  A diagram of the Granular and Pyramidal Layers is shown
-    against the noice background. The black rectangle delimites the
+    against the noise background. The black rectangle delimits the
     r.o.i. and the black arrow shows the site of stimulation in GD.
   }\label{lfpevocada}
 \end{figure}
 
 \begin{figure}[H]
+  \captionsetup{singlelinecheck=off} 
 \includegraphics[width=0.7\textwidth]{Figuras/lfpcsdcm_completa_evocada3R7.pdf}
-\caption{ Comparison of the activity represented as LFP, CSD and CM.
+\caption[tu abueala]{
+  \begin{intension}
+    En esta imagen y la siguiente se compara la representación de
+    LFP, CSD y CM. La idea es que se pueda apreciar la ventaja
+    en limpieza y localización que ofrece CSD, y que se entienda
+    como manejar los centros de masa a partir de aquella.
+    También muestra como es posible separar la acción de un grupo
+    de electrodos inservible porque su Centro de Masa no se mueve.
+  \end{intension}
+
+  Comparison of the activity represented as LFP, CSD and CM.
   The time after
   stimulation in ms is shown in the central column for each row.
   In this series of frames a relatively big patch of the electrodes
@@ -536,11 +585,21 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 
 
 \begin{figure}[H]
-\includegraphics[width=0.7\textwidth]{Figuras/lfpcsdcm_sub_evocada3R7.pdf}
-\caption{ The same as previous figure, but focusing on the
+   \captionsetup{singlelinecheck=off} 
+   \includegraphics[width=0.7\textwidth]{Figuras/lfpcsdcm_sub_evocada3R7.pdf}
+   \caption[tu abuela]{
+     \begin{intension}
+       Misma intensión general que la figura anterior pero en un
+       recuadro específico. La idea es mostrar claramente los componentes
+       disjuntos en CA3 y su Centro de Masa a detalle, en la tercera columna.
+       Un punto muy claro es ver como los componentes se pueden disolver
+       en componentes más pequeños.
+     \end{intension}
+     
+     The same as previous figure, but focusing on the
   region of interest, including the stratum pyramidale of CA3. A different
-  color scheme was choosen on the last column, so as to provide borders
-  that show how the disconnected componentes where choosen. 
+  color scheme was chosen on the last column, so as to provide borders
+  that show how the disconnected components where chosen. 
 }\label{lfpcsdcmsub}
 \end{figure}
 
@@ -584,11 +643,20 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 
 
 \begin{figure}[H]
+   \captionsetup{singlelinecheck=off} 
  \includegraphics[width=0.7\textwidth]{./Figuras/trayevocadasub.pdf}
-  \caption{The evoked trajectories in the r.o.i. We begin to track them
+ \caption[tu abuela]{
+   \begin{intension}
+     Primera muestra de trayectorias. Escogemos sólo la parte
+     respondiente del potencial evocado, para claridad. Se debe
+     poder apreciar como las trayectorias corren sobre
+     los diferentes estratos y sus tiempos de desplazamiento
+     son esperados dentro de las escalas de distancia y sincronización.
+   \end{intension}
+   The evoked trajectories in the r.o.i. We begin to track them
     at the 0.9 ms mark, after letting the saturation of the stimulus recede.
     At 3ms a very clear sink trajectory is moving retrogradly towards CA2,
-    sheepherd by two shorter source trayectories. At 5.6 a depolarization
+    shepherd by two shorter source trajectories. At 5.6 a depolarization
     trajectory starts, following almost the same path and presenting also its
     two companions, ending around the 7.7ms timestamp. No significant
   trajectories are observed after the 10ms mark. }\label{evotracks}
@@ -607,8 +675,14 @@ A previous diagram is on the figure \ref{diagfaci}.
 
 
 \begin{figure}[H]
+   \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.7\textwidth]{Figuras/diagfacilitada.pdf}
-  \caption{A diagram of the approximate location of the pyramidal and granular strata on the hippocampus slice, during a peak of activity as measured in \muV{}.
+  \caption[tu abuela]{
+  \begin{intension}
+    Mostrar un diagrama de los estratos importantes. Se puede incorporar
+    a otra figura.
+  \end{intension}
+  A diagram of the approximate location of the pyramidal and granular strata on the hippocampus slice, during a peak of activity as measured in \muV{}.
   }
   \label{diagfaci}
 \end{figure}
@@ -616,8 +690,18 @@ A previous diagram is on the figure \ref{diagfaci}.
 
 
 \begin{figure}[H]
+   \captionsetup{singlelinecheck=off} 
 \includegraphics[width=0.7\textwidth]{Figuras/lfpcsdcm_facilitada.pdf}
-\caption{ Comparison of the activity represented as LFP, CSD and CM,
+\caption[tu abuela]{
+  \begin{intension}
+    Intensión similar a la figura \ref{lfpcsdcmsub}, pero
+    usando el área de registro completa. Se muestra la diversidad
+    de escalas que abarcan los posibles componentes, por ejemplo,
+    los muy grandes en las lineas centrales, en CA3, y los pequeños en
+    la cola de CA1 en los últimos renglones. 
+  \end{intension}
+
+  Comparison of the activity represented as LFP, CSD and CM,
   in the same style as fig. \ref{lfpcsdcm}, but for facilitated activity.
   In this case the time counter starts at some moment around 80 ms. before the
   onset of the burst of activity.
@@ -627,16 +711,34 @@ A previous diagram is on the figure \ref{diagfaci}.
 
 
 \begin{figure}[H]
- \includegraphics[width=0.7\textwidth]{./Figuras/trayfaciljuntas.pdf}
- \caption{The trajectories for  the facilitated activity, in
- sequence of aparition around the burst of action.}\label{facitracks}
+  \captionsetup{singlelinecheck=off}
+  \includegraphics[width=0.7\textwidth]{./Figuras/trayfaciljuntas.pdf}
+\caption[tu abuela]{
+  \begin{intension}
+    Imagen de área de registro completo mostranto las trayectorias.
+    Después de la figura \ref{evotracks}, esta figura muestra
+    la riqueza estructural en los datos generados con éste análisis,
+    y muestra la posibilidad ( intuitivamente ) de agrupar visualmente
+    los diferentes manchones de trayectorias a esta escala. 
+  \end{intension}
+ The trajectories for  the facilitated activity, in
+ sequence of apparition around the burst of action.}\label{facitracks}
 \end{figure}
 
 
 
 \begin{figure}[H]
+   \captionsetup{singlelinecheck=off} 
  \includegraphics[width=0.7\textwidth]{./Figuras/traytodasfacilitada.png}
- \caption{The trajectories for  the facilitated activity, shown
+ \caption[tu abuela]{
+   \begin{intension}
+     Remate de la figura \ref{facitracks}. En la ampliación es mucho más fácil
+     discernir diferentes tipos de trayectorias. En CA3 corren a lo largo
+     de los estratos, mientras que en CA1 son primordialmente transversales.
+     También se puede apreciar un área de transición con menor densidad. 
+   \end{intension}
+   
+ The trajectories for  the facilitated activity, shown
  all together.}\label{facitracktodas}
 \end{figure}
 
@@ -679,8 +781,18 @@ area of CA1.
 
 
 \begin{figure}[H]
+   \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.9\textwidth]{./Figuras/LFPvsCSD_4AP.pdf}
-  \caption{Comparison of LFP and CSD representations
+  \caption[tu abuela]
+  { \begin{intension}
+      En esta figura muestro LFP contra CSD con ruido espacial y
+      sin ruido espacial. Esta vez estoy probando ordenar por
+      columnas en lugar de por renglones, probando otra representación.
+      A diferencia de otras figuras, aquí muestro explicitamente
+      la ayuda de usar un filtro gaussiano espacial para
+      ``limar el ruido''. 
+    \end{intension}
+    Comparison of LFP and CSD representations
     at the moments of the epileptic burst. In the first row
     we present the data as measured, no denoising or filtering has
     been applied. The units of measurement are in $\muV{}$. In
@@ -693,8 +805,18 @@ area of CA1.
 \end{figure}
 
 \begin{figure}[H]
+   \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.9\textwidth]{./Figuras/Fronteras2sigma.pdf}
-  \caption{The detection of disconnected components for the Sink and Source
+  \caption[tu abuela]
+    {
+      \begin{intension}
+        Una vez más enfatizamos la importancia del filtro gaussiano.
+        En el renglón superior mostramos como los componentes disconexos
+        quedan demasiado pequeños, y se pierde significancia en un mar de
+        ruido, mientras que en el inferior aparecen subconjuntos coherentes.
+      \end{intension}
+
+            The detection of disconnected components for the Sink and Source
     Sets. We take the the threshold value as two times the
     standard deviation of the whole data in CSD representation. In
     the upper row the data without the Gaussian Blur filtering is shown.
@@ -708,8 +830,16 @@ area of CA1.
 
 
 \begin{figure}[H]
+   \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.9\textwidth]{./Figuras/SeqTray4AP01.pdf}
-  \caption{ The activity in the Center of Mass and Trajectories representation.
+  \caption[tu abuela]{
+    \begin{intension}
+      Partiendo del renglón inferior de la figura \ref{csdfrontera}
+      mostramos la aparición y sucesión de trayectorias bien definidas
+      sobre str.pyr. y el giro dentado (primer ejemplo donde es claramente
+      discernible su aportación a las trayectorias). 
+    \end{intension}
+    The activity in the Center of Mass and Trajectories representation.
     A single epileptic attack is shown from slightly before the onset until the
     last wave of the attack. Sink and Source trajectories are shown in blue
     and red, respectively. In order to not saturate the latter subfigures
@@ -726,11 +856,41 @@ structures) may gain something of this analysis, but we shall focus
 our result to the neurons scale ( distances of the order of \mum{10}).
 
 The stratial tissue is an example of where this analysis cannot be used.
-The limitations of this analysis are that it works  in
+The limitation of this technique is that it works  in
 ordered, stratified neuronal tissue, and highly homogeneous tissue
-without clear structures makes the distintion of both the CSD
+without clear structures makes the distinction of both the CSD and
 disconnected sets unfeasible.
 
+
+\begin{figure}[H]
+ \captionsetup{singlelinecheck=off} 
+  \includegraphics[width=0.7\textwidth]{Figuras/lfpestriado.pdf}
+  \caption[tu abuela]{
+    \begin{intension}
+      Esta figura contrasta mucho con la figura \ref{lfpevocada}.
+      Bajo la misma representación, tenemos muy claro que no hay
+      estructuras discernibles. Sin embargo, requiere una serie de trazos
+      bien escogidos para saber si hay actividad relevante.
+    \end{intension}
+    LFP stratial Tissue, some samples. There are no discernible
+    structures. The apparent active set at the lower left corner
+  is an artifact due to some bubbles in the experiment.}
+\end{figure}
+
+\begin{figure}[H]
+   \captionsetup{singlelinecheck=off} 
+  \includegraphics[width=0.7\textwidth]{Figuras/traytodasestriado.pdf}
+  \caption[tu abuela]{
+    \begin{intension}
+      Una muestra clara de que el tejido estriado no
+      permite la búsqueda de trayectorias definidas. A pesar
+      de contar con un registro mucho más amplio, apenas alcanzamos a
+      ver un par de trayectorias ``fuente'' en lo que aparente ser
+      un artefacto del ruido y no cuentan con ``pozos'' que acompañen.
+    \end{intension}
+    After 30 seconds of recording, no visible trajectories can be found. The minimum displacement criteria is not full-filed for most of the putative centers of mass. Only a small set of trajectories is seen on the lower corner and these seem to correspond to an artifact due to a bubble in the recording. }
+  
+\end{figure}
 
 \bibliographystyle{abstract}
 \bibliography{../Reportes/BiblioReportes01} 
