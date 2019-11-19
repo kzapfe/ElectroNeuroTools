@@ -20,6 +20,7 @@
 \usepackage{siunitx} % para unidades chidas como micrometros.
 
 \usepackage{caption}
+\usepackage{subcaption}
 
 % \doublespacing
 % \linenumbers
@@ -504,6 +505,11 @@ stimulus point. The saturated area is quite large, and covers
 a large section of the GD structure. In this case we shall
 restrict the CM track analysis to the respondent area in CA3.
 
+In the figure \ref{trazselectevo} we show a sample of the LFP
+raw traces and how they appear in the CSD representation. A diagram
+over a frame of the LFP is shown delimiting the region of interest and
+some selected electrodes. 
+
 Once that we have the CSD representation, we select channels outside
 the r.o.i. and use them to obtain the threshold for separating
 the Sink and Sources sets. Then we proceed as stated in the previous section.
@@ -556,6 +562,44 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
     r.o.i. and the black arrow shows the site of stimulation in GD.
   }\label{lfpevocada}
 \end{figure}
+
+\begin{figure}[H]
+   \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{Figuras/lfpcuadrodiagramaevocado.pdf}
+        \caption{Select Electrodes}
+        \label{fig:sel}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[t]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{Figuras/lfpevocselect_3R7.pdf}
+        \caption{LFP, Raw}
+        \label{fig:lfpraw}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[t]{0.2\textwidth}
+        \includegraphics[width=\textwidth]{Figuras/csdevocselect_3R7.pdf}
+        \caption{CSD}
+        \label{fig:csd}
+    \end{subfigure}
+    \caption{
+      \begin{intension}
+        Mostremos unos cuantos trazos de la medida cruda y su representación
+        en el espacio CSD, para establecer lo adecuado del experimento.
+      \end{intension}
+      Electrode signal across some selected electrodes over the CA3 region.
+      We show in subfigure \ref{fig:sel} a frame of the raw signal in the same color
+      scale as fig. \ref{lfpevocada}. The GD and CA3 structures appear as red stains,
+      their general shape recognizable. In subfigure \ref{fig:lfpraw}
+      the raw traces of the selected electrodes are shown, and in \ref{fig:csd} the
+      csd traces come along for comparision. In this last subfigure the
+      vertical scale is in arbitrary units. }
+  \label{trazselectevo}
+\end{figure}
+
+
 
 \begin{figure}[H]
   \captionsetup{singlelinecheck=off} 
@@ -874,7 +918,34 @@ disconnected sets unfeasible.
     \end{intension}
     LFP stratial Tissue, some samples. There are no discernible
     structures. The apparent active set at the lower left corner
-  is an artifact due to some bubbles in the experiment.}
+    is an artifact due to some bubbles in the experiment.}
+  \label{cuadestriado}
+\end{figure}
+
+
+\begin{figure}[H]
+   \centering
+    \begin{subfigure}[b]{0.55\textwidth}
+        \includegraphics[width=\textwidth]{Figuras/mapestriado_1004AP.pdf}
+        \caption{A Frame}
+        \label{maptraz:map}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.35\textwidth}
+        \includegraphics[width=\textwidth]{Figuras/trazosestriado_1004AP.pdf}
+        \caption{Traces}
+        \label{maptraz:traz}
+    \end{subfigure}
+    \caption{
+      \begin{intension}
+        Mostramos aquí unos trazos ejemplares para asegurarnos de la
+        calidad del experimento.
+      \end{intension}
+      Selected Traces of the Stratial Tissue. A frame such as the ones
+      in figure \ref{cuadestriado} shows the location of the selected electrodes,
+    which where algorhytmically chosen.}
+  
 \end{figure}
 
 \begin{figure}[H]
