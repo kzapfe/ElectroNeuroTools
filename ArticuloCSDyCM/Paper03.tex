@@ -461,7 +461,7 @@ performed on slices of the rats hippocampus.
 
 
 
-\subsection{Application to evoked activity in idem.}\label{sec:evocada}
+\subsection{Application to evoked activity in the rat's hippocampus}\label{sec:evocada}
 
 Evoked activity by electrical stimulus yields simpler and cleaner patterns in the LFP
 measurements. This facilitates the exemplification of our analysis, and gives us
@@ -715,7 +715,8 @@ and ordered activity in the CA layers, as measured by the CM analysis.
 The results can be seen in the figures
 \ref{diagfaci}, \ref{lfpcsdcmfaci}, \ref{facitracks} and
 \ref{facitracktodas}.
-A previous diagram is on the figure \ref{diagfaci}.
+A previous diagram is on the figure \ref{diagfaci}, and some
+exemplary traces in the figure \ref{trazfaci}.
 
 
 \begin{figure}[H]
@@ -731,6 +732,36 @@ A previous diagram is on the figure \ref{diagfaci}.
   \label{diagfaci}
 \end{figure}
 
+
+\begin{figure}[H]
+   \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figuras/mapstddfaci.pdf}
+        \caption{Location of electrodes}
+        \label{maptrazfaci:map}
+    \end{subfigure}
+    \qquad
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[t]{0.15\textwidth}
+        \includegraphics[width=\textwidth]{Figuras/trazoselectfaci.pdf}
+        \caption{Traces}
+        \label{maptrazfaci:traz}
+    \end{subfigure}
+    \caption{
+      \begin{intension}
+        Mostrar los trazos en variar regiones del hipocampo para
+        aclarar el suceso del ataque epiléptico.
+      \end{intension} 
+      A selection of traces of the recordings for various electrodes.
+      In the subfigure \ref{maptrazfaci:map}, the selected electrodes
+      are shown against the standard deviation of the recording of the
+      potential, which gives a good indication of the more active
+      sites, and therefore, of the structure of the hippocampus.
+      The electrode labeled ``a'' is over CA3 proximal, on the other
+      extreme ``h'' is in the middle of CA1.
+    }\label{trazfaci}
+\end{figure}
 
 
 \begin{figure}[H]
@@ -789,6 +820,8 @@ A previous diagram is on the figure \ref{diagfaci}.
 %%%% *********** Vas aqui
 
 \subsection{Application to epileptic-like activity in the hippocampus}
+
+
 This is probably the most complicated data, 
 numerically and qualitatively, which comes from a series of epileptic burst
 that occurred after 15 minutes of application of 4AP to living slices of
@@ -798,7 +831,8 @@ robustness of our method.
 The necessity of having a good error value for the inactive set was more apparent here
 than in the other cases. Also, the most striking features of the propagation of activity,
 coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole
-CA structure. A sample of the raw data in $\muV{}$ can be seen in the figure \ref{lfpycsd4ap}.
+CA structure. A sample of the raw data in $\muV{}$ can be seen in the figure \ref{lfpycsd4ap}. In the figure \ref{traz4ap} some exemplarly traces
+can be seen.
 Five key moments in the epileptic burst have been selected, one just before the onset of the attack, the next one at the peak and one  following it, and the last at the subsiding moments. The figure compares the Raw data
 in $\muV{}$ in the first row, then the raw CSD representation in the second row, and
 in the third raw a CSD after a Gaussian Blur Filter has been applied,
@@ -847,6 +881,36 @@ area of CA1.
     data after a Gaussian spatial filter ( Gaussian Blur) has
     been applied. }\label{lfpycsd4ap}
 \end{figure}
+
+\begin{figure}[H]
+   \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{Figuras/mapstdd4AP.pdf}
+        \caption{Location of electrodes}
+        \label{maptraz4ap:map}
+    \end{subfigure}
+    \qquad
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[t]{0.15\textwidth}
+        \includegraphics[width=\textwidth]{Figuras/trazoselect4AP.pdf}
+        \caption{Traces}
+        \label{maptraz4ap:traz}
+    \end{subfigure}
+    \caption{
+      \begin{intension}
+        Mostrar los trazos en variar regiones del hipocampo para
+        aclarar el suceso del ataque epiléptico.
+      \end{intension} 
+      A selection of traces of the recordings for various electrodes.
+      In the subfigure \ref{maptraz4ap:map}, the selected electrodes
+      are shown against the standard deviation of the recording of the
+      potential, which gives a good indication of the more active
+      sites, and therefore, of the structure of the hippocampus.
+      The electrode labeled ``a'' is putatively over GD, while ``h''
+      is in the medial CA1.}\label{traz4ap}
+\end{figure}
+
 
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
