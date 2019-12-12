@@ -29,7 +29,7 @@ function brw_things( file_brw::String ) # depende de brw file
     vars = Dict(
                 "Offset"        => Offset,
                 "Factor"        => Factor,
-                "NRecFrames"    => NRecFrames,
+                "NRecFrames"    => NRecFrames, # esta variable es inutil
                 "SamplingRate"  => SamplingRate,
                 "Chs"   	    => x,
 		"ValidChs" 	    => y,
