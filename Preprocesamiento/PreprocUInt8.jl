@@ -1,4 +1,4 @@
-module PreprocTools
+module PreprocUInt8
 
 #=
 Modulo que transforma las rutinas de PreprocTools para ser
@@ -145,6 +145,15 @@ function datosamV(xxs::Array, factor::Number, offset=-2048)
     return result
 end
 
+
+#=
+Estas funciones van a correr ahora sobre
+la lista de canales original, asumiendo
+que tal vez los canales no estan adecuadamente organizados
+en matriz por tiempo sino en lista por tiempo.
+Abra que comparar despues con los canales especificos.
+=# 
+
 function buscasatura(datos::Array; factor,
                      offset=-2048,
                      freq=deffreq,
@@ -155,23 +164,27 @@ function buscasatura(datos::Array; factor,
     # no more Sets, only Arrays
     satint=muvoltint(umbral, factor, offset) # pasamos el valor a los enteros
     
-    (alto,ancho,largo)=size(datos)
+    (nchans, nc)=size(datos)
     cini=round(Int, ceil(desde*freq))
     cfin=round(Int, ceil(hasta*freq))
     #result=Set{Array{Int,1}}()
-    result=Set(Array{Int8, 1}[])
-    for j=1:ancho, k=1:alto
+    result=Set(Array{Int16, 1}[])
+    for j=1:nchans
         if factor>0
-            sepasa=findall(x->x>saturavalue, datos[k,j,cini:cfin])
+            sepasa=findall(x->x>saturavalue, datos[j,cini:cfin])
         else     
-            sepasa=findall(x->x<saturavalue, datos[k,j,cini:cfin])
+            sepasa=findall(x->x<saturavalue, datos[j,cini:cfin])
         end
         
         enemalos=length(sepasa)
         enetotal=length(cini:cfin)
         # el promedio era mal criterio.
         if enemalos/enetotal>tol
-            bla=[k, j]
+            (b,a)=divrem(j, 64)
+            #los canales se cuentas desde 1, no de cero
+            b++
+            a++
+            bla=[j, a, b]
             result=push!(result, bla)
         #    println(prom," ",[k,j]," ",saturavalue," ", desde, " ",hasta)
         end
@@ -189,16 +202,20 @@ function buscastdraras(datos::Array;
     #busca saturardos por desviación por ventana por umbral
     bai=abs(bajo/factor)
     ari=abs(alto/factor)
-    (alto,ancho,largo)=size(datos)
+    (nchans, nc)=size(datos)
     cini=round(Int, ceil(freq*ini))
     cfin=round(Int, ceil(freq*fin))
 
     result=Set(Array{Int8, 1}[])
     
-    for j=1:ancho, k=1:alto        
-        sigma=std(datos[k,j,cini:cfin])    
+    for j=1:nchans        
+        sigma=std(datos[j,cini:cfin])    
         if sigma>ari || sigma < bai
-            bla=[k, j]
+            (b,a)=divrem(j, 64)
+            #los canales se cuentas desde 1, no de cero
+            b++
+            a++
+            bla=[j, a, b]
             result=push!(result, bla)
         end
         
@@ -214,14 +231,20 @@ function BuscaRuidosos(datos::Array, ini, fin,
                        umbral=120, tantos=3)
     #ventms es la ventana en milisegundos
     #busca saturardos por desviación por ventana por umbral
-    (alto,ancho,largo)=size(datos)
+    (nchans, nc)=size(datos)
     cini=round(Int, ceil(freq*ini))
     cfin=round(Int, ceil(freq*fin))
     result=Set(Array{Int8, 1}[])
-    for j=1:ancho, k=1:alto        
-        pasados=findall(x-> x>umbral, datos[k,j,cini:cfin])
+    for j=1:nchans
+        pasados=findall(x-> x>umbral, datos[j,cini:cfin])
         if length(pasados)>tantos
-            bla=[k, j]
+
+            (b,a)=divrem(j, 64)
+            #los canales se cuentas desde 1, no de cero
+            b++
+            a++
+            bla=[j, a, b]
+              
             result=push!(result, bla)
         end
         
@@ -240,7 +263,7 @@ function buscaCanalPicos(datos::Array;
                               maxvolt=-100, minvolt=-1500, 
                               minstd=10, maxstd=35)
     #Busquemos los canales con probable respuesta de potencial de accion
-    (alto,ancho,largo)=size(datos)
+    (nchans,nc)=size(datos)
     taux1=round(Int, ceil(tini*freq))
     taux2=round(Int,ceil(tfin*freq))
 
@@ -253,21 +276,27 @@ function buscaCanalPicos(datos::Array;
 
     result=Set(Array{Int8, 1}[])
     
-    for j=1:ancho, k=1:alto
+    for j=1:nchans
         
-        fondo=minimum(vec(datos[k,j,taux1:taux2]))
-        dpgs=std(datos[k,j,taux1:taux2])
+        fondo=minimum(vec(datos[j,taux1:taux2]))
+        dpgs=std(datos[j,taux1:taux2])
         test=true
         
         if factor>0
             test=(mxvint >fondo>mnvint) && ( ustdint > dpgs > lstdint)
         else
-           else (mxvint <fondo<mnvint) && ( ustdint > dpgs > lstdint)
+            test=(mxvint <fondo<mnvint) && ( ustdint > dpgs > lstdint)
         end
              
-        if test 
-           #  print(dpgs, " ")
-            bla=[k, j]
+        if test
+
+            (b,a)=divrem(j, 64)
+            #los canales se cuentas desde 1, no de cero
+            b++
+            a++
+            
+            bla = [j, a, b]
+            println(bla)       
             result=push!(result,bla)
         end
     end
