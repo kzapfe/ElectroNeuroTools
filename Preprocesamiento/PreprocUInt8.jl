@@ -11,7 +11,7 @@ using Statistics
 using HDF5
 using Dates
 
-export AbreyCheca, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, BuscaSaturados, BuscaSaturadosStd, BuscaRuidosos, buscaCanalPicos, desviacionventanas, tari, mediamov, gauss, pesosgauss, suavegauss, stringtomiliseconds, parseatiempos, abrecacho
+export abrecacho, EncuentraTrancazosRaw,ActivAlrededorTrancazo, ActividadFueraTrancazo, FormaMatrizDatosCentrados, buscasatura, buscastdraras, buscaCanalPicos, desviacionventanas, tari, mediamov, gauss, pesosgauss, suavegauss, stringtomiliseconds, parseatiempos
 
 #= Muchas funciones aqui presentes son para limpiar,
 manipular, cortar y suavizar datos. Ellas dependen
@@ -157,7 +157,7 @@ Abra que comparar despues con los canales especificos.
 function buscasatura(datos::Array; factor,
                      offset=-2048,
                      freq=deffreq,
-                      desde=0.5, hasta=10,
+                      tini=0.5, tfin=10,
                         umbral=1900, tol=0.04)
     #busca saturados por promedio sobre umbral
     # cambios para guardar en HDF5 y mandar jld a freir esparragos.
@@ -165,25 +165,24 @@ function buscasatura(datos::Array; factor,
     satint=muvoltint(umbral, factor, offset) # pasamos el valor a los enteros
     
     (nchans, nc)=size(datos)
-    cini=round(Int, ceil(desde*freq))
-    cfin=round(Int, ceil(hasta*freq))
+    cini=round(Int, ceil(tini*freq))
+    cfin=round(Int, ceil(tfin*freq))
     #result=Set{Array{Int,1}}()
     result=Set(Array{Int16, 1}[])
     for j=1:nchans
         if factor>0
-            sepasa=findall(x->x>saturavalue, datos[j,cini:cfin])
+            sepasa=findall(x->x>satint, datos[j,cini:cfin])
         else     
-            sepasa=findall(x->x<saturavalue, datos[j,cini:cfin])
+            sepasa=findall(x->x<satint, datos[j,cini:cfin])
         end
         
         enemalos=length(sepasa)
         enetotal=length(cini:cfin)
         # el promedio era mal criterio.
         if enemalos/enetotal>tol
-            (b,a)=divrem(j, 64)
+            (a,b)=divrem(j, 64)
             #los canales se cuentas desde 1, no de cero
-            b++
-            a++
+            a+=1
             bla=[j, a, b]
             result=push!(result, bla)
         #    println(prom," ",[k,j]," ",saturavalue," ", desde, " ",hasta)
@@ -194,7 +193,7 @@ function buscasatura(datos::Array; factor,
 end
 
 function buscastdraras(datos::Array;
-                       ini, fin,
+                       tini, tfin,
                        factor,
                        offset=-2048,
                            freq=deffreq, bajo=10, alto=40)
@@ -203,18 +202,17 @@ function buscastdraras(datos::Array;
     bai=abs(bajo/factor)
     ari=abs(alto/factor)
     (nchans, nc)=size(datos)
-    cini=round(Int, ceil(freq*ini))
-    cfin=round(Int, ceil(freq*fin))
+    cini=round(Int, ceil(freq*tini))
+    cfin=round(Int, ceil(freq*tfin))
 
-    result=Set(Array{Int8, 1}[])
+    result=Set(Array{Int16, 1}[])
     
     for j=1:nchans        
         sigma=std(datos[j,cini:cfin])    
         if sigma>ari || sigma < bai
-            (b,a)=divrem(j, 64)
+            (a,b)=divrem(j, 64)
             #los canales se cuentas desde 1, no de cero
-            b++
-            a++
+            a+=1
             bla=[j, a, b]
             result=push!(result, bla)
         end
@@ -223,36 +221,6 @@ function buscastdraras(datos::Array;
     
     return result
 end
-
-
-""" ¿eh... esta madre no hace nada especial!!!"""
-function BuscaRuidosos(datos::Array, ini, fin,
-                       freq=deffreq,
-                       umbral=120, tantos=3)
-    #ventms es la ventana en milisegundos
-    #busca saturardos por desviación por ventana por umbral
-    (nchans, nc)=size(datos)
-    cini=round(Int, ceil(freq*ini))
-    cfin=round(Int, ceil(freq*fin))
-    result=Set(Array{Int8, 1}[])
-    for j=1:nchans
-        pasados=findall(x-> x>umbral, datos[j,cini:cfin])
-        if length(pasados)>tantos
-
-            (b,a)=divrem(j, 64)
-            #los canales se cuentas desde 1, no de cero
-            b++
-            a++
-            bla=[j, a, b]
-              
-            result=push!(result, bla)
-        end
-        
-    end
-    
-    return result
-end
-
 
 
 function buscaCanalPicos(datos::Array;
@@ -274,7 +242,7 @@ function buscaCanalPicos(datos::Array;
     
     println("Estoy buscando del cuadro " , taux1, " al , ", taux2)
 
-    result=Set(Array{Int8, 1}[])
+    result=Set(Array{Int16, 1}[])
     
     for j=1:nchans
         
@@ -290,13 +258,12 @@ function buscaCanalPicos(datos::Array;
              
         if test
 
-            (b,a)=divrem(j, 64)
+            (a,b)=divrem(j, 64)
             #los canales se cuentas desde 1, no de cero
-            b++
-            a++
+            a+=1
             
             bla = [j, a, b]
-            println(bla)       
+            
             result=push!(result,bla)
         end
     end

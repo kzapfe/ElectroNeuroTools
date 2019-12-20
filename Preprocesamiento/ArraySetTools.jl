@@ -22,9 +22,9 @@ function rowstoset(xxs::Array; enteros=true)
     return result
 end
 
-function elemtorow(xxs::Set)
+function elemtorow(xxs::Set, n=2)
     #pasa los elementos de un conjunto a rengoles de un array
-    result=[0 0] 
+    result=zeros(1,n)
     for k in xxs
         result=vcat(result, transpose(k))
     end
