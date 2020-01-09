@@ -1,6 +1,6 @@
 module ArraySetTools
 
-export rowstoset, elemtorow
+export rowstoset, elemtorow, orderelectrodes
 
 
 ## ******************************************
@@ -32,6 +32,22 @@ function elemtorow(xxs::Set, n=2)
 end
 
 
+#=
+function puntoZ2enlinea(puntoini::Array, direccion)
+    # los puntos estan en "renglon columna"
+    xo=puntoini[2]
+    yo=puntoini[1]
+    
+    
+end
+
+function orderelectrodes(xxs::Set, puntoinicial::Array;
+                         dextro=true, inidir=3.1415)
+    
+
+end
+
+=#
 
 
 end #module
