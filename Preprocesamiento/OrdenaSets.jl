@@ -188,7 +188,7 @@ function barreconjuntoyordena(datos::Array, punto::Array; dire=pi, dextro=true)
         end
     end
     # no elegante pero funciona (stupid but works)
-    result=unique(result, dims=1)
+    result=unique(result[2:end,:], dims=1)
     ll=size(result,1)
     orden=collect(1:ll)
     result=hcat(result, orden)
