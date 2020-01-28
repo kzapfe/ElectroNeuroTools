@@ -5,7 +5,7 @@ using PreprocUInt8
 using HDF5, PyPlot, Statistics
 using ArraySetTools
 
-arxname="/home/karel/BRWFiles/Isabel2019/Cacho_04_control_02.brw"
+arxname="/home/karel/BRWFiles/Isabel2019/Cacho_06_control_02.brw"
 
 if occursin("Cacho", arxname)
     arx=h5open(arxname)
@@ -51,7 +51,7 @@ iniciobusqueda=1
 finbusqueda=282
 
 PruebaRespuesta=buscaCanalPicos(dataraw, factor=factor,
-    tini=iniciobusqueda, tfin=finbusqueda, freq=freq)
+    tini=iniciobusqueda, tfin=finbusqueda, maxvolt=-100, freq=freq)
 # y luego los saturados
 
 
@@ -147,12 +147,18 @@ scatter(x3,y3, marker="x",c="green", s=25)
 scatter(x4,y4, marker="+",c="red", s=25)
 #scatter(x5,y5, marker="v",c="green", s=25)
 
+println( "el tipo de intensos ", typeof(intensos))
+println(" el tipo de PruebaRespuesta ", typeof(PruebaRespuesta))
 mal=union(quietos, satu)
 buenos=union(intensos, PruebaRespuesta)
 setdiff!(buenos, mal)
 
-malforsave=elemtorow(mal, 3)
-buenforsave=elemtorow(buenos, 3);
+println(" el tipo de buenos ", typeof(buenos))
+
+malforsave=elemtorow(mal, n=3)
+buenforsave=elemtorow(buenos, n=3);
+
+println(" el tipo de buenforsave ", typeof(buenforsave))
 
 dirgen=dirname(arxname)*"/"
 basegen=basename(arxname)[1:end-4]
@@ -165,6 +171,7 @@ listaextra=Dict(
      "CanalesMalos" => malforsave)
 
 println(outname )
+
    h5open(outname, "w")  do file
         for nam in names(arx)
             datos=read(arx[nam])
@@ -182,5 +189,6 @@ println(outname )
     end
 
 println("hemos guardado este cacho en el archivo ", outname)
+
 
 readline()

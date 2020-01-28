@@ -261,6 +261,7 @@ function buscaCanalPicos(datos::Array;
             (a,b)=divrem(j, 64)
             #los canales se cuentas desde 1, no de cero
             a+=1
+            b+=1
             
             bla = [j, a, b]
             

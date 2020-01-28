@@ -13,7 +13,7 @@ function rowstoset(xxs::Array; enteros=true)
     if enteros
         result=Set{Array{Int64,2}}()
     else
-        result=Set{Array{Float64,2}}()sp
+        result=Set{Array{Float64,2}}()
     end
     (nrow,ncol)=size(xxs)
     for j in 1:nrow
@@ -24,7 +24,7 @@ end
 
 function elemtorow(xxs::Set; n=2, renglones=false)
     #pasa los elementos de un conjunto a rengoles de un array
-    result=zeros(Int, 1,n)
+    result=zeros(UInt16, 1,n)
     for k in xxs
         if renglones
             result=vcat(result, k)
