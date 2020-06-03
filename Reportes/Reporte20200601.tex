@@ -1,0 +1,149 @@
+\documentclass{article}
+
+%\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{amsmath}
+%\usepackage[spanish]{babel}
+
+\usepackage{graphicx}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{hyperref}
+
+
+\setmainfont[Ligatures=TeX]{Droid Serif}
+
+\newcommand{\Jd}{\mathbf{J}}
+\newcommand{\EF}{\mathbf{E}}
+\newcommand{\cond}{\boldsymbol{\sigma}}
+\DeclareMathOperator{\diver}{div}
+\DeclareMathOperator{\grad}{grad}
+
+\title{Entropy, Symbolization and Mutual Information \\
+Teorical-Numerical Quarentine Dissertation}
+\author{ W. P. Karel Zapfe}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Electroneurophysiology is strongly based on the measurement and characterization of electrical signals given by live neurons, either in vitro or in vivo. This signal is often recorded as an array of voltage measurements, done at precise high frequencies. Along the years, the sampling and precision of these measurements have increased by several orders of magnitude. Moreover, the capacity to sample hundreds or thousands of sites simultaneously exists now, sometimes spread over macroscopic areas, such as the whole scalp of the head, or concentrated in very small areas, as in MMEAs (Massive Micro-electrode arrays). Such signals are very rich, and many efforts are done to characterize their complexity. A common approach is to estimate the Entropy of the signal, and from there to use other derived measures such as Mutual Information or Transfer Entropy to search for causality between different channels.
+
+It turns out that the very first step is sometimes done routinely and without much thought to fundamentals, and, as we shall show here, can lead to inconsistent or plain wrong results. As we shall see, Entropy in the sense of Shannon is often wrongly used, either due to conceptual laxity or by error in the numerical algorithmic design. On the other hand, slightly different calculations of Entropy may point different "complexities" in the data. As we are most interested in causality tests, we may focus on the most consistent and robust definition of Entropy. It appears that the definition of Entropy in the sense of Shannon is a tricky thing, and Shannon himself made an erroneous extrapolation of his discrete definition that is wrong. Even though this has been pointed since 1957 by E.T. Jaynes \cite{Jaynes1957}, and adequate alternatives have been shown to exist
+\cite{Kullback1951, Schroeder2004}, researchers routinely take the incorrect definition as granted, without realising that does not converge nor has the same interpretation \cite{Jaynes1968}. On the other side, the correct use of Shannon's Entropy involves
+a process of symbolization of the continuous data, and this introduces further
+questions. As we shall see in the following, some symbolization alter drastically
+the Entropy estimation, thus forcing the researchers to take a sort of Occam's approach:
+take the simplest one, even if it looks really crude, so that artifacts given
+by the model do not play a large role. A lot of recent work in Neuroscience take this
+path, at a very extreme level, encoding the neurophysiological signals in
+only two signs, above or below a threshold. This can be done on the electric potential field, separating putative spikes from absence of spikes, or in a  more
+focused manner, such as taking the sign of
+the difference of the signals, as in \cite{Steuer2004}, or on
+the time domain, if the inter-spike interval is larger or below a certain value,
+as in \cite{Steuer2001}.
+
+In this report we shall explore the difficulties of trying to establish the
+Entropy of a continuous LFP signal, and we shall explore a symbolic approach based
+on the decomposition of the signals on the CSD representation. We shall also explore
+the notion of block entropy and apply it to this symbolization. Finally we shall
+see if those measurements can be used to produce adequate estimations of the
+Mutual Information and Transfer Entropy, so that we can explore their
+usability as causality tests.
+
+
+
+\section{Shannon Entropy}
+
+
+Shannon Entropy was devised as a measure of the complexity of a message encoded in discrete symbols. This is very important because its strict definition works very well in the case that the symbolization is given, but it fails ( spectacularly one may say ) if one takes instead a possible continuum of symbols, or one imposes another encoding on the symbols. Claude Shannon himself wrongly stated that the continuous case was a limit form
+of his original definition \cite{Shannon1948}, and although this was corrected
+by subsequent researchers in the 50's and 60's, the error still persists in statements
+that claim, as an example, that ``the entropy of the Normal distribution is equal
+to the log of the standard deviation'', as for example the Wikipedia article on
+Normal Distribution and the references therein \cite{WikiNormal}. 
+
+
+Let us remember Shannon's definition. Suppose that we have a set of discrete symbols, i.e. , a series of separated, well defined values, which could be letters, digits, or any other symbol of such a kind. For simplicity we represent them as numbers, so $n$ discrete symbols would be $\{1, 2, \ldots n \}$. We call such a set an alphabet. Suppose that we have a random process that picks one by one these symbols and gives us a string of them. Such a string would be called a "message". Now let us suppose that the process is ergodic, that means, a very long "message" would be a good representation of the probabilities of the process that picks the symbols. In such a case the process would eventually be able to produce all the possible messages that those symbols permit, and their frequency's would represent the probabilities of the random process. If we knew precisely the probabilities $P$ of every symbol $s_j$, the entropy would be:
+\begin{equation}\label{eqDiffEnt}
+  H=-\sum_{j=1}^n P(s_j) \log (P (s_j))
+\end{equation}
+The base of the logarithm is usually taken as two, in which case the Entropy has as units the bit. In that case it can be interpreted as the average number of binary option question one has to make to guess symbol correctly.  A change of base of the logarithm is simply a change of units. We shall call this definition and only this one Shannon's Entropy.
+We may not have the knowledge of the $P(s_j)$ directly, so we must infer them from the messages that we sample, and by doing so we may say that we are measuring the Entropy of the messages and not of the process. This has to be taken into account if the messages are not "random enough".
+
+Shannon, in his original paper, stated that the same idea could be done by extending it to continuous distributions:
+\begin{equation}
+H=-\int p(x) \log (p(x)) d x
+\end{equation}
+for a random continuous variable and a probability distribution $p(x)$. It turns out that the limit does not converge. One can make some algebraic tricks to make it converge, but that would affect the interpretation. The fact that this looks identical to the Thermodynamic Entropy definition gives a false sense of legitimacy. Edwin T. Jaynes \cite{Jaynes1957}  made a rigorous critique of this confusion and showed how a true relationship between Thermodynamic and Shannon's Entropy can be found. Sometimes this formula is
+labeled ``Differential Entropy'', but it has a hidden assumption.
+The Differential Entropy would correspond to the Kullback-Leibler divergence
+with respect to a homogeneous probability, and that only makes sense if one
+has a finite support!
+Our way out of this incorrect usage shall be to honestly accept that real measurements
+of LFP do indeed have finite support into our derivations. That actually is more sensible than taking the analytical formula without criticism and is according to the nature of real experimental data. This approach leads to the so called ``Limiting density
+of Discrete Points'' \cite{Jaynes1968, Jaynes2003}, a special case of the
+Kullback-Leibler Divergence \cite{Kullback1959}.
+
+
+\section{Binarization of the Data and Symbolic Sequences}
+
+Authors take at face value the equation \ref{eqDiffEnt} and try to make a numerical aproximation to it. This is achieved first by making an heuristic estimate to the distribution function of continous data. The usuall approach is first to make an histogram of the data. By so doing one is actually making a symbolization of the data ( called binarization, from bins, not from binary digits ), and if one applies Shannon's formula, then one is actually calculating the entropy of the distribution of symbols from that specific binarization. One could optimistically think that such a calculation could be a reasonable approach to a limiting form of the Differential Entropy, but that is not the case. A simple example sufices.
+If one has a finite set of symbols ( we shall call it an alphabet from now on), such as $\{1,2\ldots,n\}$ and a random process that picks them with equal probabilies, the Shannon Entropy either of the process or of the distribution that dictates the process is 
+$$
+H=-\sum \frac{1}{n} \log \frac{1}{n} = \log n
+$$
+A simple proof shows that this has the highest entropy for a process with $n$ symbols, taking for example the entropy of one symbol to be higher or lower than the rest, and normalizing the others so that they are still equiprobable. Then It can be shown that this probability function has lower entropy. 
+
+If one takes a continous interval over the real numbers, say, from $a$ to $b$, and one puts a flat probabilty distribution function over it, the Differential Entropy will be:
+$$
+H=-\int \frac{1}{b-a} \log \frac{1}{b-a} d x = \log (b-a)
+$$
+This somehow paralels the discrete Shanon entropy for equiprobable process, but it hides a trap.
+
+Supose that we want to obtain the above by means of sampling a process, and that we put the data in bins of
+equal length. After enough samples we may have a reasonable approach to an even distribution, but we are carefull
+and don't take that for granted, so we approach the integral by a numerical discrete sum. Let us suppose that we have $n$ bins, and that each one turned to be more or less equally filled with data. Say that each bin holds 1/n of the total amount of data. Then we would obtain Shanons entropy for $n$ symbols, $H=\log n$. If we would try instead to make a Rieman sum over the expression $ p(x) \log (p(x))$ we end with another result: The bins have lenght $\Delta x= (b-a)/n$, and $p(x)=1/(b-a)$. 
+the Integral form by the next sum:
+$$
+\tilde{H}=-\sum p_n(x) \log p_n(x) \Delta x \\
+=-\sum \frac{1}{b-a}\log (\frac{1}{b-a}) \frac{b-a}{n} \\
+= \log (b-a)
+$$
+The Riemann sum in this case converges trivialy to the Integral form. But the numerical sampling does not! In fact, if we refine the partition of our data (and have enough data to spread them over the new bins), the Shannon Entropy begins to grow, as $\log n$. What is going on? Two things. The most overlooked is that $p(x)$ *is not* a probability: it needs to be multiplied by $dx$ to become one. The other problem is that  Shannon's entropy is the entropy of \emph{the partition itself}. The partition induces probabilites (discrete ones) and is a symbolization of the data. The Riemman Integral does not depend on the partition, as long as it converges uniformly. The Entropies do not match each other because they are measuring different things.
+
+People familiar with Ergodic Theory shall recognize that these kind of measures, which depend on the partition, are usefull, but one cannot omit stating the partition when using them. Moreover, given that a partition is a symbolization, how can we chose the right partition? We cannot approach with experimental data the Riemman sum, except on very simple examples. 
+In the following we shall use some experimental data
+to drive the point.
+
+\section{ First Experimental Numerical Example }
+
+We shall show some calculations derived from using naively the mentioned approach. Our data comes from electrophysiological experiments, recorded with the BioCAM form BrainWave, a MMEA that has 4095 recording electrodes over an area of 2.27mm by 2.27 mm. An extra
+electrode is used as ground value. In the data shown below, the data sampling rate was of 7.022 KHz.
+
+\subsection{The binarization process: different criteria}
+
+There are different rules to select adecuate bin sizes in one-dimensional data. The rules try to make the histogramm "smooth enough" and without gaps. We are compeled to do so, because we asume that the phenomena that produces our data is continous in nature, and therefore, it induces a continous probabilty density function. We are looking for a histogram that captures the general shape of this pdf. If the bins are to narrow, we may end up with many empty bins, or many bins with just one data point inside it. If they are too big they may not look like the shape of the underlying distribution.
+
+Below we compare three  methods that produce different bin sizes for the same data: The Freedman and Diaconis rule \cite{FD1981}, the Scott's rule \cite{Scott1979} and the square root of the number of data rule. The first two use statistical characterization over the values of the sample, such as the interquantil range or the standard deviation. Those are measures of the spread of the center of the distribution. The last one only takes into account the number of samples. Also we set up an "heuristic" binsize, in which we do not take into account anything of the sample, but we simply pick a binsize, and set up a range. In our case the range is from $-2000 \mu V$ to $2000 \mu V$
+
+
+
+
+\section{Block Entropy}
+
+Another caveat, often overlooked, is that Entropy of an array of symbols is invariant to ordering. One could in principle regard a signal as a sampling of random variables, reorder them, and obtain the same distribution, and thus, the same entropy. As an example, we could take every letter, punctuation mark and space of this paragraph, garble them into nonsense, and claim that they have the same Entropy as the original paragraph, and therefore, the same Information, which is as much nonsense as the random letters. But actually this is done implicitly in a lot of numerical estimations of Entropy.
+
+
+
+\bibliography{./BiblioReportes01}{}
+\bibliographystyle{plain}
+
+
+
+\end{document}
+
