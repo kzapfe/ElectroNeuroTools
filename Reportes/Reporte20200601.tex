@@ -20,6 +20,8 @@
 \newcommand{\cond}{\boldsymbol{\sigma}}
 \DeclareMathOperator{\diver}{div}
 \DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\iqr}{iqr}
+
 
 \title{Entropy, Symbolization and Mutual Information \\
 Teorical-Numerical Quarentine Dissertation}
@@ -92,31 +94,31 @@ Kullback-Leibler Divergence \cite{Kullback1959}.
 
 \section{Binarization of the Data and Symbolic Sequences}
 
-Authors take at face value the equation \ref{eqDiffEnt} and try to make a numerical aproximation to it. This is achieved first by making an heuristic estimate to the distribution function of continous data. The usuall approach is first to make an histogram of the data. By so doing one is actually making a symbolization of the data ( called binarization, from bins, not from binary digits ), and if one applies Shannon's formula, then one is actually calculating the entropy of the distribution of symbols from that specific binarization. One could optimistically think that such a calculation could be a reasonable approach to a limiting form of the Differential Entropy, but that is not the case. A simple example sufices.
-If one has a finite set of symbols ( we shall call it an alphabet from now on), such as $\{1,2\ldots,n\}$ and a random process that picks them with equal probabilies, the Shannon Entropy either of the process or of the distribution that dictates the process is 
+Authors take at face value the equation \ref{eqDiffEnt} and try to make a numerical approximation to it. This is achieved first by making an heuristic estimate to the distribution function of continuous data. The usually approach is first to make an histogram of the data. By so doing one is actually making a symbolization of the data ( called binarization, from bins, not from binary digits ), and if one applies Shannon's formula, then one is actually calculating the entropy of the distribution of symbols from that specific binarization. One could optimistically think that such a calculation could be a reasonable approach to a limiting form of the Differential Entropy, but that is not the case. A simple example suffices.
+If one has a finite set of symbols ( we shall call it an alphabet from now on), such as $\{1,2\ldots,n\}$ and a random process that picks them with equal probabilities, the Shannon Entropy either of the process or of the distribution that dictates the process is 
 $$
 H=-\sum \frac{1}{n} \log \frac{1}{n} = \log n
 $$
 A simple proof shows that this has the highest entropy for a process with $n$ symbols, taking for example the entropy of one symbol to be higher or lower than the rest, and normalizing the others so that they are still equiprobable. Then It can be shown that this probability function has lower entropy. 
 
-If one takes a continous interval over the real numbers, say, from $a$ to $b$, and one puts a flat probabilty distribution function over it, the Differential Entropy will be:
+If one takes a continuous interval over the real numbers, say, from $a$ to $b$, and one puts a flat probability distribution function over it, the Differential Entropy will be:
 $$
 H=-\int \frac{1}{b-a} \log \frac{1}{b-a} d x = \log (b-a)
 $$
-This somehow paralels the discrete Shanon entropy for equiprobable process, but it hides a trap.
+This somehow parallels the discrete Shannon entropy for equiprobable process, but it hides a trap.
 
-Supose that we want to obtain the above by means of sampling a process, and that we put the data in bins of
-equal length. After enough samples we may have a reasonable approach to an even distribution, but we are carefull
-and don't take that for granted, so we approach the integral by a numerical discrete sum. Let us suppose that we have $n$ bins, and that each one turned to be more or less equally filled with data. Say that each bin holds 1/n of the total amount of data. Then we would obtain Shanons entropy for $n$ symbols, $H=\log n$. If we would try instead to make a Rieman sum over the expression $ p(x) \log (p(x))$ we end with another result: The bins have lenght $\Delta x= (b-a)/n$, and $p(x)=1/(b-a)$. 
+Suppose that we want to obtain the above by means of sampling a process, and that we put the data in bins of
+equal length. After enough samples we may have a reasonable approach to an even distribution, but we are careful
+and don't take that for granted, so we approach the integral by a numerical discrete sum. Let us suppose that we have $n$ bins, and that each one turned to be more or less equally filled with data. Say that each bin holds 1/n of the total amount of data. Then we would obtain Shannon's entropy for $n$ symbols, $H=\log n$. If we would try instead to make a Riemann sum over the expression $ p(x) \log (p(x))$ we end with another result: The bins have length $\Delta x= (b-a)/n$, and $p(x)=1/(b-a)$. 
 the Integral form by the next sum:
 $$
 \tilde{H}=-\sum p_n(x) \log p_n(x) \Delta x \\
 =-\sum \frac{1}{b-a}\log (\frac{1}{b-a}) \frac{b-a}{n} \\
 = \log (b-a)
 $$
-The Riemann sum in this case converges trivialy to the Integral form. But the numerical sampling does not! In fact, if we refine the partition of our data (and have enough data to spread them over the new bins), the Shannon Entropy begins to grow, as $\log n$. What is going on? Two things. The most overlooked is that $p(x)$ *is not* a probability: it needs to be multiplied by $dx$ to become one. The other problem is that  Shannon's entropy is the entropy of \emph{the partition itself}. The partition induces probabilites (discrete ones) and is a symbolization of the data. The Riemman Integral does not depend on the partition, as long as it converges uniformly. The Entropies do not match each other because they are measuring different things.
+The Riemann sum in this case converges trivially to the Integral form. But the numerical sampling does not! In fact, if we refine the partition of our data (and have enough data to spread them over the new bins), the Shannon Entropy begins to grow, as $\log n$. What is going on? Two things. The most overlooked is that $p(x)$ *is not* a probability: it needs to be multiplied by $dx$ to become one. The other problem is that  Shannon's entropy is the entropy of \emph{the partition itself}. The partition induces probabilities (discrete ones) and is a symbolization of the data. The Riemann Integral does not depend on the partition, as long as it converges uniformly. The Entropies do not match each other because they are measuring different things.
 
-People familiar with Ergodic Theory shall recognize that these kind of measures, which depend on the partition, are usefull, but one cannot omit stating the partition when using them. Moreover, given that a partition is a symbolization, how can we chose the right partition? We cannot approach with experimental data the Riemman sum, except on very simple examples. 
+People familiar with Ergodic Theory shall recognize that these kind of measures, which depend on the partition, are useful, but one cannot omit stating the partition when using them. Moreover, given that a partition is a symbolization, how can we chose the right partition? We cannot approach with experimental data the Riemann sum, except on very simple examples. 
 In the following we shall use some experimental data
 to drive the point.
 
@@ -127,11 +129,51 @@ electrode is used as ground value. In the data shown below, the data sampling ra
 
 \subsection{The binarization process: different criteria}
 
-There are different rules to select adecuate bin sizes in one-dimensional data. The rules try to make the histogramm "smooth enough" and without gaps. We are compeled to do so, because we asume that the phenomena that produces our data is continous in nature, and therefore, it induces a continous probabilty density function. We are looking for a histogram that captures the general shape of this pdf. If the bins are to narrow, we may end up with many empty bins, or many bins with just one data point inside it. If they are too big they may not look like the shape of the underlying distribution.
+There are different rules to select adequate bin sizes in one-dimensional data. The rules try to make the histogram "smooth enough" and without gaps. We are compelled to do so, because we assume that the phenomena that produces our data is continuous in nature, and therefore, it induces a continuous probability density function. We are looking for a histogram that captures the general shape of this pdf. If the bins are to narrow, we may end up with many empty bins, or many bins with just one data point inside it. If they are too big they may not look like the shape of the underlying distribution.
 
-Below we compare three  methods that produce different bin sizes for the same data: The Freedman and Diaconis rule \cite{FD1981}, the Scott's rule \cite{Scott1979} and the square root of the number of data rule. The first two use statistical characterization over the values of the sample, such as the interquantil range or the standard deviation. Those are measures of the spread of the center of the distribution. The last one only takes into account the number of samples. Also we set up an "heuristic" binsize, in which we do not take into account anything of the sample, but we simply pick a binsize, and set up a range. In our case the range is from $-2000 \mu V$ to $2000 \mu V$
+Below we compare three  methods that produce different bin sizes for the same data.
+The Freedman and Diaconis rule \cite{FD1981}, takes as ruler the interquantile
+range. This makes the criterion stable with respect to outliers. The exact expression
+is
+\begin{equation}
+  l_{FD}=2 \iqr / \sqrt[3]{N},
+\end{equation}
+where $\iqr$ is the interquantile range and $N$ is the number of data entries.
+A very similar one is Scott's rule \cite{Scott1979}:
+\begin{equation}
+  l_{S}=3.49 \sigma / \sqrt[3]{N},
+\end{equation}
+where $\sigma$ is the standard deviation. If the data behaves more or less like a
+Gaussian, it gives a good bin size.
+We also use the ``square root'' rule, in which we use as many data bins as the
+square root of the number of data, a usual rule of thumb for obtaining histograms.
+Also we set up an "heuristic" bin size, in which we do not take into account anything of the sample, but we simply pick a bin size, and set up a range. In our case the range is from $-2000 \mu V$ to $2000 \mu V$, and bin size of $4.7 \mu V$.
+
+After obtaining histograms for each channel using each of the criteria above, we
+calculate Shannon's Entropy on each channel. In the figure \ref{entrocomp} we compare
+the results. 
+\begin{figure}
+  \includegraphics[width=0.9\textwidth]{ComparaEntropias01.png}
+  \caption{Comparison of Shannon's Entropy of the same data, but
+    different binning. The criteria produce qualitatively different results.}
+  \label{entrocomp}
+\end{figure}
 
 
+\subsection{Discussion of the Entropies with different bin sizes criteria}
+
+Inspecting the above figures, it shall be obvious that Shannon's Entropy depends highly on the partition of the range of data. The different color maps don't differ only in scale: they behave qualitatively in contrary ways. Both the Scott and the Square Root show the opposite behaviour as the Freed-Diaconis and the Heuristic fixed method. In the former higher entropy is on the noise channels, the later have higher entropy on the very active CA3 region and their neighbourhood (we discuss the count-map method at the end). Why is that and what does it mean?
+
+Let us recant some properties of Shannon Entropy. In a finite alphabet, higher entropies imply a flatter distribution. If all the symbols have the same probability, we get the maximum entropy. Also, a distribution with more symbols tends to also have a higher entropy, unless the symbols have very different probabilities. The different criteria for obtaining the optimal bin size take into account that there may be a continuous distribution underneath it, so we are optimizing in search of it. But every channel produces a different bin size. Scott and Square root methods are very sensible to outliers, (the second one is actually dependent solely on the extrema, that is, the more outliers of them all), so they tend to produce larger bins. If the channel is active, we end with some bins that are large enough to contain all noise contribution and others that contain the activity. On the other hand,the noisy channels produce smaller bins, and the distribution of noise tend to be more homogeneous, like a truncated Gaussian. This will produce a higher entropy, as we have more bins, with a relatively flatter distribution.
+
+In the Freed Diaconis method, we use the interquantile range as a ruler, so it is more stable in presence of outliers. That makes the bin size more consistent across channels, and therefore, the active channels tend to have a larger spread of probabilities over more or less the same alphabet, giving more Entropy to channels with more diverse signals. The heuristic criterion behaves more like this, as we use the exact same bin size and number of bins for all channels. 
+
+It turns out to be that histograms that are optimized to find a continuous distribution are inconsistent to estimate the Shannon Entropy, and this is rightly so: the Differential Entropy is \emph{not} the limit of Shannon's entropy, so that any continuous distribution can not induce a consistent discrete entropies that converge to it. 
+
+This gives us the reason to explore our true limiting partition. Our apparatus has an intrinsic discrete alphabet: the measurements are given in integer multiples of $2.014 \mu V$, so our symbols are actually those discrete values of the electric Voltage. The count-map function gives us an histogram of those discrete values. The entropy thus calculated is qualitatively similar to the Freed Diaconis Criterion, but with higher values, as it maximizes the symbols. Moreover, it also avoids misplacing measurements in the same basket, leaving other symbols empty- this is the correct alphabet for measuring the Entropy of
+the signal: is consistent across channels and it minimizes our assumptions. But it shall
+not generalize to more complex measures, such as Mutual Information or
+Transfer Entropy, as we shall see below.
 
 
 \section{Block Entropy}
