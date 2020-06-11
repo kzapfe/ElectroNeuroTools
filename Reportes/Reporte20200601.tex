@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[10pt]{article}
 
 %\usepackage[utf8]{inputenc}
 \usepackage{fontspec}
@@ -175,13 +175,149 @@ the signal: is consistent across channels and it minimizes our assumptions. But 
 not generalize to more complex measures, such as Mutual Information or
 Transfer Entropy, as we shall see below.
 
+\subsection{Diggresion: using countmap to discover numerical artifacts on
+  the data}
+
+When using the countmap method, we obtain a frequency histogram of discrete values.
+This is so because the apparatus gives us discrete values, it is the nature
+of any experiment to have finite resolution. The BioCam in this data has a
+minimal resolution of exactly $\Delta V=2.01416015625 \mu V $.
+When plotting the frequency
+of each value we end up with a figure as seen in fig, \ref{histocountmap1}.
+Using a coarser binning to produce the histogram would have made us miss
+this efect, or at least made it more dificult to discover. 
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.65\textwidth]{histoconcorazones01.png}
+    \end{center}
+ \caption{Absolute frequencies of the discrete values of all active channels.
+   Some values clearly deviate from the statistic, which is apparently
+   Gaussian. These atypical values seem to be more or less
+   evenly spaced, indicated by red marks here.}\label{histocountmap1}
+\end{figure}
+
+The spacing of the suspicious values near the center seems to be
+around $12 \Delta V \approx 25 \mu V$, but other differences appear.
+There seems no sensible way of how to deal with these values, because
+substituting them randomly could alter the statistical propiertes of the
+signal. Nevertheless we can ignore them when calculating the Entropy
+by the countmap method, as the other values give a well defined shape
+of the Probability Function. Given that the weird behavior is less
+detectable on the edges of the Gaussian, we may only eliminate those
+near the center. A larger range graph is presented on the figure
+\ref{histocountmap2}.
+
+
+\begin{figure}
+  \begin{center}
+ \includegraphics[width=0.85\textwidth]{histoconcorazones02.png}   
+  \end{center}
+ 
+ \caption{Broader view of the same daa as figure \ref{histocountmap2}.
+   A very suspicios irregularity is seen, but is very dificult to
+ quantify it.}
+ \label{histocountmap2}   
+\end{figure}
+
+In contrast, a histogram would smooth those strange values, making it
+difficult to detect. In the figure \ref{histoscott01} we show the
+effect of using the Scott's Method for the histogram. As can be seen,
+the ``bad values'' are much more dificult to spot, and the
+histogram looks really weird. Any further method that we apply over such
+probabilistic calculation will have unreliable or false effects. This reveals
+the necesesity to be very very strict with the Histograms that we calculate.
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.65\textwidth]{histoscottbuenos01.png}  
+  \end{center}
+    \caption{The same data as on previous figures but binned with Scott's method.}
+  \label{histoscott01}
+\end{figure}
+
+Let us inspect the data a bit more. How do those values look on the trace of
+the signal?
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{trazosospechos01.png}
+  \end{center}
+  \caption{An exemplary trace with the suspicious values marked. Note that
+  many occur on local maxima or minima.}
+  \label{trazomarcas01}
+\end{figure}
+
+In the figure \ref{trazomarcas01} we can see that the strange values occur often
+at turning points in the data, marking some characteriztic oscillation of the noise.
+This is clearly an artifact of the electrodes measuring the potential, as they
+seem more prone to round of to certain values at the moment in which the
+potential changes sign of its temporal derivative. Although a denoizing filter may
+help us to clean those values, I suspect that other artifacts may acumulate and
+alter the value of the Entropy.
+
+
+\section{Higher dimensional and causality measures}
+
+We have established that the method of counting the discrete values of
+the measured LFP is the one that gives a trustworthy estimation of the
+probabiliy function. In some sense, it is a good representative
+of the probabilites of the \emph{measured values} of the data.
+As a side effect, it also helps us to reveal numerical artifacts
+on the data. Without a relieable measure of the Probabilites
+we cannot  calculate causality functions, such as Mutual Information and
+Transfer Entropy, which are our true aim.
+Could we use the countmap method for such calculations?
+The answer is no. The problem is that the probabilites of joint events
+decrease as a power of the number of events that we are measuring: the data
+points get diluted in a higher dimensional space. We are seeing
+discrete events that are sampled from a process that has around 1000 symbols.
+They appear to be more or less normaly distributed, with a standard deviation
+of around 12 simbols. So around the central 50 simbols we have 95 percent of all
+events (the 68-95-99 rule of gaussian distributions).
+In a very rough Fermi approximation these symbols could be thought of being
+equiprobable. If we measure the joint probability of two channels,
+the appareance of a certain pair
+of symbols in those ranges is around 1/2500. We have around 2000 samples in
+the example experiment. That means that we are going to observe each pair
+at most once, which makes a very poor statistic indeed.
+If that were not bad enough,
+the central symbols account mostly for the background and thermal noise.
+Those are the more probable pairs of symbols that we are going to see: the
+ones corresponding to spikes are very rare, and to see
+two correlated spikes is going to be an extremely rare event with this
+resulution and number of samples.
+
+
+To ilustrate this, we shall select two exemplary channels and
+determine the joint distribution of their symbols. We select channels from
+the very active CA3 region. Channels labeled $A=[50,28]$ and $B=[60,35]$ have both
+around 40 putative spikes. We shall plot the joint distribution of events,
+$P(X_A, X_B)$ in the figure \ref{histopAB}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{histopAB.png}
+  \end{center}
+  \caption{Frequency of the order pair of values for Channels $A$ and $B$.
+    Both axis are in $\mu V$.  The color indicates the frequency of each pair
+  of values.}
+  \label{histopAB}
+\end{figure}
+
+Most of the values in the plot are zero. Some of them are 1, and the peak of
+the distribution is exactly at zero, with 10 ocurrences of the event $(0,0)$.
+This could be highly disappointing: the only probable correlated occurences are
+just noise. On closer inspection we find some valuers that show possible correlation
+beyond the noise center. The pair of values $(215.5 \mu V, 88.6 \mu V)$ occurs twice.
+This is still very poor but maybe it could point to something. 
 
 \section{Block Entropy}
 
 Another caveat, often overlooked, is that Entropy of an array of symbols is invariant to ordering. One could in principle regard a signal as a sampling of random variables, reorder them, and obtain the same distribution, and thus, the same entropy. As an example, we could take every letter, punctuation mark and space of this paragraph, garble them into nonsense, and claim that they have the same Entropy as the original paragraph, and therefore, the same Information, which is as much nonsense as the random letters. But actually this is done implicitly in a lot of numerical estimations of Entropy.
 
 
-
+1
 \bibliography{./BiblioReportes01}{}
 \bibliographystyle{plain}
 
