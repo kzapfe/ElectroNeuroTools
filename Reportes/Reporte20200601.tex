@@ -267,6 +267,21 @@ As a side effect, it also helps us to reveal numerical artifacts
 on the data. Without a relieable measure of the Probabilites
 we cannot  calculate causality functions, such as Mutual Information and
 Transfer Entropy, which are our true aim.
+Let us recall the definition of the first measure. Let us say that
+$y$ is a result of the random process $Y$ and $x$ of the random
+process $X$ (for simplicity in the notation we shall identify
+the process with its encoding alphabet, and from now on we shall
+restrict ourselves to discrete process). Mutual Information
+between process $Y$ and $X$ is given by \cite{Cover1991}:
+\begin{equation}
+  I(X;Y)=\sum_{x \in X} \sum_{y \in Y} P(x,y) \log \frac{P(x,y)}{P(x)P(y)}
+\end{equation}
+where $P(y,x)$ is the probability of the joint event and the other are
+individual probabilities. Here is where our problem grows in dimensionality.
+These joint probabilities have as domain a cartesian product of the
+separated spaces $X$ and $Y$. If one has $n$ symbols in one, and
+$m$ symbols in the other, the joint space alphabet would have $ n \times m$ 
+symbols.
 Could we use the countmap method for such calculations?
 The answer is no. The problem is that the probabilites of joint events
 decrease as a power of the number of events that we are measuring: the data
@@ -312,12 +327,210 @@ just noise. On closer inspection we find some valuers that show possible correla
 beyond the noise center. The pair of values $(215.5 \mu V, 88.6 \mu V)$ occurs twice.
 This is still very poor but maybe it could point to something. 
 
+
+\section{Symbolization strategies}
+
+The problem with the histograms is that we induce a certain partition of the
+data, and there it is a certain degree of arbitrairness. We have also seen
+that partitions that are too fine would be useless for the higher dimensional
+measures. We shall test some symbolization strategies that do not depend
+on the exact values of the data, as we have also tested that some of these
+values may be unreliable due to measurement artifacts.
+Steuer \emph{et al.} \cite{Steuer2004} used a two symbol system based on
+the finite time derivative of the signal. I shall use the same basic idea
+but with three symbols, using $1$ for increasing signal, $0$ for stationary, and
+$-1$ for decreasing signal.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{entropia2s01.png}
+  \end{subfigure}
+   \begin{subfigure}[b]{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{histo2s01.png}
+  \end{subfigure}
+   \caption{The entropy for 3 symbols over all channels  and its histogram. The later was done using only the putative active channels. No discernible features are visible,
+     except the unusable channels, that have zero entropy. Compare with figure
+     \ref{entrocomp}. }
+   \label{entro2s01}
+\end{figure}
+
+In the figure \ref{entro2s01} we show the results of this symbolization procedure.
+As one can see, there is no range and therefore no contrast between the
+active channels and the inactive ones. This symbolization is not adecuate. The
+noise, which varies rapidly between increasing and decreasing signals, drowns
+out all features of neuronal activity when reduced to such a simple characteristic.
+Steuer \emph{et al.} do not provide clues of the timestep they used, but the caveat
+is there. I propose to extend the alphabet in the following manner.
+Instead of considerin one time step, which is a sampling step of the BrainWave
+BioCAM, we shall use time windows that are of the order of magnitud of physiological
+events, around 1ms. In each window we shall calculate the sums of the signs
+of the differences, that is, sum the signs of the former symbolization. The new symbols
+will be a measure of how much was moving the signal in the positive or negative
+direction, discretized in reasonable amounts. If a window contains mostly noice,
+the sum will be near zero. Otherwise it shall depart notably from zero
+in a window which encompases the polarization or depolarization of a neuron. A window
+may encompass $n$ frames, so the alphabet shall range from $-n$ to $n$, having
+$2n+1$ symbols. We shall choose the $n$ value as the ones which provides the
+higher contrast between entropies, that is, the largest range of entropies between
+active and inactive channels. The largest spread of entropy values ignoring the
+unusable channels appears at $n=8$, which at this sampling rate is a little longer
+than one milisecond. This could be a good symbolic alphabet for obtaining the
+Mutual Information, although it is still quite large with 17 symbols. 
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.85\textwidth]{comparasumaentropias01.png}
+    \end{center}
+  \caption{Comparission of the summed symbol entropies. Each image corresponds
+    to summing over the stated number of symbols on the header.}
+  \label{compsumentro}
+\end{figure}
+
+In the figure  \ref{h8sim} we
+show the distribution of symbols for the sum over 8 frames, ranging from
+$-16$ to $+16$. The distribution seems consistent across channels, having a
+gross normal appearence with richer structure therein.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=3.0in]{histogramas_8simbolos.png}
+  \caption{Histogram for two channels on the putative active Area, coordinates indicated in the legend. Compare with figure \ref{entro2s01}.}
+  \label{h8sim}
+\end{figure}
+
+
 \section{Block Entropy}
 
-Another caveat, often overlooked, is that Entropy of an array of symbols is invariant to ordering. One could in principle regard a signal as a sampling of random variables, reorder them, and obtain the same distribution, and thus, the same entropy. As an example, we could take every letter, punctuation mark and space of this paragraph, garble them into nonsense, and claim that they have the same Entropy as the original paragraph, and therefore, the same Information, which is as much nonsense as the random letters. But actually this is done implicitly in a lot of numerical estimations of Entropy.
+Another caveat, often overlooked, is that Entropy of an array of symbols is invariant to ordering. One could in principle regard a signal as a sampling of random variables, reorder them, and obtain the same distribution, and thus, the same entropy. As an example, we could take every letter, punctuation mark and space of this paragraph, garble them into nonsense, and claim that they have the same Entropy as the original paragraph, and therefore, the same Information, which is as much nonsense as the random letters. But actually this is done implicitly in a lot of numerical estimations of Entropy. In the last section
+I proposed adding the symbols of a certain time window to obtain a richer symbolization,
+and thus describe a larger set of messages. There is more detailed version
+of this approach. The idea is to regard finite succesion of symbols as
+higher order symbols, in a larger alphabet, a vocabulary in some sense. The entropy
+that one obtains calculating $n$ symbol words is called ``n-block Entropy''.
+This measure of entropy does not converge as we take larger words. As we have
+established, Shanon's Entropy grows as the logarythm of the size of the
+alphabet, or in this case, the vocabulary. If the signal is rich in pattens, and
+long enough, many words shall appear. What it is done here is to establish
+an average entropy increasse per new symbol. If Shannon's Entropy for the $n$ block
+vocabulary is denoted $H_n$, the average increase in entropy for each new symbol
+will be:
+\begin{equation}
+    h_n=(H_{n+1}-H_n)    
+\end{equation}
+This quantity converges under normal circumstances, and its limit is called
+the \emph{source entropy}. Unconveniently, it converges very slowly, so in principle
+we shall use very large words to obtain a good approximation. This becomes a
+problem, because we are constrained by the data set length to obtain adecuate
+probabilities in the estimation of this entropy. Let us
+think that the data length is $M$ symbols
+long, and we are trying to establish $n$ word probabilities. It the alphabet
+contians $N$ different symbols, there are $N^n$ possible words. If they were
+equiprobable, in order to detect on average once each word, t
+he next relationship should hold:
+\begin{equation}
+  1 \approx M/(N^n)
+\end{equation}
+that means that to be marginally able to detect an arbitrary $n$ length word,
+$n$ shall be at most:
+\begin{equation}
+  n < \log(M)/\log(N).
+\end{equation}
+or, equivalently, $ n < \log_N (M) $, that is, the logarythm of the length of
+the measured data in the base of the symbol alphabet size. In a concrete case,
+if we have $2000$ data points per channel, and I propose a three symbol
+alphabet, we cannot realiably measure probabilities beyond $n=7$. As a curious
+note, this is very close to the best case in the  ``summed'' symbol that
+I proposed on the last section. The similitude may derive in that
+the summed symbol is a ``compressed encoding'' of the word symbol, and that
+both may cointain similar information, altough on second looks,
+the summed symbol, especially if the range  of the sum is relative large, may
+encode as the same symbol very different signal segments, and the compression
+is not homgeneous. The quantity of words $W_3$ that add up exactly to $m$ using at most
+$n$ symbols choosen from the alphabet $S_3={-1,0,1}$ is
+\begin{equation}
+  W_3=\sum_{j=0}^\nu \frac{n!}{(m-n-2j)!(n+j)!j!}, 
+\end{equation}
+where $\nu$ is the integer part of $(n-)/2$ and represents the pairs of $+1$ and
+$-1$ that add up to zero and don't alter the sum. as an example we can calculate
+how many words are commpresed in the 8 symbols sum for different values of $m$.
+\begin{center}
+  \begin{tabular}{ l | r }
+    $m$ & $W_3$ \\
+    \hline
+    0 & 1107 \\
+    1 & 1016 \\
+    2 & 784 \\
+    3 & 504 \\
+    4 & 266 \\
+    5 & 112 \\
+    6 & 36 \\
+    7 & 8 \\
+    8 & 1 \\
+    \hline
+  \end{tabular}
+\end{center}
+The most extreme case is the $m=0$, where there could be such disimilar symbols
+compresed as the sequence $0,0,0,0,0,0,0,0$, a completely flat signal,
+and the sequence $-1,-1,-1,-1,+1,+1,+1,+1$, which could be a spike! It is interesting
+to note that even so, the entropy thus obtained is concentrated in the
+physiological
+expected areas, namely CA3. After some pondering, it turns out that
+the lossy compression is only effective if we perform the change of dictionary
+( the sum over windows) if we do not make a running window, but a time stepped
+window. The running window does not lose in general the ternary message, because
+after $n$ time steps, we have enough linear equations to recover the
+subyacent signs. Therefore, the succesive messages are not independent. They
+follow a very specific and strict succesion, and that produces higher entropies,
+revealing the structure of the original complex message that is subyacent to the
+encoding. Heuristically, that also could point out to the fact that
+the optimal summing window has 8 time frames, and the best block entropy
+that we can calculate is with 7 time frames.
+
+We should not be to hasty to regard the expanded and detailed vocabulary
+as the best simbolization strategy. As before, excess symbols may actually be a
+hindrance to a good interpretation of the entropy measure. Let us see the
+entropies from 1 to 6 symbols in the figure \ref{entro6symbs}.
+
+\begin{figure}
+  \includegraphics[width=0.8\textwidth]{comparaentrobloc01.png}
+  \caption{Block Entropies for words with three symbols from the
+    set $\{ -1, 0, 1 \}$. 
+  }\label{entro6symbs}
+\end{figure}
+
+A bit to the surprise and dismay of the author, the Block Entropy for this
+data provides less contrast (and therefore less information about the channels)
+than the sum of the symbol entropies. A plausble explanation is that the
+more detailed symbolic set flattens the distribution, making noisy and
+active channels more alike in this encoding. We shall test this numerically
+on the next figure, \ref{histo6simbols}. The histogram looks terribly
+messy and without any ordering, much in contrast with the one in figure
+\ref{h8sim} where a natural ordering seems to be present. Worse yet,
+the comparision with a noisey channel doesn't seem to yield any qualitative
+differences, but a sort of grouping of the probabilites that seem similar
+in both cases, thus indicating that this symbolization is better at
+describing the noise than the physiological signal.
 
 
-1
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{\textwidth}
+  \includegraphics[width=0.8\textwidth]{histo6simbols.png}  
+  \end{subfigure} \\
+  \begin{subfigure}[b]{\textwidth}
+  \includegraphics[width=0.8\textwidth]{histo6simbruido.png}  
+  \end{subfigure} 
+  \caption{Distribution for the 6 symbol words in an active
+    Channel. The labels are ordered numerically from
+    $(-1,-1, -1, -1,-1,-1)$ to $(1,1,1,1,1,1)$. In the above
+    plot the distribution for an active channel is shown. Below we see
+    a graphic for a noisy channel. 
+  }\label{histo6simbols}
+\end{figure}
+
+
+
+
 \bibliography{./BiblioReportes01}{}
 \bibliographystyle{plain}
 
