@@ -24,7 +24,7 @@
 
 
 \title{Entropy, Symbolization and Mutual Information \\
-Teorical-Numerical Quarentine Dissertation}
+Teorical-Numerical Dissertation during the Quarentine}
 \author{ W. P. Karel Zapfe}
 
 \begin{document}
@@ -175,7 +175,7 @@ the signal: is consistent across channels and it minimizes our assumptions. But 
 not generalize to more complex measures, such as Mutual Information or
 Transfer Entropy, as we shall see below.
 
-\subsection{Diggresion: using countmap to discover numerical artifacts on
+\subsection{Digression: using countmap to discover numerical artifacts on
   the data}
 
 When using the countmap method, we obtain a frequency histogram of discrete values.
@@ -185,7 +185,7 @@ minimal resolution of exactly $\Delta V=2.01416015625 \mu V $.
 When plotting the frequency
 of each value we end up with a figure as seen in fig, \ref{histocountmap1}.
 Using a coarser binning to produce the histogram would have made us miss
-this efect, or at least made it more dificult to discover. 
+this effect, or at least made it more difficult to discover. 
 
 \begin{figure}
   \begin{center}
@@ -200,7 +200,7 @@ this efect, or at least made it more dificult to discover.
 The spacing of the suspicious values near the center seems to be
 around $12 \Delta V \approx 25 \mu V$, but other differences appear.
 There seems no sensible way of how to deal with these values, because
-substituting them randomly could alter the statistical propiertes of the
+substituting them randomly could alter the statistical properties of the
 signal. Nevertheless we can ignore them when calculating the Entropy
 by the countmap method, as the other values give a well defined shape
 of the Probability Function. Given that the weird behavior is less
@@ -214,8 +214,8 @@ near the center. A larger range graph is presented on the figure
  \includegraphics[width=0.85\textwidth]{histoconcorazones02.png}   
   \end{center}
  
- \caption{Broader view of the same daa as figure \ref{histocountmap2}.
-   A very suspicios irregularity is seen, but is very dificult to
+ \caption{Broader view of the same data as figure \ref{histocountmap2}.
+   A very suspicious irregularity is seen, but is very difficult to
  quantify it.}
  \label{histocountmap2}   
 \end{figure}
@@ -223,10 +223,10 @@ near the center. A larger range graph is presented on the figure
 In contrast, a histogram would smooth those strange values, making it
 difficult to detect. In the figure \ref{histoscott01} we show the
 effect of using the Scott's Method for the histogram. As can be seen,
-the ``bad values'' are much more dificult to spot, and the
+the ``bad values'' are much more difficult to spot, and the
 histogram looks really weird. Any further method that we apply over such
 probabilistic calculation will have unreliable or false effects. This reveals
-the necesesity to be very very strict with the Histograms that we calculate.
+the necessity to be very very strict with the Histograms that we calculate.
 
 \begin{figure}
   \begin{center}
@@ -249,11 +249,11 @@ the signal?
 \end{figure}
 
 In the figure \ref{trazomarcas01} we can see that the strange values occur often
-at turning points in the data, marking some characteriztic oscillation of the noise.
+at turning points in the data, marking some characteristic oscillation of the noise.
 This is clearly an artifact of the electrodes measuring the potential, as they
 seem more prone to round of to certain values at the moment in which the
-potential changes sign of its temporal derivative. Although a denoizing filter may
-help us to clean those values, I suspect that other artifacts may acumulate and
+potential changes sign of its temporal derivative. Although a denoising filter may
+help us to clean those values, I suspect that other artifacts may accumulate and
 alter the value of the Entropy.
 
 
@@ -261,10 +261,10 @@ alter the value of the Entropy.
 
 We have established that the method of counting the discrete values of
 the measured LFP is the one that gives a trustworthy estimation of the
-probabiliy function. In some sense, it is a good representative
-of the probabilites of the \emph{measured values} of the data.
+probability function. In some sense, it is a good representative
+of the probabilities of the \emph{measured values} of the data.
 As a side effect, it also helps us to reveal numerical artifacts
-on the data. Without a relieable measure of the Probabilites
+on the data. Without a reliable measure of the Probabilities
 we cannot  calculate causality functions, such as Mutual Information and
 Transfer Entropy, which are our true aim.
 Let us recall the definition of the first measure. Let us say that
@@ -278,21 +278,21 @@ between process $Y$ and $X$ is given by \cite{Cover1991}:
 \end{equation}
 where $P(y,x)$ is the probability of the joint event and the other are
 individual probabilities. Here is where our problem grows in dimensionality.
-These joint probabilities have as domain a cartesian product of the
+These joint probabilities have as domain a Cartesian product of the
 separated spaces $X$ and $Y$. If one has $n$ symbols in one, and
 $m$ symbols in the other, the joint space alphabet would have $ n \times m$ 
 symbols.
 Could we use the countmap method for such calculations?
-The answer is no. The problem is that the probabilites of joint events
+The answer is no. The problem is that the probabilities of joint events
 decrease as a power of the number of events that we are measuring: the data
 points get diluted in a higher dimensional space. We are seeing
 discrete events that are sampled from a process that has around 1000 symbols.
-They appear to be more or less normaly distributed, with a standard deviation
-of around 12 simbols. So around the central 50 simbols we have 95 percent of all
-events (the 68-95-99 rule of gaussian distributions).
+They appear to be more or less normally distributed, with a standard deviation
+of around 12 symbols. So around the central 50 symbols we have 95 percent of all
+events (the 68-95-99 rule of Gaussian distributions).
 In a very rough Fermi approximation these symbols could be thought of being
 equiprobable. If we measure the joint probability of two channels,
-the appareance of a certain pair
+the appearance of a certain pair
 of symbols in those ranges is around 1/2500. We have around 2000 samples in
 the example experiment. That means that we are going to observe each pair
 at most once, which makes a very poor statistic indeed.
@@ -301,10 +301,10 @@ the central symbols account mostly for the background and thermal noise.
 Those are the more probable pairs of symbols that we are going to see: the
 ones corresponding to spikes are very rare, and to see
 two correlated spikes is going to be an extremely rare event with this
-resulution and number of samples.
+resolution and number of samples.
 
 
-To ilustrate this, we shall select two exemplary channels and
+To illustrate this, we shall select two exemplary channels and
 determine the joint distribution of their symbols. We select channels from
 the very active CA3 region. Channels labeled $A=[50,28]$ and $B=[60,35]$ have both
 around 40 putative spikes. We shall plot the joint distribution of events,
@@ -321,8 +321,8 @@ $P(X_A, X_B)$ in the figure \ref{histopAB}.
 \end{figure}
 
 Most of the values in the plot are zero. Some of them are 1, and the peak of
-the distribution is exactly at zero, with 10 ocurrences of the event $(0,0)$.
-This could be highly disappointing: the only probable correlated occurences are
+the distribution is exactly at zero, with 10 occurrences of the event $(0,0)$.
+This could be highly disappointing: the only probable correlated occurrences are
 just noise. On closer inspection we find some valuers that show possible correlation
 beyond the noise center. The pair of values $(215.5 \mu V, 88.6 \mu V)$ occurs twice.
 This is still very poor but maybe it could point to something. 
@@ -331,7 +331,7 @@ This is still very poor but maybe it could point to something.
 \section{Symbolization strategies}
 
 The problem with the histograms is that we induce a certain partition of the
-data, and there it is a certain degree of arbitrairness. We have also seen
+data, and there it is a certain degree of arbitrariness. We have also seen
 that partitions that are too fine would be useless for the higher dimensional
 measures. We shall test some symbolization strategies that do not depend
 on the exact values of the data, as we have also tested that some of these
@@ -357,31 +357,31 @@ $-1$ for decreasing signal.
 
 In the figure \ref{entro2s01} we show the results of this symbolization procedure.
 As one can see, there is no range and therefore no contrast between the
-active channels and the inactive ones. This symbolization is not adecuate. The
+active channels and the inactive ones. This symbolization is not adequate. The
 noise, which varies rapidly between increasing and decreasing signals, drowns
 out all features of neuronal activity when reduced to such a simple characteristic.
-Steuer \emph{et al.} do not provide clues of the timestep they used, but the caveat
+Steuer \emph{et al.} do not provide clues of the time step they used, but the caveat
 is there. I propose to extend the alphabet in the following manner.
-Instead of considerin one time step, which is a sampling step of the BrainWave
-BioCAM, we shall use time windows that are of the order of magnitud of physiological
+Instead of considering one time step, which is a sampling step of the BrainWave
+BioCAM, we shall use time windows that are of the order of magnitude of physiological
 events, around 1ms. In each window we shall calculate the sums of the signs
 of the differences, that is, sum the signs of the former symbolization. The new symbols
 will be a measure of how much was moving the signal in the positive or negative
-direction, discretized in reasonable amounts. If a window contains mostly noice,
+direction, discredited in reasonable amounts. If a window contains mostly noise,
 the sum will be near zero. Otherwise it shall depart notably from zero
-in a window which encompases the polarization or depolarization of a neuron. A window
+in a window which encompasses the polarization or depolarization of a neuron. A window
 may encompass $n$ frames, so the alphabet shall range from $-n$ to $n$, having
 $2n+1$ symbols. We shall choose the $n$ value as the ones which provides the
 higher contrast between entropies, that is, the largest range of entropies between
 active and inactive channels. The largest spread of entropy values ignoring the
 unusable channels appears at $n=8$, which at this sampling rate is a little longer
-than one milisecond. This could be a good symbolic alphabet for obtaining the
+than one millisecond. This could be a good symbolic alphabet for obtaining the
 Mutual Information, although it is still quite large with 17 symbols. 
 \begin{figure}
   \begin{center}
     \includegraphics[width=0.85\textwidth]{comparasumaentropias01.png}
     \end{center}
-  \caption{Comparission of the summed symbol entropies. Each image corresponds
+  \caption{Comparison of the summed symbol entropies. Each image corresponds
     to summing over the stated number of symbols on the header.}
   \label{compsumentro}
 \end{figure}
@@ -389,7 +389,7 @@ Mutual Information, although it is still quite large with 17 symbols.
 In the figure  \ref{h8sim} we
 show the distribution of symbols for the sum over 8 frames, ranging from
 $-16$ to $+16$. The distribution seems consistent across channels, having a
-gross normal appearence with richer structure therein.
+gross normal appearance with richer structure therein.
 
 \begin{figure}
   \centering
@@ -404,27 +404,27 @@ gross normal appearence with richer structure therein.
 Another caveat, often overlooked, is that Entropy of an array of symbols is invariant to ordering. One could in principle regard a signal as a sampling of random variables, reorder them, and obtain the same distribution, and thus, the same entropy. As an example, we could take every letter, punctuation mark and space of this paragraph, garble them into nonsense, and claim that they have the same Entropy as the original paragraph, and therefore, the same Information, which is as much nonsense as the random letters. But actually this is done implicitly in a lot of numerical estimations of Entropy. In the last section
 I proposed adding the symbols of a certain time window to obtain a richer symbolization,
 and thus describe a larger set of messages. There is more detailed version
-of this approach. The idea is to regard finite succesion of symbols as
+of this approach. The idea is to regard finite succession of symbols as
 higher order symbols, in a larger alphabet, a vocabulary in some sense. The entropy
 that one obtains calculating $n$ symbol words is called ``n-block Entropy''.
 This measure of entropy does not converge as we take larger words. As we have
-established, Shanon's Entropy grows as the logarythm of the size of the
-alphabet, or in this case, the vocabulary. If the signal is rich in pattens, and
+established, Shannon's Entropy grows as the logarithm of the size of the
+alphabet, or in this case, the vocabulary. If the signal is rich in patterns, and
 long enough, many words shall appear. What it is done here is to establish
-an average entropy increasse per new symbol. If Shannon's Entropy for the $n$ block
+an average entropy increases per new symbol. If Shannon's Entropy for the $n$ block
 vocabulary is denoted $H_n$, the average increase in entropy for each new symbol
 will be:
 \begin{equation}
     h_n=(H_{n+1}-H_n)    
 \end{equation}
 This quantity converges under normal circumstances, and its limit is called
-the \emph{source entropy}. Unconveniently, it converges very slowly, so in principle
+the \emph{source entropy}. Inconveniently, it converges very slowly, so in principle
 we shall use very large words to obtain a good approximation. This becomes a
-problem, because we are constrained by the data set length to obtain adecuate
+problem, because we are constrained by the data set length to obtain adequate
 probabilities in the estimation of this entropy. Let us
 think that the data length is $M$ symbols
 long, and we are trying to establish $n$ word probabilities. It the alphabet
-contians $N$ different symbols, there are $N^n$ possible words. If they were
+contains $N$ different symbols, there are $N^n$ possible words. If they were
 equiprobable, in order to detect on average once each word, t
 he next relationship should hold:
 \begin{equation}
@@ -432,27 +432,27 @@ he next relationship should hold:
 \end{equation}
 that means that to be marginally able to detect an arbitrary $n$ length word,
 $n$ shall be at most:
-\begin{equation}
+\begin{equation}\label{eqequiprob01}
   n < \log(M)/\log(N).
 \end{equation}
-or, equivalently, $ n < \log_N (M) $, that is, the logarythm of the length of
+or, equivalently, $ n < \log_N (M) $, that is, the logarithm of the length of
 the measured data in the base of the symbol alphabet size. In a concrete case,
 if we have $2000$ data points per channel, and I propose a three symbol
-alphabet, we cannot realiably measure probabilities beyond $n=7$. As a curious
+alphabet, we cannot reliably measure probabilities beyond $n=7$. As a curious
 note, this is very close to the best case in the  ``summed'' symbol that
 I proposed on the last section. The similitude may derive in that
 the summed symbol is a ``compressed encoding'' of the word symbol, and that
-both may cointain similar information, altough on second looks,
+both may contain similar information, although on second looks,
 the summed symbol, especially if the range  of the sum is relative large, may
 encode as the same symbol very different signal segments, and the compression
-is not homgeneous. The quantity of words $W_3$ that add up exactly to $m$ using at most
-$n$ symbols choosen from the alphabet $S_3={-1,0,1}$ is
+is not homogeneous. The quantity of words $W_3$ that add up exactly to $m$ using at most
+$n$ symbols chosen from the alphabet $S_3={-1,0,1}$ is
 \begin{equation}
   W_3=\sum_{j=0}^\nu \frac{n!}{(m-n-2j)!(n+j)!j!}, 
 \end{equation}
 where $\nu$ is the integer part of $(n-)/2$ and represents the pairs of $+1$ and
 $-1$ that add up to zero and don't alter the sum. as an example we can calculate
-how many words are commpresed in the 8 symbols sum for different values of $m$.
+how many words are compressed in the 8 symbols sum for different values of $m$.
 \begin{center}
   \begin{tabular}{ l | r }
     $m$ & $W_3$ \\
@@ -469,25 +469,25 @@ how many words are commpresed in the 8 symbols sum for different values of $m$.
     \hline
   \end{tabular}
 \end{center}
-The most extreme case is the $m=0$, where there could be such disimilar symbols
-compresed as the sequence $0,0,0,0,0,0,0,0$, a completely flat signal,
+The most extreme case is the $m=0$, where there could be such dissimilar symbols
+compressed as the sequence $0,0,0,0,0,0,0,0$, a completely flat signal,
 and the sequence $-1,-1,-1,-1,+1,+1,+1,+1$, which could be a spike! It is interesting
 to note that even so, the entropy thus obtained is concentrated in the
 physiological
 expected areas, namely CA3. After some pondering, it turns out that
-the lossy compression is only effective if we perform the change of dictionary
+the lousy compression is only effective if we perform the change of dictionary
 ( the sum over windows) if we do not make a running window, but a time stepped
 window. The running window does not lose in general the ternary message, because
 after $n$ time steps, we have enough linear equations to recover the
-subyacent signs. Therefore, the succesive messages are not independent. They
-follow a very specific and strict succesion, and that produces higher entropies,
-revealing the structure of the original complex message that is subyacent to the
+underlying signs. Therefore, the successive messages are not independent. They
+follow a very specific and strict succession, and that produces higher entropies,
+revealing the structure of the original complex message that is underlying to the
 encoding. Heuristically, that also could point out to the fact that
 the optimal summing window has 8 time frames, and the best block entropy
 that we can calculate is with 7 time frames.
 
 We should not be to hasty to regard the expanded and detailed vocabulary
-as the best simbolization strategy. As before, excess symbols may actually be a
+as the best symbolization strategy. As before, excess symbols may actually be a
 hindrance to a good interpretation of the entropy measure. Let us see the
 entropies from 1 to 6 symbols in the figure \ref{entro6symbs}.
 
@@ -500,19 +500,41 @@ entropies from 1 to 6 symbols in the figure \ref{entro6symbs}.
 
 A bit to the surprise and dismay of the author, the Block Entropy for this
 data provides less contrast (and therefore less information about the channels)
-than the sum of the symbol entropies. A plausble explanation is that the
+than the sum of the symbol entropies. A plausible explanation is that the
 more detailed symbolic set flattens the distribution, making noisy and
 active channels more alike in this encoding. We shall test this numerically
 on the next figure, \ref{histo6simbols}. The histogram looks terribly
 messy and without any ordering, much in contrast with the one in figure
 \ref{h8sim} where a natural ordering seems to be present. Worse yet,
-the comparision with a noisey channel doesn't seem to yield any qualitative
-differences, but a sort of grouping of the probabilites that seem similar
+the comparison with a noisy channel doesn't seem to yield any qualitative
+differences, but a sort of grouping of the probabilities that seem similar
 in both cases, thus indicating that this symbolization is better at
-describing the noise than the physiological signal.
+describing the noise than the physiological signal. This vocabulary of 6
+symbol words is useless for our purposes for another reason: it is much
+more detailed than the actual values of the LFP as given by the machine!
+Remember that the machine would give us approximately around thousand different
+values. The 6 symbol word is an alphabet of in principle $3^6=729$ words,
+too many for the higher dimensional measures. In the actual data only
+around 230 such words appear. This is because after one word only a
+very similar word can appear, the way this encoding works induces
+a certain grammatical rule. It is only after 6 steps that a completely
+different word can appear, and so we can only have at most 333 words
+in this data set. There is then a mistake in the estimation of the longest
+word entropy that we did above. It turns out that in the derivation
+of equation \ref{eqequiprob01} I tacitly equated the quantity of symbols
+and words. The correct estimation is that the number of independent words
+can be at most $M/n$. Then the solution for the length of the
+word, $n$ is:
+\begin{equation}
+  n=\frac{W(M \log N)}{\log N},
+\end{equation}
+where $W(x)$ is Lambert's W function. In our case this gives approximately
+5 symbols long, giving us the possibility of having $2000/5=400$ independent
+words, and $3^5=243$ possible words. This opens the discussion for the next
+subtopic, which is the question of the possible followers for a certain symbol.
+That is called \emph{grammatical rules} in the context of symbolic dynamics.
 
-
-\begin{figure}
+\begin{figure}[h]
   \centering
   \begin{subfigure}[b]{\textwidth}
   \includegraphics[width=0.8\textwidth]{histo6simbols.png}  
@@ -527,6 +549,93 @@ describing the noise than the physiological signal.
     a graphic for a noisy channel. 
   }\label{histo6simbols}
 \end{figure}
+
+\subsection{Grammatical Rules}
+
+In the last section we saw that in a rich enough alphabet or vocabulary,
+not every succession of symbols is allowed.  The encoding is not truly
+ergodic, and this may be an artifact of the encoding or of the
+dynamic process itself. The rules that prohibit certain succession of signs
+are called grammatical rules. If the rules are an artifact of the encoding,
+it may be possible to find a larger symbol set that doesn't need such
+rules. For example, suppose that we use only two symbols, $0$ and $1$,
+and suppose that we are exploring larger and larger blocks of symbols of
+the message source.  If we are seeing  that at four symbols
+the sequence $1,1,1,1$ never appears, then it may be that
+there is a rule preventing the symbol $1$ to follow the
+(composite) symbol $1,1,1$. A better encoding would dispense of the
+symbol altogether, but in such an approach new rules keep on appearing as
+we study larger and larger messages. At the end, we should strive to
+understand why such symbols do not appear.
+
+\section{Mutual Information via summed symbols}
+
+Recalling that Mutual Information of two messages is defined as:
+\begin{equation}
+  I(X;Y)=\sum_{x \in X} \sum_{y \in Y} P(x,y) \log \frac{P(x,y)}{P(x)P(y)},
+\end{equation}
+Mutual Information has many advantages over other correlation measures, such
+as having precise interpretation about what a higher number means,
+in absolute terms \cite{Brenner2000}. The propossed symbolization makes the
+coarse graining thick enough that the joint probabilities ocurr with discernible
+frequency. For a test, we pick a channel well situated in the CA3 Area (Channel
+number [28,54]) and
+plot its M.I. against all other active channels. The result appears
+in the figure \ref{exMI1}.
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[width=1\textwidth]{mutualinfoexample01.png}  
+  \end{subfigure}
+  ~
+   \begin{subfigure}[b]{0.45\textwidth}
+  \includegraphics[width=1\textwidth]{mutualinfoexample02.png}  
+  \end{subfigure}
+   \caption{Mutual Information with respect to channel [28,54]. In the
+     left figure, the color scale is adjusted to the M.I. value, while on
+     the right one is colored according to its \emph{ordering}. This exagerates
+     the contrast and makes it apparent the prescence of strata that have a
+   higher degree of M.I. than their neighbours. }
+  \label{exMI1}
+\end{figure}
+The figure shows interesting features. The closer channels show high degree
+of mutual information. That is to be expected, given that in a strong
+signal a lot gets recorded by many neighbouring electrodes. But the spread
+of the higher entropies does not follow a circular pattern but an oblong one,
+that sits where the stratum pyramidale is. And much more peculiar is the
+fact that we have a second, smaller spot of values above 0.15 that are
+sepparated from the first one and seem to be more or less parallel to these.
+This is a sign of higher mutual information that is not neighbouring. It could
+point to such sensitivity on the electrodes, that we are seeing the
+changes in potential produced almost simultaneously on different parts
+of the same cell, in their dendritic structures, far from the firing soma.
+Or it could be somethin else. We shall compare with other channels as
+centers of the M.I. in the figure \ref{variasMI}.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{comparami01.png}
+  \caption{A comparision of various Mutual Information with
+    respect to some pivot channel, indicated by a black circle. It is
+    interesenting to note that channels near CA3 str. pyr. show a higher degree
+    of shared information with the rest of the structure
+    than other nearby channels.}
+   \label{variasMI}
+\end{figure}
+We can see on the last figure that there are highly correlated channels ( in the
+sense of M.I.) within a particular patch that appears to be the stratum pyramidale of
+CA3, and a second patch that is around the stratum lucidum. They also have an
+above average M.I. with the rest of the active channels. It is important to notice
+that \emph{ this is still not a causality test}. We have only tested the mutual
+information taking all the messages as \emph{simultaneous sources}. The shared
+information in this case should not be interpreted as ``message from source
+A preforms a part of message from source B'', but as if both source A and B originate
+from a third, predating cause. In the next section we shall test the M.I.
+measure with a time delay, but for now let us explore this part a little more.
+
+We shall next test which are the channels that on average have
+the higher M.I. with the rest of the active channels. We plot the result in
+the figure bla bla.
+
 
 
 

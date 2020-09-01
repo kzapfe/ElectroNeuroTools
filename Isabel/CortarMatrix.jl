@@ -10,7 +10,9 @@ using HDF5
 arxname=ARGS[1]
 
 #memoria usada
-pmem = filesize(arxname)/Sys.total_memory()
+ramsiz=Sys.total_memory()
+pmem = filesize(arxname)/ramsiz
+
 
 #000000000000 Funciones chidas
 
@@ -61,8 +63,9 @@ function cortayguarda(filenombre::String, pmem=0.125)
     nch=size(chans, 1)
     nframes=Int(M/nch)
     
-    
-    ncachos=max(ceil(Int, 1/(1-pmem)), 8) # al menos partela en 4
+
+    nrams=ceil(Int, filesize(filenombre)*8/Sys.total_memory())  
+    ncachos=max(nrams, 8) # al menos partela en 4
     fcacho=floor(Int, nframes/ncachos) # frames por cacho dara un poco menos que el total.
         
     paso=nch*fcacho #cuantos datos tiene cada cacho.

@@ -8,9 +8,20 @@ module TrayectoriasAux
 
 using Statistics
 
-export reducecatenario, AntesQue, DespuesQue, distprom
+export reducecatenario, AntesQue, DespuesQue, distprom,
+    dist, set2dict
 
 dist(x1,y1,x2,y2)=sqrt((x1-x2)^2+(y1-y2)^2)
+
+function set2dict(xx::Set)
+    j=1
+    result=Dict{Integer, Any}()
+    for x in xx
+        result[j]=x
+        j+=1
+    end
+    return result
+end
 
 function reducecatenario(Catenario::Dict;
                          gordmin=25,minlong=7,maxlong=100, distmin=0)
@@ -46,8 +57,8 @@ function cortacatenarios(Catenario::Dict; nini,nfin)
         if length(paux) != 0
             result[k]=paux
         end
-        
-    end
+         
+   end
 
     return result
 end
@@ -94,6 +105,11 @@ function distprom(Catenario::Dict)
         result[k]=d
     end
     return result
+end
+
+function distprom(Catenario::Set)
+    aux=set2dict(Catenario)
+    distprom(aux)
 end
 
 end # module

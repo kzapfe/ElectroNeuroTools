@@ -48,11 +48,9 @@ function ComponentesSP(DatosSignados::Array)
             y=pop!(listaprofundeza)
             for v in vecindad8(y)
                 if in(v, lista)
-                    
-                    
                     deleteat!(lista, indexin(Any[v], lista))
                     push!(listaprofundeza, v) 
-                   profundidad+=1
+                    profundidad+=1
                     push!(componentecurlab, v)
                 end
             end
