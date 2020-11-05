@@ -18,6 +18,18 @@ end
 
 
 
+function TiraOrillas(Puntos::Set)
+    #Descarta lo que se sale de la malla de electrodos
+    result=Set([])
+    for p in Puntos
+        if !(p[1]==0 || p[2]==0 || p[1]==65 ||  p[2]==65)
+            push!(result,p)
+           # println("Añadiendo ", p, " al result") 
+        end
+    end
+    return result
+end
+
 
 function vecindad8(punto::Array)
     # La ocho-vecindad de un punto en una malla cuadrada.
@@ -32,6 +44,7 @@ function vecindad8(punto::Array)
     push!(result, [j+1,k-1])
     push!(result, [j+1,k])
     push!(result, [j+1,k+1])
+    result=TiraOrillas(result)
     return result
 end
 
@@ -50,18 +63,6 @@ function promediasobreconjunto(puntos::Set, datos::Array)
     return result
 end
 
-
-function TiraOrillas(Puntos::Set)
-    #Descarta las orillas de la malla de electrodos
-    result=Set([])
-    for p in Puntos
-        if !(p[1]==0 || p[2]==0 || p[1]==65 ||  p[2]==65)
-            push!(result,p)
-           # println("Añadiendo ", p, " al result") 
-        end
-    end
-    return result
-end
 
 
 
