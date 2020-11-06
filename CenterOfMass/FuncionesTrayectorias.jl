@@ -40,7 +40,7 @@ end
 
 
 
-function encuentraTrayectorias(Datos, mincadena=20, desde=1,hasta=20)
+function encuentraTrayectorias(Datos, mincadena=20)
 # Encuentra las trayectorias putativas siguiendo la distancia euclediana
 
     
