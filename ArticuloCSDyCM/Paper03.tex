@@ -49,7 +49,7 @@ Electro-physiological recordings usually consist of
  series of traces, each one corresponding to a sampling
 electrode on the tissue. Causality tests are made between the
 signals in search for effective connections. 
-As Micro Electrode Arrays (MEAs) become denser,the data saturates itself
+As Micro Electrode Arrays (Maws) become denser,the data saturates itself
 and the discovery of patterns becomes a difficult task.
 Testing for combination of signals in large numbers
 brings ``combinatorial explosion'' into
@@ -62,7 +62,7 @@ are available now, most derived from the application of blind source
 separation analysis, such as ICA.
 In this paper we present a method that aims rather to integrate
 the signals into functional components that
-have physiologicall interpretation.
+have physiological interpretation.
 This is a technique for tracing out
 ``functional local connectivity'', which would bring independent information
 that is complementary to Blind Source Separation.
@@ -116,14 +116,14 @@ a inter-electrode distance of the order of magnitude of a typical pyramidal soma
 After acquiring data from experiment, we pass the data through some Prepossessing
 routines. These serve to detect and discard unusable channels,
 such as saturated or failing electrodes. The
-set of failling electrodes varies from data set to data set,
+set of failing electrodes varies from data set to data set,
 as they can be produced by bubbles or by saturation after electrical stimulation
 or any other cause. 
 We call this step the elimination of bad channels. We use a simple criterion for this:
 if the absolute value of the signal is above certain threshold (which must be
 adjusted for evoked vs spontaneous activity, but
 is of the order of \muV{1000}) or if the standard deviation is
-larger than a two times the averague r.m.s.  of the normal noise,
+larger than a two times the average r.m.s.  of the normal noise,
 the channel is discarded.
 
 
@@ -244,7 +244,7 @@ saturated electrodes are over the r.o.i.
 It is important to mention that our data has noise up to 0.1 of the mean magnitude of the
 signal, which means that regularization of the matrix $K$ is unavoidable (see section 4.1 in \cite{Potworowski2011} and references therein). We used a regularization parameter $\lambda=0.001 |e_{max}|$, where $e_{max}$ is the principal eigenvalue of $K$. 
 
-The attainment of $K$ and $\tilde{K}$ turns out to be computer-costly for high density MEAs, but paraletization, specially on GPUs, solves this issue.
+The attainment of $K$ and $\tilde{K}$ turns out to be computer-costly for high density MEAs, but parallelization, specially on GPUs, solves this issue.
 
 
 \subsection{CSD as weight density for vectors}
@@ -281,7 +281,7 @@ set as an independent entity and calculate the center of mass for each one. Noti
 he possibility of having a concave subset with a CM that lies outside. But, as we shall see,
 as the electrode resolution is finite, the possibility of having highly non compact shapes is unlikely, and they
 tend to have a CM inside or near their borders. In the figure \ref{disconnectedsets}
-\texxtbf{B} we show this with experimental
+\textbf{B} we show this with experimental
 data (we are using evoked activity data, as explained in section \ref{sec:evocada}). In graph
 \textbf{Bi} we
 separate the CSD data into the sink and sources set. We take sinks as example. In the graph
@@ -297,7 +297,7 @@ seen). Each CM gets listed as a probable step in a trajectory.
 \begin{figure}[H]
   \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.9\textwidth]{Figuras/explicadisconected.pdf}
-  \caption[tu abuela]{
+  \caption[test]{
    %& \begingroup
     %  \fontfamily{ppl}\selectfont
     \begin{intension}
@@ -455,7 +455,7 @@ should is due and is beyond the scope of this work.
    it is better to discard the data. 
  \item Separate the CSD data into three sets: sources, sinks, and neutral.
    Again, sensible criteria have to be defined.
-   A rule of thumb would be to use the mean of the peaks of the noise  of the recording as the amplitude for the ``thick neutral'' range of values. 
+   A rule of thumb would be to use the mean of the peaks of the noise  of the recording as the amplitude for the ``neutral'' range of values. 
 \item Perform disconnected component analysis in the sources and sinks sets, frame by frame.
   A single pass algorithm here is  adequate \cite{Vincent91, Abubaker07}.
 \item  Obtain the CM for each component, using eq. \ref{cmparadisj}. Discard
@@ -535,7 +535,7 @@ the Sink and Sources sets. Then we proceed as stated in the previous section.
 
 The figure \ref{lfpcsdcm}  compares the representation of the activity in
 the LFP, CSD and CM spaces. The CSD
-representation provides better spatial localization of active sites, but the
+representation provides better spatial localization of active sites, and the
 CM serves as better dynamical tracker. The figure illustrates
 that point by choosing the time interval of response in CA3 after the stimulus.
 CM representation permits us to track the activity with less
@@ -558,13 +558,14 @@ to it. We have been very thorough with this example as it will help us
 to understand the more complicated data that shall be presented in
 the next examples. 
 
-The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate inconsistencies in the network below. 
+The evoked activity seems to yield much cleaner results, as we can now compare the trajectories of successive, very similar events. Our CSD and CM analysis can be used to detect consistent features in these experiments, such as the direction the waxing and waning of activity. Small deviations from the trajectory in successive experiments that are above the numerical error could indicate changes in response from
+the underlying network. 
 
 
 \begin{figure}[H]
   \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.9\textwidth]{Figuras/lfpevocado01.pdf}
-  \caption[tu abuela]{
+  \caption[test]{
     \begin{intension}
       Aquí mostramos como se ve el registro crudo del potencial
       en un evento evocado. Tenmos los primeros recuadros super
@@ -613,7 +614,7 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
       scale as fig. \ref{lfpevocada}. The GD and CA3 structures appear as red stains,
       their general shape recognizable. In subfigure \ref{fig:lfpraw}
       the raw traces of the selected electrodes are shown, and in \ref{fig:csd} the
-      csd traces come along for comparision. In this last subfigure the
+      csd traces come along for comparison. In this last subfigure the
       vertical scale is in arbitrary units. }
   \label{trazselectevo}
 \end{figure}
@@ -650,7 +651,7 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
    \includegraphics[width=0.7\textwidth]{Figuras/lfpcsdcm_sub_evocada3R7.pdf}
-   \caption[tu abuela]{
+   \caption[test]{
      \begin{intension}
        Misma intensión general que la figura anterior pero en un
        recuadro específico. La idea es mostrar claramente los componentes
@@ -708,7 +709,7 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
  \includegraphics[width=0.7\textwidth]{./Figuras/trayevocadasub.pdf}
- \caption[tu abuela]{
+ \caption[test]{
    \begin{intension}
      Primera muestra de trayectorias. Escogemos sólo la parte
      respondiente del potencial evocado, para claridad. Se debe
@@ -729,9 +730,10 @@ The evoked activity seems to yield much cleaner results, as we can now compare t
 
 \subsection{Application to facilitated activity through injury}
 
-The facilitated activity through a small injury produces very clean
-and ordered activity in the CA layers, as measured by the CM analysis.
-The results can be seen in the figures
+A very small transversal cut of the enthorrinal cortex produces
+a higher level of activity in the stratyum pyramidale. We call
+this ``facilitated activity''. This activity shows bursts that
+are very clean in the CSD representation.
 \ref{diagfaci}, \ref{lfpcsdcmfaci}, \ref{facitracks} and
 \ref{facitracktodas}.
 A previous diagram is on the figure \ref{diagfaci}, and some
@@ -741,7 +743,7 @@ exemplary traces in the figure \ref{trazfaci}.
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.7\textwidth]{Figuras/diagfacilitada.pdf}
-  \caption[tu abuela]{
+  \caption[test]{
   \begin{intension}
     Mostrar un diagrama de los estratos importantes. Se puede incorporar
     a otra figura.
@@ -786,7 +788,7 @@ exemplary traces in the figure \ref{trazfaci}.
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
 \includegraphics[width=0.7\textwidth]{Figuras/lfpcsdcm_facilitada.pdf}
-\caption[tu abuela]{
+\caption[test]{
   \begin{intension}
     Intensión similar a la figura \ref{lfpcsdcmsub}, pero
     usando el área de registro completa. Se muestra la diversidad
@@ -807,7 +809,7 @@ exemplary traces in the figure \ref{trazfaci}.
 \begin{figure}[H]
   \captionsetup{singlelinecheck=off}
   \includegraphics[width=0.7\textwidth]{./Figuras/trayfaciljuntas.pdf}
-\caption[tu abuela]{
+\caption[test]{
   \begin{intension}
     Imagen de área de registro completo mostranto las trayectorias.
     Después de la figura \ref{evotracks}, esta figura muestra
@@ -824,7 +826,7 @@ exemplary traces in the figure \ref{trazfaci}.
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
  \includegraphics[width=0.7\textwidth]{./Figuras/traytodasfacilitada.png}
- \caption[tu abuela]{
+ \caption[test]{
    \begin{intension}
      Remate de la figura \ref{facitracks}. En la ampliación es mucho más fácil
      discernir diferentes tipos de trayectorias. En CA3 corren a lo largo
@@ -850,14 +852,14 @@ robustness of our method.
 The necessity of having a good error value for the inactive set was more apparent here
 than in the other cases. Also, the most striking features of the propagation of activity,
 coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole
-CA structure. A sample of the raw data in $\muV{}$ can be seen in the figure \ref{lfpycsd4ap}. In the figure \ref{traz4ap} some exemplarly traces
+CA structure. A sample of the raw data in $\muV{}$ can be seen in the figure \ref{lfpycsd4ap}. In the figure \ref{traz4ap} some exemplary traces
 can be seen.
 Five key moments in the epileptic burst have been selected, one just before the onset of the attack, the next one at the peak and one  following it, and the last at the subsiding moments. The figure compares the Raw data
 in $\muV{}$ in the first row, then the raw CSD representation in the second row, and
 in the third raw a CSD after a Gaussian Blur Filter has been applied,
 with a $\sigma$ value of $ \mum{42}$. After the Gaussian Blur acts a sort of
 spatial denoising mechanism, the disjoint components are apparent to the eye.
-In the figure \ref{csdfrontera} we apply the border criterion for the disconnected
+In the figure \ref{csdfrontera} we separate the disjoint
 components. Again, in the first row we have the CSD without the Gaussian Blur.
 Even though well localized patches of activity are to be seen over the
 stratum pyramidale, large parts of the activity remain hidden by the noise.
@@ -880,7 +882,7 @@ area of CA1.
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.9\textwidth]{./Figuras/LFPvsCSD_4AP.pdf}
-  \caption[tu abuela]
+  \caption[test]
   { \begin{intension}
       En esta figura muestro LFP contra CSD con ruido espacial y
       sin ruido espacial. Esta vez estoy probando ordenar por
@@ -934,7 +936,7 @@ area of CA1.
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.9\textwidth]{./Figuras/Fronteras2sigma.pdf}
-  \caption[tu abuela]
+  \caption[test]
     {
       \begin{intension}
         Una vez más enfatizamos la importancia del filtro gaussiano.
@@ -959,7 +961,7 @@ area of CA1.
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.9\textwidth]{./Figuras/SeqTray4AP01.pdf}
-  \caption[tu abuela]{
+  \caption[test]{
     \begin{intension}
       Partiendo del renglón inferior de la figura \ref{csdfrontera}
       mostramos la aparición y sucesión de trayectorias bien definidas
@@ -992,7 +994,7 @@ disconnected sets unfeasible.
 \begin{figure}[H]
  \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.7\textwidth]{Figuras/lfpestriado.pdf}
-  \caption[tu abuela]{
+  \caption[test]{
     \begin{intension}
       Esta figura contrasta mucho con la figura \ref{lfpevocada}.
       Bajo la misma representación, tenemos muy claro que no hay
@@ -1006,35 +1008,35 @@ disconnected sets unfeasible.
 \end{figure}
 
 
-\begin{figure}[H]
-   \centering
-    \begin{subfigure}[b]{0.55\textwidth}
-        \includegraphics[width=\textwidth]{Figuras/mapestriado_1004AP.pdf}
-        \caption{A Frame}
-        \label{maptraz:map}
-    \end{subfigure}
+%\begin{figure}[H]
+%   \centering
+%    \begin{subfigure}[b]{0.55\textwidth}
+%        \includegraphics[width=\textwidth]{Figuras/mapestriado_1004AP.pdf}
+%        \caption{A Frame}
+%        \label{maptraz:map}
+%    \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.35\textwidth}
-        \includegraphics[width=\textwidth]{Figuras/trazosestriado_1004AP.pdf}
-        \caption{Traces}
-        \label{maptraz:traz}
-    \end{subfigure}
-    \caption{
-      \begin{intension}
-        Mostramos aquí unos trazos ejemplares para asegurarnos de la
-        calidad del experimento.
-      \end{intension}
-      Selected Traces of the Stratial Tissue. A frame such as the ones
-      in figure \ref{cuadestriado} shows the location of the selected electrodes,
-    which where algorhytmically chosen.}
+%    \begin{subfigure}[b]{0.35\textwidth}
+%        \includegraphics[width=\textwidth]{Figuras/trazosestriado_1004AP.pdf}
+%        \caption{Traces}
+%        \label{maptraz:traz}
+%    \end{subfigure}
+%    \caption{
+%      \begin{intension}
+%        Mostramos aquí unos trazos ejemplares para asegurarnos de la
+%        calidad del experimento.
+%      \end{intension}
+%      Selected Traces of the Stratial Tissue. A frame such as the ones
+%      in figure \ref{cuadestriado} shows the location of the selected electrodes,
+%    which where algorhytmically chosen.}
   
-\end{figure}
+% \end{figure}
 
 \begin{figure}[H]
    \captionsetup{singlelinecheck=off} 
   \includegraphics[width=0.7\textwidth]{Figuras/traytodasestriado.pdf}
-  \caption[tu abuela]{
+  \caption[test]{
     \begin{intension}
       Una muestra clara de que el tejido estriado no
       permite la búsqueda de trayectorias definidas. A pesar
@@ -1045,6 +1047,54 @@ disconnected sets unfeasible.
     After 30 seconds of recording, no visible trajectories can be found. The minimum displacement criteria is not full-filed for most of the putative centers of mass. Only a small set of trajectories is seen on the lower corner and these seem to correspond to an artifact due to a bubble in the recording. }
   
 \end{figure}
+
+
+\section{Conclusions}
+
+We have presented here a numerical tool that can help neurophysiologist in
+discovering functional connections in structured tissue. In a previous work
+we have shown an example with interpretation \cite{Franco2018}.
+In this technical report we have shown in detail the process and ideas
+that support it but without much physiological interpretation.
+The main idea is to be able to track reliably and somewhat easily
+the succession of active sites in the neuronal tissue. It may be that the best
+examples are those that have epileptic bursts or some
+sort of induced excess activity. In tissue that is highly homogeneous,
+or unstructured, this technique is useless. Also, if the activity is
+subtle, or shows very reduced local correlation, as opposed to long
+range spatial correlations, the analysis may prove not very useful.
+The sink and sources trajectories has to be made by the activation
+of neighbouring units to make sense. The plausible explanation for these
+active neighbours would be that they correspond to the same processing
+circuitry, and thus, the trajectory would reveal its existence and
+possible some of the simplified pathways that it contains.
+It is pertain to remind that those trajectories are not
+connections themselves. They are indicators of highly correlated
+activity as measured from the outside of the cells. This correlation is
+both temporal, spatial, and causal, so it is a good indicator
+of possible physiological connection, but it doesn't say of what type it
+is or if it direct or indirect.
+
+We may point out some possible uses for this analysis.
+If somewhat less noisy electrodes are developed, and their density
+increases by a factor of two or four, a very precise mapping of the
+trajectories, in conjunction with an ICA, would reveal active
+cells that form part of the same functional circuitry. Different
+kinds of connections could be revealed by using some blocking
+or stimulating drugs, and comparing trajectories.
+
+I would very much suggest a similar analysis done on
+the visual cortex by exposition to visual imaginary
+that has softly moving stimulus.
+
+Three Dimensional MEAS are becoming also a reality.
+In structured tissue, this kind
+of analysis would be very revealing, if the electrodes
+are dense enough, we may be able to trace the different units at
+different strata stimulated by a single axon.
+
+
+
 
 \bibliographystyle{abstract}
 \bibliography{../Reportes/BiblioReportes01} 
