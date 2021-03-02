@@ -1,19 +1,13 @@
 \documentclass[utf8]{frontiersSCNS} 
 
-
-
-
 %\setcitestyle{square} % for Physics and Applied Mathematics and Statistics articles
 \usepackage{url,hyperref,lineno,microtype,subcaption}
 \usepackage[onehalfspacing]{setspace}
-
-\linenumbers
-
-
-\usepackage{siunitx}% para unidades chidas como micrometros.
-
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{siunitx}% para unidades chidas como micrometros.
+
+\linenumbers
 
 % \doublespacing
 % \linenumbers
@@ -25,8 +19,6 @@
 
 \newenvironment{intension}{\fontfamily{phv}\selectfont}{\par}
 
-
-
 \def\keyFont{\fontsize{8}{11}\helveticabold }
 \def\firstAuthorLast{W.P.K. Zapfe {et~al.}} %use et al only if is more than 1 author
 \def\Authors{Wilhelm Pablo Karel Zapfe\,$^{1,*}$, Franco Ortiz\,$^{2}$ and Rafael Gutierrez\,$^{1}$}
@@ -37,17 +29,12 @@ $^{2}$Laboratory X, Institute X, Department X, Organization X, City X , State XX
 \def\corrEmail{kzapfe@cinvestav.mx}
 
 
-
-
-
 \begin{document}
 \onecolumn
 \firstpage{1}
 
-
 \title[CSD+CM]{Disjoint components and trayectory detection in CSD representation
 for electrophysiological recordings}
-
 
 \author[\firstAuthorLast ]{\Authors} %This field will be automatically populated
 \address{} %This field will be automatically populated
@@ -57,21 +44,18 @@ for electrophysiological recordings}
 
 \maketitle
 
-
 \begin{abstract}
 
-
 \section{}
-CSD representation of the extracellular measurements of neuronal tissue lends itself
-to an analysis of the propagation of activity. The CSD sepparates action into two
-different parts, namely Sinks and Sources of ionic charges on the extracelluar medium.
-This differentation provides the mean to sepparate disjoint locus of activity
+CSD representation of the extracellular electrophysiological activity of neuronal tissue lends itself
+to an analysis of the propagation of activity. The CSD sepparates ionic urrents into sinks and sources on the extracelluar medium.
+This differentation provides the means to separate disjoint loci of activity
 and track them sepparatelly. The local effective connections would be the
-main causes for this continous spread of action. By obtaining the vectoral
-average of an area regardes as sink or source we obtain a putative center of
+main causes for this continous spread of activity. By obtaining the vectorial
+average of an area regarded as sink or source, we obtain a putative center of
 action. The succesive centers would reveal the inmediate nearby correlated
 units that inherit or otherwise are triggered by this activity. For
-structured tissue, this provides a clean mean to infer effective excitatory
+structured tissue, this provides a clean means to infer effective excitatory
 connections.
 
 \tiny
@@ -79,16 +63,15 @@ connections.
 \end{abstract}
 
 
-
 \section{Introduction}
 
-Tracking the propagation of activity in neural tissue poses challenging
+Tracking the propagation of electrical activity in neural tissue poses challenging
 problems. 
-Electro-physiological recordings usually consist of 
- series of traces, each one corresponding to a sampling
+Micro Electrode Arrays (MEA) electrophysiological recordings usually consist of 
+a series of traces, each one corresponding to a sampling
 electrode on the tissue. Causality tests are made between the
 signals in search for effective connections. 
-As Micro Electrode Arrays (Maws) become denser,the data saturates itself
+As MEAs become denser,the data saturates itself
 and the discovery of patterns becomes a difficult task.
 Testing for combination of signals in large numbers
 brings ``combinatorial explosion'' into
@@ -107,7 +90,7 @@ This is a technique for tracing out
 that is complementary to Blind Source Separation.
 Our  method would be applicable mostly to
 activity in highly structured neural tissue. We shall exemplify it by
-the data obtained from recordings of the rats hippocampus,
+the data obtained from recordings of the rat's hippocampus,
 taking advantage of its highly stratified  structure. 
 
 Local field potential (LFP)
@@ -125,10 +108,10 @@ how to define and acquire the putative paths is an open question.
 
 In previous works some form of vector averaging has been proposed and shown to reveal some trajectories drawn by the activity. We shall call such methods Center of Mass Analyses (CMA).  The ``weights'' that have been chosen for obtaining the average have been selected on heuristic grounds. In the works of Chao \emph{et al.} \citep{Chao05, Chao07}, the density of spikes in a certain time interval was used, a sort of ``averaged density of action'', while Manjarrez \emph{et al.} \citep{Manjarrez07, Manjarrez09} used the positive half of the LFP recording as their weight. 
 Here we advance on such methods by incorporating mathematically sound definitions and concepts which allow us to rigorously separate spatially distinct traces. Our weight is actually the natural density function provided by the data: the Current Source Density. This representation not only provides a mathematical rigorous  measure for the weights in the vector averaging process, but helps to separate the data into disjoint sets and disconnected components.
-This allows us to track separate process in the same region of interest
+This allows us to track separate processes in the same region of interest
 (r.o.i.) by following separately the distinct poles of action: influx and
-efflux of charged ions, which correspond to two distinct phases of the
-neuronal activity: depolarization and repolarization. 
+efflux of charged ions, which normally correspond to two distinct phases of the
+neuronal activity: depolarization and repolarization, respectively. 
 
 The application of the method requires electro-physiological data acquired
 through bi-dimensional MEAs, although the extension to three dimensional arrays
@@ -136,14 +119,12 @@ is straightforward.
 The MEA should have dense enough spatial and temporal samplings,
 so as to obtain good estimates of the CSD and their changes in time.
 
-Our method permits us to map possible trajectories of activity inside structured neuronal tissue, without requiring ad hoc geometric constraints. As a prime example, non-convex structures which may show simultaneous activity in separate parts could show the robustness of our method. We have tested the method on slices of rat's hippocampus, concentrating in the CA3 region. We exemplify the usage of the method with data that has been obtained on experiments on rat's hippocampal slices that are centered on the GD and CA
-regions. The slices are put over an array of 64 by 64 electrodes
+Our method permits us to map possible trajectories of activity inside structured neuronal tissue, without requiring ad hoc geometric constraints. As a prime example, non-convex structures which may show simultaneous activity in separate parts could show the robustness of our method. We have tested the method on slices of rat's hippocampus, focusing on the CA3 region. The slices are put over an array of 64 by 64 electrodes
 (BioCAM 4096 by 3Brain \citep{BioCam}),
 and data is recorded at sampling rates between 7 and 14 kHz. The richness of the
 data is an exemplary use case for our method. A certain amount of down-scaling would be 
 possible, but the array of electrodes should be at least 2 dimensional and
-a inter-electrode distance of the order of magnitude of a typical pyramidal soma
-(around \mum{100} at most). 
+have an inter-electrode distance of the order of magnitude of a typical pyramidal cell's diameter, \mum{100} in the more extreme situation. 
 
 
 
@@ -152,14 +133,12 @@ a inter-electrode distance of the order of magnitude of a typical pyramidal soma
 
 \subsection{Prepossessing}
 
-After acquiring data from experiment, we pass the data through some Prepossessing
-routines. These serve to detect and discard unusable channels,
+After data acquisition, we preprocess the data to detect and discard unusable channels,
 such as saturated or failing electrodes. The
-set of failing electrodes varies from data set to data set,
-as they can be produced by bubbles or by saturation after electrical stimulation
-or any other cause. 
-We call this step the elimination of bad channels. We use a simple criterion for this:
-if the absolute value of the signal is above certain threshold (which must be
+number of failing electrodes varies from data set to data set,
+as air bubbles can interrupt the contact between the tissue and the electrode or the electrode's signal may become saturated 
+after electrical stimulation. (Aquí no quieres porner "any other cause" porque los referees pueden pensar que no llevas un buen control de tus experimentos) 
+If the absolute value of the signal is above certain threshold (which must be
 adjusted for evoked vs spontaneous activity, but
 is of the order of \muV{1000}) or if the standard deviation is
 larger than a two times the average r.m.s.  of the normal noise,
@@ -181,7 +160,7 @@ We have used kCSDA where
 the difference method is not applicable. The results are
 independent of the method except for a multiplicative factor.
 As there is still another unknown constant factor
-(the resistivity of the medium) this is irrelevant.
+(the resistivity of the medium), this is irrelevant.
 Therefore, all of the CSD results are presented in arbitrary units.
 
 Thanks to the density and scales of the BioCAM 4096,
@@ -189,7 +168,7 @@ the numerical finite difference method
 produces an excellent approximation to the CSD,
 if the number of failing channels is low or
 they are outside the r.o.i.
-In most examples the number  of unusable channels is in the tens.
+In most examples the number of unusable channels is in the tens.
 A  numerical Laplacian Operator which reduces the cross effect of
 rectangular grids is the convolution of the data with the following
 matrix \citep{Lindberg90}:
@@ -312,7 +291,7 @@ A first visual inspection of the CSD color map at a given instant in time shows 
 cross lengths around \mum{150}. .
 These appear to correspond to the expected poles of firing neurons in structured tissue \citep{Buzsaki2012} and inspired us to separate the sink and source  sets into their \emph{disconnected components}. This concept is used in mathematics to denote subsets of a given geometric set that do not touch each other  \citep{Halmos}. Their rough correspondence to poles of firing neurons is most useful in tracking the successive locus of the activity.
 
-To clarify the concept and how we are we using it an example is in order. In figure \ref{disconnectedsets} \textbf{A} we show geometrical sets enclosed by simple curves as color patches, where every color indicates a Set. The set $A$ consists of a single connected component, that means that one can make  path between any two points in the set that consist entirely of points of the same set. In contrast, the set $B$ is made of two disconnected components, labeled $B1$ and $B2$. If one chooses a point in each of the components, one cannot draw a path joining them without leaving the set. But each one of those components is connected, meaning that if we choose the pair of points in one component, then again we can trace a path joining them in the set. So the set $B$ consists of two disconnected components, but each component can be regarded as a connected set on their own. Likewise the set $C$ is made of three disconnected components. In the subfigure \ref{disconnectedsets} \textbf{Aiii} we show the center of mass of the sets. The set $A$ is concave, so, it can have a center of mass outside the set. The
+To clarify the concept and how we are using it, an example is necessary. In figure \ref{disconnectedsets} \textbf{A} we show geometrical sets enclosed by simple curves as color patches, where every color indicates a set. The set $A$ consists of a single connected component, that means that one can make  path between any two points in the set that consist entirely of points of the same set. In contrast, the set $B$ is made of two disconnected components, labeled $B1$ and $B2$. If one chooses a point in each of the components, one cannot draw a path joining them without leaving the set. But each one of those components is connected, meaning that if we choose the pair of points in one component, then again we can trace a path joining them in the set. So the set $B$ consists of two disconnected components, but each component can be regarded as a connected set on their own. Likewise the set $C$ is made of three disconnected components. In the subfigure \ref{disconnectedsets} \textbf{Aiii} we show the center of mass of the sets. The set $A$ is concave, so, it can have a center of mass outside the set. The
 set $B$ has also a center of mass outside the set. It has two disconnected components that are approximately
 equal and separated by a long distance (this is not an implication: a set can be disconnected and have
 a CM inside the set). For the set $C$ our approach has been used: we treat every disconnected component of the
@@ -375,9 +354,9 @@ are not largely spread over the space of the measurements.
 We must not take out of sight the phenomena which is producing the CSD distribution:
 neurons have a finite size, and the effect of their action a delimited extent.
 Every patch that we can identify as a disconnected component of the Sources/Sink
-sets indicates a  joint active set of units. A center of mass for each disjoint
+sets indicates a joint active set of units. A center of mass for each disjoint
 component would then indicate an average locus for this active group, a putative center of activity to which we can give a position, intensity and time. An instantaneous snapshot of such information would depict the centers of activity of an ordered structure of neurons and their relative intensities. But it is in the successive depiction of a series of such snapshots that this analysis can show interpretative power. The appearance , displacement, and disappearance of such centers could reveal very subtle details of the dynamics of neural activity. Very small, fast displacements of the Centers of mass, may be occur due to slight asynchronous action between neurons which belong to the same active group.
-Larger displacements and  longer intervals (more than two or so firing periods)
+Larger displacements and longer intervals (more than two or so firing periods)
 could indicate physiological connections between different groups or units.
 
 The next step in our analysis is a procedure to systematically associate to each CM
@@ -387,7 +366,7 @@ the corresponding coordinates of the second.
 Remember that these coordinates can be now
 rational numbers
 respect to the grid of electrodes,
-as CM are not restricted to be  at the grid points.
+as CM are not restricted to be at the grid points.
 The distance is:
 \begin{equation}
 d(q_1,q_2):=\sqrt{(x_1-x_2)^2+(y_1+y_2)^2}.
@@ -413,7 +392,7 @@ should is due and is beyond the scope of this work.
  
  In order to perform the analysis described here, we summarize the steps.
  \begin{enumerate}
- \item Acquire high density electro-physiological data. The data must be two
+ \item Acquire high density extracellular electro-physiological data. The data must be two
    dimensional
    in space. Distance between the recording sites must be of the order of the typical
    size of the neurons involved or less, and such sites must be on a dense enough grid to perform numerical difference operations over them.
@@ -448,12 +427,11 @@ should is due and is beyond the scope of this work.
 \section{Results}
 
 The necessity to create such analysis came originally from the study of
-electro-physiological data obtained from the rat's hippocampus, using
+electro-physiological data obtained from the in vitro (poner "in vitro" en cursivas) rat's hippocampus, using
 a very dense MEA, the BioCAM of 3Brain \citep{BioCam}. 
-The highly layered CA structure of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the paths of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the somatic layer. Using CSD and disconnected component tracking over the data provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacological
+The highly layered CA structure of the hippocampus provides strong, discernible patterns of Sources and Sinks. Following the paths of activity using Center of Mass analysis directly from the data, though, proves unfruitful, due to the non-convex nature of the somatic layer. Using CSD and disconnected component tracking over the data provided the right conceptual framework to follow the displacement of active areas during highly active events, such as epileptic-like activity that was pharmacologically
 or traumatically induced. The proposed analysis would not produce vector averages over different simultaneously active areas. On the contrary, it would separate them and track them independently. So the most violent epileptic burst provided us with the data necessary to prove the robustness of the method.
-All the experimental data comes from a series of experiments
-performed on slices of the rats hippocampus. 
+ 
 
 
 
@@ -464,7 +442,7 @@ measurements. This facilitates the exemplification of our analysis, and gives us
 a good starting case. It comes at a cost, nonetheless, as many of the electrodes
 remain saturated after the stimulus and well beyond the measurement interval.
 The data was obtained by stimulating  specific points on the dentate gyrus
-in the slice of hippocampus with different voltage intensities. Details of the experiment
+(DG) in the slice of hippocampus with different voltage intensities. Details of the experiment
 have been published elsewhere \citep{Franco2018}. We shall borrow some of
 the experimental data for our purposes.
 
@@ -488,7 +466,7 @@ the experimental data for our purposes.
 
 
 
-The LFP is averaged over three events, produced by three successive
+The LFP is averaged over three responses, produced by three successive
 electrical stimuli in the same point at constant voltage. The
 response of the cells is almost identical in each event, which
 allows us to use averages as a denoising mechanism. After averaging
@@ -498,7 +476,7 @@ In the figure \ref{lfpevocada} we show some frames of the post-stimulus
 activity as a color map, along
 with a diagram of the somatic layers and the
 stimulus point. The saturated area is quite large, and covers
-a large section of the GD structure. In this case we shall
+a large section of the DG structure. In this case we shall
 restrict the CM track analysis to the respondent area in CA3.
 
 In the figure \ref{trazselectevo} we show a sample of the LFP
@@ -554,8 +532,8 @@ This kind of trajectories form strata over the CA region,
 showing a preference for CSD sites to be ordered by layers,
 as can be seen on the figure \ref{facitracks}.
 Careful examination of these figures show that trajectories
-are either pareallel or ortogonal to somal strata, with small
-deviations from these rule. This is notorious in the sink (blue)
+are either parallel or ortogonal to somatic strata, with small
+deviations from this rule. This is notorious in the sink (blue)
 trajectories, and should be interpreted accordingly.
 
 
@@ -576,7 +554,7 @@ than in the other cases. Also, the most striking features of the propagation of 
 coded now as trajectories of the CM, could be seen here, as the epileptic burst covered the whole
 CA structure. A sample of the raw data in $\muV{}$ can be seen in the figure \ref{lfpycsd4ap}. In the figure \ref{traz4ap} some exemplary traces
 can be seen.
-Five key moments in the epileptic burst have been selected, one just before the onset of the attack, the next one at the peak and one  following it, and the last at the subsiding moments. The figure compares the Raw data
+Five key moments in the epileptic burst have been selected, one just before the onset of the attack, the next one at the peak and one following it, and the last at the subsiding moments. The figure compares the Raw data
 in $\muV{}$ in the first row, then the raw CSD representation in the second row, and
 in the third raw a CSD after a Gaussian Blur Filter has been applied,
 with a $\sigma$ value of $ \mum{42}$. After the Gaussian Blur acts a sort of
@@ -591,11 +569,11 @@ In the figure \ref{tray4ap} we show the epileptic burst on the trajectories repr
 Fine lines
 connect the blue (sink) and red (source) dots, that indicate the trajectories
 along various activation
-sites around the whole CA structure, and part of GD. Very small trajectories precede
-the onset of the epileptiform attack in CA1. At around 60ms after the 4AP dose a burst
+sites around the whole CA structure, and part of the DG. Very small trajectories precede
+the onset of the epileptiform attack in CA1. At around 60ms after the 4AP dose, a burst
 of localized trajectories appear near CA2. By the 70ms mark, the activity has spread
-retrograde through most of the CA structure. Between the 80 and 90 ms marks
-GD shows knot-like trajectories. By 140ms the remaining activity is in the proximal
+retrogradely through most of the CA structure. Between the 80 and 90 ms marks,
+DG shows knot-like trajectories. By 140ms the remaining activity is in the proximal
 area of CA1.
 
 
@@ -640,14 +618,14 @@ range spatial correlations, the analysis may prove not very useful.
 The sink and sources trajectories has to be made by the activation
 of neighbouring units to make sense. The plausible explanation for these
 active neighbours would be that they correspond to the same processing
-circuitry, and thus, the trajectory would reveal its existence and
-possible some of the simplified pathways that it contains.
-It is pertain to remind that those trajectories are not
+circuitry, and thus, the trajectory would reveal its existence and,
+possibly, some of the simplified pathways that it contains.
+It is pertinent to remind that those trajectories are not
 connections themselves. They are indicators of highly correlated
 activity as measured from the outside of the cells. This correlation is
 both temporal, spatial, and causal, so it is a good indicator
 of possible physiological connection, but it doesn't say of what type it
-is or if it direct or indirect.
+is or if it is monosynaptic or polysinaptic.
 
 We may point out some possible future uses for this analysis.
 If somewhat less noisy electrodes are developed, and their density
@@ -658,12 +636,11 @@ kinds of connections could be revealed by using some blocking
 or stimulating drugs, and comparing trajectories in different conditions.
 
 I would very much suggest a similar analysis done on
-the visual cortex by exposition to visual imaginary
-that has softly moving stimulus.
+the visual cortex using a moving stimulus as control.
 
 Three Dimensional MEAS are becoming also a reality.
 In structured tissue, this kind
-of analysis would be very revealing, if the electrodes
+of analysis would be very revealing. If the electrodes
 are dense enough, we may be able to trace the different units at
 different strata stimulated by a single axon.
 
